@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary: hsl(183 97% 18%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(72 51% 53%);
+  --color-secondary-foreground: hsl(0 0% 10%);
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(0 0% 10%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(0 0% 10%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(0 0% 10%);
+  --color-muted: hsl(210 20% 97%);
+  --color-muted-foreground: hsl(0 0% 40%);
+  --color-accent: hsl(72 51% 53%);
+  --color-accent-foreground: hsl(0 0% 10%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: hsl(210 20% 90%);
+  --color-input: hsl(210 20% 90%);
+  --color-ring: hsl(183 97% 18%);
+  --radius: 0.5rem;
+  --radius-sm: 0.3rem;
+  --radius-md: 0.4rem;
+  --radius-lg: 0.5rem;
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+  --primary: 183 97% 18%;
+  --primary-foreground: 0 0% 100%;
+  --primary-light: 183 38% 42%;
+  --primary-lighter: 183 38% 92%;
+  --secondary: 72 51% 53%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 210 20% 97%;
+  --muted-foreground: 0 0% 40%;
+  --accent: 72 51% 53%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 20% 90%;
+  --input: 210 20% 90%;
+  --ring: 183 97% 18%;
+  --radius: 0.5rem;
+  --gradient-primary: linear-gradient(135deg, hsl(183, 97%, 18%), hsl(183, 38%, 42%));
+  --gradient-primary-horizontal: linear-gradient(90deg, hsl(183, 97%, 18%), hsl(183, 38%, 42%));
+  --section-gray: 210 20% 97.5%;
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+.dark {
+  --background: 183 30% 5%;
+  --foreground: 0 0% 95%;
+  --card: 183 30% 8%;
+  --card-foreground: 0 0% 95%;
+  --popover: 183 30% 8%;
+  --popover-foreground: 0 0% 95%;
+  --primary: 183 38% 42%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 72 51% 53%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 183 20% 15%;
+  --muted-foreground: 0 0% 65%;
+  --accent: 72 51% 53%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 95%;
+  --border: 183 20% 20%;
+  --input: 183 20% 20%;
+  --ring: 183 38% 42%;
+  --section-gray: 183 20% 8%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(183, 97%, 18%), hsl(183, 38%, 42%));
+  }
+
+  .gradient-primary-horizontal {
+    background: linear-gradient(90deg, hsl(183, 97%, 18%), hsl(183, 38%, 42%));
+  }
+
+  .gradient-primary-text {
+    background: linear-gradient(135deg, hsl(183, 97%, 18%), hsl(183, 38%, 42%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
