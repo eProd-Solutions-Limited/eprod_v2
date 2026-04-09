@@ -71,6 +71,8 @@ export interface Config {
     media: Media;
     articles: Article;
     'team-pages': TeamPage;
+    team: Team;
+    'cta-config': CtaConfig;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +84,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     'team-pages': TeamPagesSelect<false> | TeamPagesSelect<true>;
+    team: TeamSelect<false> | TeamSelect<true>;
+    'cta-config': CtaConfigSelect<false> | CtaConfigSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -283,6 +287,84 @@ export interface TeamPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team".
+ */
+export interface Team {
+  id: number;
+  name: string;
+  title: string;
+  photo: number | Media;
+  bio: string;
+  linkedin?: string | null;
+  /**
+   * Display order
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cta-config".
+ */
+export interface CtaConfig {
+  id: number;
+  title: string;
+  email: {
+    /**
+     * Recipient email address
+     */
+    to: string;
+    /**
+     * Sender email address
+     */
+    from: string;
+    /**
+     * Email subject line
+     */
+    subject: string;
+    /**
+     * Use HTML content type
+     */
+    htmlContent?: boolean | null;
+    /**
+     * Email body. Use {company}, {email}, {challenge} for dynamic fields
+     */
+    body: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * Additional email headers
+     */
+    headers?:
+      | {
+          key: string;
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * File attachments
+     */
+    attachments?: (number | Media)[] | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -320,6 +402,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team-pages';
         value: number | TeamPage;
+      } | null)
+    | ({
+        relationTo: 'team';
+        value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'cta-config';
+        value: number | CtaConfig;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -497,6 +587,46 @@ export interface TeamPagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  photo?: T;
+  bio?: T;
+  linkedin?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cta-config_select".
+ */
+export interface CtaConfigSelect<T extends boolean = true> {
+  title?: T;
+  email?:
+    | T
+    | {
+        to?: T;
+        from?: T;
+        subject?: T;
+        htmlContent?: T;
+        body?: T;
+        headers?:
+          | T
+          | {
+              key?: T;
+              value?: T;
+              id?: T;
+            };
+        attachments?: T;
       };
   updatedAt?: T;
   createdAt?: T;

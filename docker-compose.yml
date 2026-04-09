@@ -12,11 +12,13 @@ services:
     command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
     depends_on:
       - mongo
-      # - postgres
+      - mailhog
     env_file:
       - .env
+    environment:
+      SMTP_HOST: mailhog
+      SMTP_PORT: 1025
 
-  # Ensure your DATABASE_URL uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
   mongo:
     image: mongo:latest
     ports:
@@ -28,16 +30,14 @@ services:
     logging:
       driver: none
 
-  # Uncomment the following to use postgres
-  # postgres:
-  #   restart: always
-  #   image: postgres:latest
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
-  #   ports:
-  #     - "5432:5432"
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - '1025:1025'  # SMTP port
+      - '8025:8025'  # Web UI (http://localhost:8025)
+    logging:
+      driver: none
 
 volumes:
   data:
-  # pgdata:
   node_modules:
