@@ -12,6 +12,8 @@ import { Articles } from './collections/Articles'
 import { TeamPages } from './collections/TeamPages'
 import { Team } from './collections/Team'
 import { CTAConfig } from './collections/CTAConfig'
+import { LogoWall } from './globals/LogoWall'
+import { VoiceOfCustomer } from './globals/VoiceOfCustomer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,6 +26,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Articles, TeamPages, Team, CTAConfig],
+  globals: [LogoWall, VoiceOfCustomer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
