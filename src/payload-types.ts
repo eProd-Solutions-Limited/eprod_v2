@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     articles: Article;
+    'case-studies': CaseStudy;
     'team-pages': TeamPage;
     team: Team;
     'cta-config': CtaConfig;
@@ -83,6 +84,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     'team-pages': TeamPagesSelect<false> | TeamPagesSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     'cta-config': CtaConfigSelect<false> | CtaConfigSelect<true>;
@@ -239,6 +241,43 @@ export interface Article {
         blockType: 'quote';
       }
   )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  title: string;
+  coverImage?: (number | null) | Media;
+  /**
+   * e.g. "Novos Horizontes — Poultry Sector"
+   */
+  client?: string | null;
+  /**
+   * Category shown in the filter bar
+   */
+  tag?: ('Financial Inclusion' | 'EUDR Traceability' | 'Operational Efficiency') | null;
+  /**
+   * Bold card headline, e.g. "Unlocking $2M in Input Financing..."
+   */
+  headline?: string | null;
+  /**
+   * Challenge — what problem did the client face?
+   */
+  situation?: string | null;
+  /**
+   * Solution — what did eProd implement?
+   */
+  action?: string | null;
+  /**
+   * Impact — measurable outcome
+   */
+  result?: string | null;
+  ctaLabel?: string | null;
+  hasVideo?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -406,6 +445,10 @@ export interface PayloadLockedDocument {
         value: number | Article;
       } | null)
     | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
+      } | null)
+    | ({
         relationTo: 'team-pages';
         value: number | TeamPage;
       } | null)
@@ -555,6 +598,24 @@ export interface ArticlesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  coverImage?: T;
+  client?: T;
+  tag?: T;
+  headline?: T;
+  situation?: T;
+  action?: T;
+  result?: T;
+  ctaLabel?: T;
+  hasVideo?: T;
   updatedAt?: T;
   createdAt?: T;
 }
