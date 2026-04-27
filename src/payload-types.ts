@@ -95,8 +95,14 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'logo-wall': LogoWall;
+    'voice-of-customer': VoiceOfCustomer;
+  };
+  globalsSelect: {
+    'logo-wall': LogoWallSelect<false> | LogoWallSelect<true>;
+    'voice-of-customer': VoiceOfCustomerSelect<false> | VoiceOfCustomerSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -670,6 +676,87 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logo-wall".
+ */
+export interface LogoWall {
+  id: number;
+  agribusinessLogos?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  bankLogos?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voice-of-customer".
+ */
+export interface VoiceOfCustomer {
+  id: number;
+  quotes?:
+    | {
+        quote: string;
+        name: string;
+        role: string;
+        /**
+         * e.g. "Bank Partner", "Agribusiness CEO"
+         */
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logo-wall_select".
+ */
+export interface LogoWallSelect<T extends boolean = true> {
+  agribusinessLogos?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  bankLogos?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voice-of-customer_select".
+ */
+export interface VoiceOfCustomerSelect<T extends boolean = true> {
+  quotes?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        role?: T;
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
