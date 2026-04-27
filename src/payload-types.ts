@@ -74,6 +74,7 @@ export interface Config {
     'team-pages': TeamPage;
     team: Team;
     'cta-config': CtaConfig;
+    popups: Popup;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     'team-pages': TeamPagesSelect<false> | TeamPagesSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     'cta-config': CtaConfigSelect<false> | CtaConfigSelect<true>;
+    popups: PopupsSelect<false> | PopupsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -409,6 +411,150 @@ export interface CtaConfig {
   createdAt: string;
 }
 /**
+ * Manage popup notifications for trainings, webinars, and announcements. No code required — create and configure popups entirely from this panel.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popups".
+ */
+export interface Popup {
+  id: number;
+  /**
+   * Internal label to identify this popup (not visible to site visitors)
+   */
+  name: string;
+  /**
+   * Enable or disable this popup. Only active popups are shown on the site.
+   */
+  isActive?: boolean | null;
+  /**
+   * Optionally limit when this popup is shown. Leave both dates empty to always show it (while active).
+   */
+  scheduling?: {
+    /**
+     * Start showing from this date/time. Leave empty to start immediately.
+     */
+    startDate?: string | null;
+    /**
+     * Stop showing after this date/time. Leave empty to show indefinitely.
+     */
+    endDate?: string | null;
+  };
+  display: {
+    /**
+     * Which pages should this popup appear on.
+     */
+    pages: 'all' | 'homepage' | 'specific';
+    /**
+     * Enter exact page paths where the popup should appear (e.g. /about, /case-studies).
+     */
+    specificPaths?:
+      | {
+          path: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Seconds to wait after page load before showing the popup.
+     */
+    delay?: number | null;
+    /**
+     * How often this popup is shown to the same visitor.
+     */
+    frequency: 'every-visit' | 'once-per-session' | 'once-per-day' | 'once-per-week' | 'once-ever';
+  };
+  content: {
+    /**
+     * Optional small label shown above the title (e.g. "Upcoming Webinar", "Free Training").
+     */
+    badge?: string | null;
+    /**
+     * Main heading of the popup.
+     */
+    title: string;
+    /**
+     * Detailed popup content. Supports formatting, lists, and links.
+     */
+    body?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Optional banner image shown at the top of the popup.
+     */
+    image?: (number | null) | Media;
+  };
+  /**
+   * Action buttons displayed at the bottom of the popup. You can add multiple buttons.
+   */
+  buttons?:
+    | {
+        label: string;
+        /**
+         * What happens when this button is clicked.
+         */
+        action: 'link' | 'register' | 'close';
+        /**
+         * URL to open (required for "Open a Link" action).
+         */
+        url?: string | null;
+        openInNewTab?: boolean | null;
+        /**
+         * Visual style of this button.
+         */
+        style?: ('primary' | 'secondary' | 'outline' | 'ghost') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Configures the form shown when a visitor clicks a "Register" button. The marketing team will receive an email for each registration.
+   */
+  registration?: {
+    /**
+     * Email address that receives registration notifications (e.g. marketing@eprod.com).
+     */
+    notifyEmail?: string | null;
+    /**
+     * Subject line for the notification email sent to your team.
+     */
+    emailSubject?: string | null;
+    collectName?: boolean | null;
+    collectPhone?: boolean | null;
+    collectOrganization?: boolean | null;
+    /**
+     * Message shown to the visitor after they successfully register.
+     */
+    successMessage?: string | null;
+  };
+  appearance?: {
+    /**
+     * Maximum width of the popup.
+     */
+    size?: ('sm' | 'md' | 'lg') | null;
+    /**
+     * Allows visitors to dismiss the popup.
+     */
+    showCloseButton?: boolean | null;
+    closeOnOverlayClick?: boolean | null;
+    /**
+     * Color of the badge label (if set).
+     */
+    badgeColor?: ('brand' | 'green' | 'blue' | 'orange' | 'purple' | 'red') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -459,6 +605,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'cta-config';
         value: number | CtaConfig;
+      } | null)
+    | ({
+        relationTo: 'popups';
+        value: number | Popup;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -694,6 +844,71 @@ export interface CtaConfigSelect<T extends boolean = true> {
               id?: T;
             };
         attachments?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popups_select".
+ */
+export interface PopupsSelect<T extends boolean = true> {
+  name?: T;
+  isActive?: T;
+  scheduling?:
+    | T
+    | {
+        startDate?: T;
+        endDate?: T;
+      };
+  display?:
+    | T
+    | {
+        pages?: T;
+        specificPaths?:
+          | T
+          | {
+              path?: T;
+              id?: T;
+            };
+        delay?: T;
+        frequency?: T;
+      };
+  content?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        body?: T;
+        image?: T;
+      };
+  buttons?:
+    | T
+    | {
+        label?: T;
+        action?: T;
+        url?: T;
+        openInNewTab?: T;
+        style?: T;
+        id?: T;
+      };
+  registration?:
+    | T
+    | {
+        notifyEmail?: T;
+        emailSubject?: T;
+        collectName?: T;
+        collectPhone?: T;
+        collectOrganization?: T;
+        successMessage?: T;
+      };
+  appearance?:
+    | T
+    | {
+        size?: T;
+        showCloseButton?: T;
+        closeOnOverlayClick?: T;
+        badgeColor?: T;
       };
   updatedAt?: T;
   createdAt?: T;
