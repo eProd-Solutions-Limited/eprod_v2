@@ -13,6 +13,7 @@ import { TeamPages } from './collections/TeamPages'
 import { Team } from './collections/Team'
 import { CTAConfig } from './collections/CTAConfig'
 import { CaseStudies } from './collections/CaseStudies'
+import { Popups } from './collections/Popups'
 import { LogoWall } from './globals/LogoWall'
 import { VoiceOfCustomer } from './globals/VoiceOfCustomer'
 
@@ -26,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Articles, CaseStudies, TeamPages, Team, CTAConfig],
+  collections: [Users, Media, Articles, CaseStudies, TeamPages, Team, CTAConfig, Popups],
   globals: [LogoWall, VoiceOfCustomer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
