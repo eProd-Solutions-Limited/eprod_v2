@@ -40,7 +40,9 @@ const HeroSection = () => {
                 src={heroImage}
                 alt="African farmer using mobile technology in a green agricultural field with digital data overlays"
                 className="w-full h-auto object-cover"
-                loading="eager"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                placeholder="blur"
+                priority
               />
             </div>
             <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-full bg-secondary/20 blur-2xl" />

@@ -70,9 +70,11 @@ export interface Config {
     users: User;
     media: Media;
     articles: Article;
+    'case-studies': CaseStudy;
     'team-pages': TeamPage;
     team: Team;
     'cta-config': CtaConfig;
+    popups: Popup;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,9 +85,11 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     'team-pages': TeamPagesSelect<false> | TeamPagesSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     'cta-config': CtaConfigSelect<false> | CtaConfigSelect<true>;
+    popups: PopupsSelect<false> | PopupsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -238,6 +242,103 @@ export interface Article {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  title: string;
+  /**
+   * Auto-generated from the title. Only edit if you need a custom URL.
+   */
+  slug?: string | null;
+  /**
+   * Hero image displayed on the card and at the top of the case study
+   */
+  coverImage?: (number | null) | Media;
+  /**
+   * Short summary shown on the listing card (1-2 sentences)
+   */
+  excerpt?: string | null;
+  /**
+   * Name of the client or company featured
+   */
+  client?: string | null;
+  /**
+   * e.g. Agribusiness, Microfinance, Digital Banking
+   */
+  industry?: string | null;
+  publishedAt?: string | null;
+  content: (
+    | {
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'richText';
+      }
+    | {
+        image: number | Media;
+        caption?: string | null;
+        alt: string;
+        width?: ('full' | 'half' | 'inline') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'image';
+      }
+    | {
+        url: string;
+        caption?: string | null;
+        autoplay?: boolean | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'video';
+      }
+    | {
+        gif: number | Media;
+        caption?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'gif';
+      }
+    | {
+        text: string;
+        author?: string | null;
+        role?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'quote';
+      }
+    | {
+        items?:
+          | {
+              value: string;
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'stats';
+      }
+  )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "team-pages".
  */
 export interface TeamPage {
@@ -364,6 +465,150 @@ export interface CtaConfig {
   createdAt: string;
 }
 /**
+ * Manage popup notifications for trainings, webinars, and announcements. No code required — create and configure popups entirely from this panel.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popups".
+ */
+export interface Popup {
+  id: number;
+  /**
+   * Internal label to identify this popup (not visible to site visitors)
+   */
+  name: string;
+  /**
+   * Enable or disable this popup. Only active popups are shown on the site.
+   */
+  isActive?: boolean | null;
+  /**
+   * Optionally limit when this popup is shown. Leave both dates empty to always show it (while active).
+   */
+  scheduling?: {
+    /**
+     * Start showing from this date/time. Leave empty to start immediately.
+     */
+    startDate?: string | null;
+    /**
+     * Stop showing after this date/time. Leave empty to show indefinitely.
+     */
+    endDate?: string | null;
+  };
+  display: {
+    /**
+     * Which pages should this popup appear on.
+     */
+    pages: 'all' | 'homepage' | 'specific';
+    /**
+     * Enter exact page paths where the popup should appear (e.g. /about, /case-studies).
+     */
+    specificPaths?:
+      | {
+          path: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Seconds to wait after page load before showing the popup.
+     */
+    delay?: number | null;
+    /**
+     * How often this popup is shown to the same visitor.
+     */
+    frequency: 'every-visit' | 'once-per-session' | 'once-per-day' | 'once-per-week' | 'once-ever';
+  };
+  content: {
+    /**
+     * Optional small label shown above the title (e.g. "Upcoming Webinar", "Free Training").
+     */
+    badge?: string | null;
+    /**
+     * Main heading of the popup.
+     */
+    title: string;
+    /**
+     * Detailed popup content. Supports formatting, lists, and links.
+     */
+    body?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Optional banner image shown at the top of the popup.
+     */
+    image?: (number | null) | Media;
+  };
+  /**
+   * Action buttons displayed at the bottom of the popup. You can add multiple buttons.
+   */
+  buttons?:
+    | {
+        label: string;
+        /**
+         * What happens when this button is clicked.
+         */
+        action: 'link' | 'register' | 'close';
+        /**
+         * URL to open (required for "Open a Link" action).
+         */
+        url?: string | null;
+        openInNewTab?: boolean | null;
+        /**
+         * Visual style of this button.
+         */
+        style?: ('primary' | 'secondary' | 'outline' | 'ghost') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Configures the form shown when a visitor clicks a "Register" button. The marketing team will receive an email for each registration.
+   */
+  registration?: {
+    /**
+     * Email address that receives registration notifications (e.g. marketing@eprod.com).
+     */
+    notifyEmail?: string | null;
+    /**
+     * Subject line for the notification email sent to your team.
+     */
+    emailSubject?: string | null;
+    collectName?: boolean | null;
+    collectPhone?: boolean | null;
+    collectOrganization?: boolean | null;
+    /**
+     * Message shown to the visitor after they successfully register.
+     */
+    successMessage?: string | null;
+  };
+  appearance?: {
+    /**
+     * Maximum width of the popup.
+     */
+    size?: ('sm' | 'md' | 'lg') | null;
+    /**
+     * Allows visitors to dismiss the popup.
+     */
+    showCloseButton?: boolean | null;
+    closeOnOverlayClick?: boolean | null;
+    /**
+     * Color of the badge label (if set).
+     */
+    badgeColor?: ('brand' | 'green' | 'blue' | 'orange' | 'purple' | 'red') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -400,6 +645,10 @@ export interface PayloadLockedDocument {
         value: number | Article;
       } | null)
     | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
+      } | null)
+    | ({
         relationTo: 'team-pages';
         value: number | TeamPage;
       } | null)
@@ -410,6 +659,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'cta-config';
         value: number | CtaConfig;
+      } | null)
+    | ({
+        relationTo: 'popups';
+        value: number | Popup;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -554,6 +807,81 @@ export interface ArticlesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  coverImage?: T;
+  excerpt?: T;
+  client?: T;
+  industry?: T;
+  publishedAt?: T;
+  content?:
+    | T
+    | {
+        richText?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        image?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              alt?: T;
+              width?: T;
+              id?: T;
+              blockName?: T;
+            };
+        video?:
+          | T
+          | {
+              url?: T;
+              caption?: T;
+              autoplay?: T;
+              id?: T;
+              blockName?: T;
+            };
+        gif?:
+          | T
+          | {
+              gif?: T;
+              caption?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quote?:
+          | T
+          | {
+              text?: T;
+              author?: T;
+              role?: T;
+              id?: T;
+              blockName?: T;
+            };
+        stats?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "team-pages_select".
  */
 export interface TeamPagesSelect<T extends boolean = true> {
@@ -627,6 +955,71 @@ export interface CtaConfigSelect<T extends boolean = true> {
               id?: T;
             };
         attachments?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popups_select".
+ */
+export interface PopupsSelect<T extends boolean = true> {
+  name?: T;
+  isActive?: T;
+  scheduling?:
+    | T
+    | {
+        startDate?: T;
+        endDate?: T;
+      };
+  display?:
+    | T
+    | {
+        pages?: T;
+        specificPaths?:
+          | T
+          | {
+              path?: T;
+              id?: T;
+            };
+        delay?: T;
+        frequency?: T;
+      };
+  content?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        body?: T;
+        image?: T;
+      };
+  buttons?:
+    | T
+    | {
+        label?: T;
+        action?: T;
+        url?: T;
+        openInNewTab?: T;
+        style?: T;
+        id?: T;
+      };
+  registration?:
+    | T
+    | {
+        notifyEmail?: T;
+        emailSubject?: T;
+        collectName?: T;
+        collectPhone?: T;
+        collectOrganization?: T;
+        successMessage?: T;
+      };
+  appearance?:
+    | T
+    | {
+        size?: T;
+        showCloseButton?: T;
+        closeOnOverlayClick?: T;
+        badgeColor?: T;
       };
   updatedAt?: T;
   createdAt?: T;

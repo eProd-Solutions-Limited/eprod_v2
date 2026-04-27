@@ -2,9 +2,8 @@ import { cache } from 'react'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { cn } from '@/lib/utils'
+import { RichTextRenderer } from '@/components/RichTextRenderer'
 
 const getArticle = cache(async (slug: string) => {
   const payload = await getPayload({ config: payloadConfig })
@@ -58,10 +57,7 @@ function BlockRenderer({ block }: BlockProps) {
   switch (block.blockType) {
     case 'richText':
       return (
-        <div className="prose prose-invert max-w-none mb-8">
-          {/* Use Payload's built-in RichText component */}
-          <RichText data={block.content} />
-        </div>
+        <RichTextRenderer data={block.content as any} className="mb-8" />
       )
 
     case 'image':
