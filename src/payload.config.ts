@@ -14,6 +14,8 @@ import { TeamPages } from './collections/TeamPages'
 import { Team } from './collections/Team'
 import { CTAConfig } from './collections/CTAConfig'
 import { Popups } from './collections/Popups'
+import { LogoWall } from './globals/LogoWall'
+import { VoiceOfCustomer } from './globals/VoiceOfCustomer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,6 +28,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Articles, CaseStudies, TeamPages, Team, CTAConfig, Popups],
+  globals: [LogoWall, VoiceOfCustomer],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
   }),

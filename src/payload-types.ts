@@ -99,8 +99,14 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'logo-wall': LogoWall;
+    'voice-of-customer': VoiceOfCustomer;
+  };
+  globalsSelect: {
+    'logo-wall': LogoWallSelect<false> | LogoWallSelect<true>;
+    'voice-of-customer': VoiceOfCustomerSelect<false> | VoiceOfCustomerSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -247,93 +253,33 @@ export interface Article {
 export interface CaseStudy {
   id: number;
   title: string;
-  /**
-   * Auto-generated from the title. Only edit if you need a custom URL.
-   */
-  slug?: string | null;
-  /**
-   * Hero image displayed on the card and at the top of the case study
-   */
   coverImage?: (number | null) | Media;
   /**
-   * Short summary shown on the listing card (1-2 sentences)
-   */
-  excerpt?: string | null;
-  /**
-   * Name of the client or company featured
+   * e.g. "Novos Horizontes — Poultry Sector"
    */
   client?: string | null;
   /**
-   * e.g. Agribusiness, Microfinance, Digital Banking
+   * Category shown in the filter bar
    */
-  industry?: string | null;
-  publishedAt?: string | null;
-  content: (
-    | {
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'richText';
-      }
-    | {
-        image: number | Media;
-        caption?: string | null;
-        alt: string;
-        width?: ('full' | 'half' | 'inline') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'image';
-      }
-    | {
-        url: string;
-        caption?: string | null;
-        autoplay?: boolean | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'video';
-      }
-    | {
-        gif: number | Media;
-        caption?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'gif';
-      }
-    | {
-        text: string;
-        author?: string | null;
-        role?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'quote';
-      }
-    | {
-        items?:
-          | {
-              value: string;
-              label: string;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'stats';
-      }
-  )[];
+  tag?: ('Financial Inclusion' | 'EUDR Traceability' | 'Operational Efficiency') | null;
+  /**
+   * Bold card headline, e.g. "Unlocking $2M in Input Financing..."
+   */
+  headline?: string | null;
+  /**
+   * Challenge — what problem did the client face?
+   */
+  situation?: string | null;
+  /**
+   * Solution — what did eProd implement?
+   */
+  action?: string | null;
+  /**
+   * Impact — measurable outcome
+   */
+  result?: string | null;
+  ctaLabel?: string | null;
+  hasVideo?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -811,72 +757,15 @@ export interface ArticlesSelect<T extends boolean = true> {
  */
 export interface CaseStudiesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   coverImage?: T;
-  excerpt?: T;
   client?: T;
-  industry?: T;
-  publishedAt?: T;
-  content?:
-    | T
-    | {
-        richText?:
-          | T
-          | {
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        image?:
-          | T
-          | {
-              image?: T;
-              caption?: T;
-              alt?: T;
-              width?: T;
-              id?: T;
-              blockName?: T;
-            };
-        video?:
-          | T
-          | {
-              url?: T;
-              caption?: T;
-              autoplay?: T;
-              id?: T;
-              blockName?: T;
-            };
-        gif?:
-          | T
-          | {
-              gif?: T;
-              caption?: T;
-              id?: T;
-              blockName?: T;
-            };
-        quote?:
-          | T
-          | {
-              text?: T;
-              author?: T;
-              role?: T;
-              id?: T;
-              blockName?: T;
-            };
-        stats?:
-          | T
-          | {
-              items?:
-                | T
-                | {
-                    value?: T;
-                    label?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-      };
+  tag?: T;
+  headline?: T;
+  situation?: T;
+  action?: T;
+  result?: T;
+  ctaLabel?: T;
+  hasVideo?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1063,6 +952,87 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logo-wall".
+ */
+export interface LogoWall {
+  id: number;
+  agribusinessLogos?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  bankLogos?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voice-of-customer".
+ */
+export interface VoiceOfCustomer {
+  id: number;
+  quotes?:
+    | {
+        quote: string;
+        name: string;
+        role: string;
+        /**
+         * e.g. "Bank Partner", "Agribusiness CEO"
+         */
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logo-wall_select".
+ */
+export interface LogoWallSelect<T extends boolean = true> {
+  agribusinessLogos?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  bankLogos?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "voice-of-customer_select".
+ */
+export interface VoiceOfCustomerSelect<T extends boolean = true> {
+  quotes?:
+    | T
+    | {
+        quote?: T;
+        name?: T;
+        role?: T;
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
