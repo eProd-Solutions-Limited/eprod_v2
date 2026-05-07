@@ -1,5 +1,10 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
+/**
+ * Requires coverImage and category to be populated (depth >= 1) by the caller.
+ * coverImage.url must be a string — do not pass un-populated Payload relations.
+ */
 export interface InsightArticle {
   id: number
   title: string
@@ -21,24 +26,32 @@ function ArticleCard({ article, large }: { article: InsightArticle; large?: bool
   return (
     <Link
       href={`/articles/${article.slug}`}
-      className={`group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition hover:shadow-md ${large ? 'row-span-2' : ''}`}
+      className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition hover:shadow-md"
     >
       {/* Cover image or gradient placeholder */}
-      <div
-        className={`w-full flex-shrink-0 ${large ? 'h-52' : 'h-28'}`}
-        style={
-          hasCover
-            ? { backgroundImage: `url(${article.coverImage!.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-            : { background: 'linear-gradient(135deg, hsl(183 97% 18%), hsl(183 97% 30%))' }
-        }
-      />
+      <div className={`relative w-full shrink-0 overflow-hidden ${large ? 'h-52' : 'h-28'}`}>
+        {hasCover ? (
+          <Image
+            src={article.coverImage!.url}
+            alt={article.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        ) : (
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(135deg, hsl(183 97% 18%), hsl(183 97% 30%))' }}
+          />
+        )}
+      </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
         {article.category && (
           <span className="w-fit rounded-full bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
             {article.category.name}
           </span>
         )}
-        <h3 className={`font-bold leading-snug text-foreground group-hover:text-primary transition-colors ${large ? 'text-lg' : 'text-sm'}`}>
+        <h3 className={`font-bold leading-snug text-foreground transition-colors group-hover:text-primary ${large ? 'text-lg' : 'text-sm'}`}>
           {article.title}
         </h3>
         {large && article.excerpt && (
@@ -76,8 +89,8 @@ export function InsightsMasonryGrid({ articles }: InsightsMasonryGridProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      {groups.map((group, gi) => (
-        <div key={gi} className="grid grid-cols-1 gap-4 md:grid-cols-[1.5fr_1fr]">
+      {groups.map((group) => (
+        <div key={group[0].id} className="grid grid-cols-1 gap-4 md:grid-cols-[1.5fr_1fr]">
           {/* Large card — always first in group */}
           <ArticleCard article={group[0]} large />
           {/* Small cards stacked on the right */}
