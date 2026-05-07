@@ -192,6 +192,8 @@ export interface Article {
   excerpt?: string | null;
   publishedAt?: string | null;
   author?: (number | null) | User;
+  coverImage?: (number | null) | Media;
+  category?: (number | null) | Category;
   content: (
     | {
         content: {
@@ -245,6 +247,20 @@ export interface Article {
         blockType: 'quote';
       }
   )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  /**
+   * Used in URL filter params. Auto-fill from name, then adjust if needed.
+   */
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -558,20 +574,6 @@ export interface Popup {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: number;
-  name: string;
-  /**
-   * Used in URL filter params. Auto-fill from name, then adjust if needed.
-   */
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -722,6 +724,8 @@ export interface ArticlesSelect<T extends boolean = true> {
   excerpt?: T;
   publishedAt?: T;
   author?: T;
+  coverImage?: T;
+  category?: T;
   content?:
     | T
     | {

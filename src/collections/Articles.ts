@@ -133,6 +133,16 @@ export const Articles: CollectionConfig = {
       relationTo: 'users',
     },
     {
+      name: 'coverImage',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+    },
+    {
       name: 'content',
       type: 'blocks',
       blocks: [richTextBlock, imageBlock, videoBlock, gifBlock, quoteBlock],
