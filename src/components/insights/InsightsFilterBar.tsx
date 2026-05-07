@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { Search } from 'lucide-react'
 
+const SEARCH_DEBOUNCE_MS = 300
+
 interface Category {
   id: number
   name: string
@@ -14,6 +16,10 @@ interface InsightsFilterBarProps {
   categories: Category[]
 }
 
+/**
+ * Must be rendered inside <Suspense> — uses useSearchParams().
+ * @see https://nextjs.org/docs/app/api-reference/functions/use-search-params#static-rendering
+ */
 export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -28,12 +34,19 @@ export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
     setInputValue(activeQ)
   }, [activeQ])
 
+  // Clear debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [])
+
   function pushParams(category: string, q: string) {
     const params = new URLSearchParams()
     if (category) params.set('category', category)
     if (q) params.set('q', q)
     params.set('page', '1')
-    router.push(`/insights?${params.toString()}`)
+    router.push(`/insights?${params.toString()}`, { scroll: false })
   }
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -42,10 +55,12 @@ export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(() => {
       pushParams(activeCategory, value)
-    }, 300)
+    }, SEARCH_DEBOUNCE_MS)
   }
 
   function handleCategoryClick(slug: string) {
+    // Cancel any pending search debounce to prevent it overwriting this navigation
+    if (debounceRef.current) clearTimeout(debounceRef.current)
     const next = slug === activeCategory ? '' : slug
     pushParams(next, inputValue)
   }
@@ -60,14 +75,17 @@ export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
           value={inputValue}
           onChange={handleSearchChange}
           placeholder="Search articles..."
+          aria-label="Search articles"
           className="h-10 w-full rounded-lg border border-border bg-background pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
         />
       </div>
 
       {/* Category pills */}
-      <div className="flex flex-wrap gap-2">
+      <div role="group" aria-label="Filter by category" className="flex flex-wrap gap-2">
         <button
+          type="button"
           onClick={() => handleCategoryClick('')}
+          aria-pressed={activeCategory === ''}
           className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
             activeCategory === ''
               ? 'bg-primary text-primary-foreground'
@@ -79,7 +97,9 @@ export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
         {categories.map((cat) => (
           <button
             key={cat.id}
+            type="button"
             onClick={() => handleCategoryClick(cat.slug)}
+            aria-pressed={activeCategory === cat.slug}
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
               activeCategory === cat.slug
                 ? 'bg-primary text-primary-foreground'
