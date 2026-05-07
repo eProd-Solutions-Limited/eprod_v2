@@ -6,6 +6,7 @@ import { InsightsFilterBar } from '@/components/insights/InsightsFilterBar'
 import { InsightsMasonryGrid } from '@/components/insights/InsightsMasonryGrid'
 import { InsightsPagination } from '@/components/insights/InsightsPagination'
 import type { InsightArticle } from '@/components/insights/InsightsMasonryGrid'
+import type { Where } from 'payload'
 
 const PAGE_SIZE = 12
 
@@ -15,8 +16,19 @@ const getCategories = cache(async () => {
   return result.docs as { id: number; name: string; slug: string }[]
 })
 
-function buildWhere(categoryId?: number, q?: string) {
-  const conditions: object[] = []
+const getHeroArticles = cache(async () => {
+  const payload = await getPayload({ config: payloadConfig })
+  const result = await payload.find({
+    collection: 'articles',
+    sort: '-publishedAt',
+    limit: 5,
+    depth: 1,
+  })
+  return result.docs
+})
+
+function buildWhere(categoryId?: number, q?: string): Where {
+  const conditions: Where[] = []
   if (categoryId) conditions.push({ category: { equals: categoryId } })
   if (q) conditions.push({ or: [{ title: { like: q } }, { excerpt: { like: q } }] })
   return conditions.length ? { and: conditions } : {}
@@ -45,6 +57,7 @@ export default async function InsightsPage({
 }) {
   const { category = '', q = '', page: pageParam = '1' } = await searchParams
   const currentPage = Math.max(1, parseInt(pageParam, 10) || 1)
+  const safeQ = q.trim().slice(0, 200)
 
   const payload = await getPayload({ config: payloadConfig })
   const categories = await getCategories()
@@ -52,15 +65,10 @@ export default async function InsightsPage({
   const matchedCategory = category ? categories.find((c) => c.slug === category) : null
   const categoryId = matchedCategory?.id
 
-  const where = buildWhere(categoryId, q || undefined)
+  const where = buildWhere(categoryId, safeQ || undefined)
 
-  const [heroResult, gridResult] = await Promise.all([
-    payload.find({
-      collection: 'articles',
-      sort: '-publishedAt',
-      limit: 5,
-      depth: 1,
-    }),
+  const [heroDocs, gridResult] = await Promise.all([
+    getHeroArticles(),
     payload.find({
       collection: 'articles',
       sort: '-publishedAt',
@@ -71,7 +79,7 @@ export default async function InsightsPage({
     }),
   ])
 
-  const heroArticles = heroResult.docs.map(toArticle)
+  const heroArticles = heroDocs.map(toArticle)
   const gridArticles = gridResult.docs.map(toArticle)
   const totalPages = gridResult.totalPages
 
@@ -81,6 +89,7 @@ export default async function InsightsPage({
 
       <InsightsHero articles={heroArticles} />
 
+      {/* Suspense required: InsightsFilterBar uses useSearchParams() */}
       <Suspense fallback={<div className="h-16" />}>
         <InsightsFilterBar categories={categories} />
       </Suspense>
@@ -91,7 +100,7 @@ export default async function InsightsPage({
         currentPage={currentPage}
         totalPages={totalPages}
         category={category || undefined}
-        q={q || undefined}
+        q={safeQ || undefined}
       />
     </main>
   )

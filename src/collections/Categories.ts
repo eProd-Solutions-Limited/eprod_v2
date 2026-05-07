@@ -21,7 +21,7 @@ export const Categories: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'Used in URL filter params. Auto-fill from name, then adjust if needed.',
+        description: 'Used in URL filter params (e.g. company-news). Must be lowercase, hyphen-separated.',
       },
     },
   ],
