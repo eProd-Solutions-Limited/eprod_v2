@@ -6,6 +6,9 @@ export const Categories: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug'],
   },
+  access: {
+    read: () => true,
+  },
   fields: [
     {
       name: 'name',
