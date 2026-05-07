@@ -30,7 +30,7 @@ const getHeroArticles = cache(async () => {
 function buildWhere(categoryId?: number, q?: string): Where {
   const conditions: Where[] = []
   if (categoryId) conditions.push({ category: { equals: categoryId } })
-  if (q) conditions.push({ or: [{ title: { like: q } }, { excerpt: { like: q } }] })
+  if (q) conditions.push({ or: [{ title: { contains: q } }, { excerpt: { contains: q } }] })
   return conditions.length ? { and: conditions } : {}
 }
 
