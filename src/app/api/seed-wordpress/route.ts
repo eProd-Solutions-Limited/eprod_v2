@@ -89,7 +89,12 @@ export async function GET() {
   const payload = await getPayload({ config: payloadConfig })
 
   const xmlPath = path.join(process.cwd(), 'eprodsolutions.WordPress.2026-05-07 (1).xml')
-  const xml = fs.readFileSync(xmlPath, 'utf-8')
+  let xml: string
+  try {
+    xml = fs.readFileSync(xmlPath, 'utf-8')
+  } catch {
+    return NextResponse.json({ ok: false, error: 'WordPress XML file not found at project root' }, { status: 404 })
+  }
 
   // Extract all <item> blocks
   const items: string[] = []
@@ -152,15 +157,15 @@ export async function GET() {
     })
     if (existing.docs.length > 0) { skipped++; continue }
 
-    const title = extractCDATA(itemXml, 'title') || slug
-    const excerpt = extractCDATA(itemXml, 'excerpt:encoded')
-    const content = extractCDATA(itemXml, 'content:encoded')
-    const publishedAtRaw = extractCDATA(itemXml, 'wp:post_date_gmt')
-    const wpCategories = extractWpCategories(itemXml)
-    const categorySlug = mapCategorySlug(wpCategories)
-    const categoryId = await getCategoryId(categorySlug)
-
     try {
+      const title = extractCDATA(itemXml, 'title') || slug
+      const excerpt = extractCDATA(itemXml, 'excerpt:encoded')
+      const content = extractCDATA(itemXml, 'content:encoded')
+      const publishedAtRaw = extractCDATA(itemXml, 'wp:post_date_gmt')
+      const wpCategories = extractWpCategories(itemXml)
+      const categorySlug = mapCategorySlug(wpCategories)
+      const categoryId = await getCategoryId(categorySlug)
+
       await payload.create({
         collection: 'articles',
         data: {
@@ -180,6 +185,7 @@ export async function GET() {
       })
       imported++
     } catch (e: any) {
+      const title = extractCDATA(itemXml, 'title') || extractCDATA(itemXml, 'wp:post_name') || 'unknown'
       errors.push(`"${title}": ${e.message}`)
     }
   }
