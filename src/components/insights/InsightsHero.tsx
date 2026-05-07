@@ -23,18 +23,24 @@ export function InsightsHero({ articles }: InsightsHeroProps) {
   const [current, setCurrent] = useState(0)
   const [paused, setPaused] = useState(false)
 
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   useEffect(() => {
-    if (paused || articles.length <= 1) return
+    if (paused || articles.length <= 1 || prefersReducedMotion) return
     const id = setInterval(() => {
       setCurrent((prev) => (prev + 1) % articles.length)
     }, 5000)
     return () => clearInterval(id)
-  }, [paused, articles.length])
+  }, [paused, articles.length, prefersReducedMotion])
+
+  useEffect(() => {
+    if (current >= articles.length) setCurrent(0)
+  }, [articles.length, current])
 
   if (articles.length === 0) return null
 
   const article = articles[current]
-  const hasCover = !!article.coverImage?.url
+  const coverUrl = article.coverImage?.url ?? null
 
   function prev() {
     setCurrent((c) => (c - 1 + articles.length) % articles.length)
@@ -47,16 +53,20 @@ export function InsightsHero({ articles }: InsightsHeroProps) {
   return (
     <section
       className="relative w-full overflow-hidden rounded-2xl"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Featured insights"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      aria-label="Featured insights"
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
     >
       {/* Background */}
       <div
-        className="absolute inset-0 transition-all duration-700"
+        className="absolute inset-0"
         style={
-          hasCover
-            ? { backgroundImage: `url(${article.coverImage!.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+          coverUrl
+            ? { backgroundImage: `url("${coverUrl.replace(/"/g, '\\"')}")`, backgroundSize: 'cover', backgroundPosition: 'center' }
             : { background: 'linear-gradient(135deg, hsl(183 97% 14%), hsl(183 97% 25%))' }
         }
       />
@@ -85,7 +95,7 @@ export function InsightsHero({ articles }: InsightsHeroProps) {
             href={`/articles/${article.slug}`}
             className="rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground transition hover:brightness-110"
           >
-            Read More →
+            Read More <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>
@@ -112,9 +122,10 @@ export function InsightsHero({ articles }: InsightsHeroProps) {
           <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
             {articles.map((_, i) => (
               <button
-                key={i}
+                key={articles[i].id}
                 onClick={() => setCurrent(i)}
                 aria-label={`Go to slide ${i + 1}`}
+                aria-current={i === current ? true : undefined}
                 className={`h-2 rounded-full transition-all ${
                   i === current ? 'w-6 bg-secondary' : 'w-2 bg-white/40 hover:bg-white/70'
                 }`}
