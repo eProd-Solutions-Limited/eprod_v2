@@ -258,7 +258,7 @@ export interface Category {
   id: number;
   name: string;
   /**
-   * Used in URL filter params. Auto-fill from name, then adjust if needed.
+   * Used in URL filter params (e.g. company-news). Must be lowercase, hyphen-separated.
    */
   slug: string;
   updatedAt: string;
