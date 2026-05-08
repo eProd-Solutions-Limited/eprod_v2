@@ -2,6 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 export const Popups: CollectionConfig = {
   slug: 'popups',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'isActive', 'updatedAt'],
