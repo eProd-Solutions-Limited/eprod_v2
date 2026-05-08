@@ -14,7 +14,7 @@ const benefits = [
   {
     icon: TrendingUp,
     title: "Reduced Default Risk",
-    text: "Real-time supply chain visibility helps banks assess risk accurately, leading to better loan terms for agribusinesses.",
+    text: "Real-time supply chain visibility via API's helps banks assess risk accurately, leading to better loan terms for agribusinesses.",
   },
   {
     icon: Handshake,
@@ -27,7 +27,7 @@ const partners = [
   "KCB Bank",
   "Equity Bank",
   "Stanbic Bank",
-  "NCBA",
+  "RaboBank",
   "Cooperative Bank",
   "I&M Bank",
 ];
@@ -77,7 +77,7 @@ const BankPartnershipsSection = () => {
 
         <div className="mt-12 max-w-2xl mx-auto bg-card border border-secondary/30 rounded-xl p-8 text-center">
           <p className="text-lg font-bold text-foreground mb-2">
-            "eProd's data platform gave us the confidence to extend credit to 200+ agribusinesses we previously considered too risky."
+            "eProd's data platform gave us the confidence to extend credit to thousands of farmers we previously considered too risky."
           </p>
           <p className="text-sm text-muted-foreground">
             — Agricultural Lending Director, Leading East African Bank

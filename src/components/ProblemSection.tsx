@@ -26,7 +26,7 @@ const ProblemSection = () => {
           The Challenge: Managing Agricultural Supply Chains{" "}
           <span className="gradient-primary-text">at Scale</span>
         </h2>
-        <p className="text-center text-muted-foreground mb-14 max-w-2xl mx-auto">
+        <p className="text-center md:text-2xl text-muted-foreground mb-14 max-w-2xl mx-auto">
           Agribusinesses face growing complexity every day. Here are the three biggest pain points.
         </p>
 
