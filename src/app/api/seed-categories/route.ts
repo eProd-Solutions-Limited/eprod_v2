@@ -9,11 +9,10 @@ const DEFAULT_CATEGORIES = [
   { name: 'Culture', slug: 'culture' },
 ]
 
-if (process.env.NODE_ENV === 'production') {
-  throw new Error('Seed route must not be used in production')
-}
-
 export async function GET() {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not available in production' }, { status: 403 })
+  }
   const payload = await getPayload({ config: payloadConfig })
   const results: string[] = []
   const errors: string[] = []

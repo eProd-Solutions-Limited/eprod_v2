@@ -2,10 +2,6 @@ import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
 
-if (process.env.NODE_ENV === 'production') {
-  throw new Error('Seed route must not be used in production')
-}
-
 function richText(...nodes: object[]) {
   return {
     root: {
@@ -264,6 +260,9 @@ const CASE_STUDIES = [
 ]
 
 export async function GET() {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not available in production' }, { status: 403 })
+  }
   const payload = await getPayload({ config: payloadConfig })
   const results: string[] = []
 

@@ -11,10 +11,6 @@ const WP_CATEGORY_MAP: Record<string, string> = {
   'Recent Activities': 'events',
 }
 
-if (process.env.NODE_ENV === 'production') {
-  throw new Error('Seed route must not be used in production')
-}
-
 function extractCDATA(itemXml: string, tag: string): string {
   const regex = new RegExp(`<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tag}>`)
   const match = itemXml.match(regex)
@@ -276,6 +272,9 @@ function buildRichText(html: string) {
 // ── Route handler ──────────────────────────────────────────────────────────
 
 export async function GET(request: NextRequest) {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not available in production' }, { status: 403 })
+  }
   const payload = await getPayload({ config: payloadConfig })
 
   // ?reset=true deletes all existing articles before re-importing
