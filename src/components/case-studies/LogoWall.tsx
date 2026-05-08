@@ -1,11 +1,36 @@
+import Image from 'next/image'
+
+interface MediaImage {
+  url: string
+  alt?: string
+  width?: number
+  height?: number
+}
+
 interface LogoEntry {
   name: string
   id?: string | number
+  image?: MediaImage | null
 }
 
 interface LogoWallProps {
   agribusinessLogos: LogoEntry[]
   bankLogos: LogoEntry[]
+}
+
+function LogoCell({ logo, textClassName }: { logo: LogoEntry; textClassName: string }) {
+  if (logo.image?.url) {
+    return (
+      <Image
+        src={logo.image.url}
+        alt={logo.image.alt ?? logo.name}
+        width={logo.image.width ?? 120}
+        height={logo.image.height ?? 60}
+        className="max-h-10 w-auto object-contain"
+      />
+    )
+  }
+  return <span className={textClassName}>{logo.name}</span>
 }
 
 export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
@@ -38,7 +63,7 @@ export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
                   key={logo.id ?? logo.name}
                   className="h-20 rounded-lg bg-muted border border-border flex items-center justify-center px-3 text-center hover:border-primary/40 transition"
                 >
-                  <span className="text-xs font-bold text-muted-foreground">{logo.name}</span>
+                  <LogoCell logo={logo} textClassName="text-xs font-bold text-muted-foreground" />
                 </div>
               ))}
             </div>
@@ -58,7 +83,7 @@ export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
                   key={logo.id ?? logo.name}
                   className="h-20 rounded-lg gradient-primary flex items-center justify-center px-3 text-center"
                 >
-                  <span className="text-xs font-bold text-primary-foreground">{logo.name}</span>
+                  <LogoCell logo={logo} textClassName="text-xs font-bold text-primary-foreground" />
                 </div>
               ))}
             </div>

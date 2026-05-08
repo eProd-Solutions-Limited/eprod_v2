@@ -14,7 +14,7 @@ const getData = cache(async () => {
 
   const [storiesResult, logoWall, voiceOfCustomer] = await Promise.all([
     payload.find({ collection: 'case-studies', limit: 50, depth: 1 }),
-    payload.findGlobal({ slug: 'logo-wall' }),
+    payload.findGlobal({ slug: 'logo-wall', depth: 1 }),
     payload.findGlobal({ slug: 'voice-of-customer' }),
   ])
 

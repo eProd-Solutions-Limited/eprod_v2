@@ -14,6 +14,7 @@ export const LogoWall: GlobalConfig = {
       type: 'array',
       fields: [
         { name: 'name', type: 'text', required: true },
+        { name: 'image', type: 'upload', relationTo: 'media', required: true },
       ],
     },
     {
@@ -21,6 +22,7 @@ export const LogoWall: GlobalConfig = {
       type: 'array',
       fields: [
         { name: 'name', type: 'text', required: true },
+        { name: 'image', type: 'upload', relationTo: 'media', required: true },
       ],
     },
   ],
