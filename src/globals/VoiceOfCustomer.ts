@@ -2,6 +2,9 @@ import { GlobalConfig } from 'payload'
 
 export const VoiceOfCustomer: GlobalConfig = {
   slug: 'voice-of-customer',
+  access: {
+    read: () => true,
+  },
   admin: {
     group: 'Case Studies Page',
   },

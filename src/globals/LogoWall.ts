@@ -2,6 +2,9 @@ import { GlobalConfig } from 'payload'
 
 export const LogoWall: GlobalConfig = {
   slug: 'logo-wall',
+  access: {
+    read: () => true,
+  },
   admin: {
     group: 'Case Studies Page',
   },
