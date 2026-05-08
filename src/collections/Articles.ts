@@ -51,8 +51,8 @@ const videoBlock: Block = {
       name: 'url',
       type: 'text',
       required: true,
-      validate: (val) => {
-        if (!val.includes('youtube') && !val.includes('vimeo')) {
+      validate: (val: string | null | undefined) => {
+        if (!val || (!val.includes('youtube') && !val.includes('vimeo'))) {
           return 'Only YouTube or Vimeo URLs'
         }
         return true
