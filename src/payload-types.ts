@@ -996,12 +996,14 @@ export interface LogoWall {
   agribusinessLogos?:
     | {
         name: string;
+        image: number | Media;
         id?: string | null;
       }[]
     | null;
   bankLogos?:
     | {
         name: string;
+        image: number | Media;
         id?: string | null;
       }[]
     | null;
@@ -1038,12 +1040,14 @@ export interface LogoWallSelect<T extends boolean = true> {
     | T
     | {
         name?: T;
+        image?: T;
         id?: T;
       };
   bankLogos?:
     | T
     | {
         name?: T;
+        image?: T;
         id?: T;
       };
   updatedAt?: T;
