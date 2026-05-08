@@ -20,7 +20,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
       <div className="container mx-auto flex items-center justify-between py-3 px-4">
         <a href="/" className="flex items-center">
-          <img src="/e-prod_Logo.png" alt="eProd" className="h-10 w-auto" />
+          <img src="/e-prod_Logo.png" alt="eProd" className="h-14 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">

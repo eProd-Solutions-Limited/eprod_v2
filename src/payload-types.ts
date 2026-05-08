@@ -996,14 +996,14 @@ export interface LogoWall {
   agribusinessLogos?:
     | {
         name: string;
-        image: number | Media;
+        image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
   bankLogos?:
     | {
         name: string;
-        image: number | Media;
+        image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;

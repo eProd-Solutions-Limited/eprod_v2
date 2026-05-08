@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { cache } from 'react'
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
