@@ -61,7 +61,7 @@ export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
               {agribusinessLogos.map((logo) => (
                 <div
                   key={logo.id ?? logo.name}
-                  className="h-20 rounded-lg bg-muted border border-border flex items-center justify-center px-3 text-center hover:border-primary/40 transition"
+                  className="h-20 flex items-center justify-center px-3 text-center"
                 >
                   <LogoCell logo={logo} textClassName="text-xs font-bold text-muted-foreground" />
                 </div>
@@ -81,9 +81,9 @@ export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
               {bankLogos.map((logo) => (
                 <div
                   key={logo.id ?? logo.name}
-                  className="h-20 rounded-lg gradient-primary flex items-center justify-center px-3 text-center"
+                  className="h-20 flex items-center justify-center px-3 text-center"
                 >
-                  <LogoCell logo={logo} textClassName="text-xs font-bold text-primary-foreground" />
+                  <LogoCell logo={logo} textClassName="text-xs font-bold text-muted-foreground" />
                 </div>
               ))}
             </div>
