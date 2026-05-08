@@ -19,7 +19,7 @@
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/case-studies.ts"
   },
   "dependencies": {
-    "@payloadcms/db-sqlite": "3.81.0",
+    "@payloadcms/db-postgres": "3.81.0",
     "@payloadcms/email-nodemailer": "3.81.0",
     "@payloadcms/next": "3.81.0",
     "@payloadcms/plugin-seo": "3.81.0",
