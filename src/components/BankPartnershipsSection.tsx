@@ -1,4 +1,6 @@
 import { ShieldCheck, Landmark, TrendingUp, Handshake } from "lucide-react";
+import { LogoCell } from '@/components/LogoCell'
+import type { LogoEntry } from '@/components/LogoCell'
 
 const benefits = [
   {
@@ -23,16 +25,7 @@ const benefits = [
   },
 ];
 
-const partners = [
-  "KCB Bank",
-  "Equity Bank",
-  "Stanbic Bank",
-  "RaboBank",
-  "Cooperative Bank",
-  "I&M Bank",
-];
-
-const BankPartnershipsSection = () => {
+const BankPartnershipsSection = ({ bankLogos = [] }: { bankLogos?: LogoEntry[] }) => {
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">
@@ -64,12 +57,12 @@ const BankPartnershipsSection = () => {
             Trusted by Leading Financial Institutions
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6">
-            {partners.map((name) => (
+            {bankLogos.map((logo) => (
               <div
-                key={name}
-                className="px-6 py-3 rounded-lg bg-card border border-border text-sm font-semibold text-muted-foreground opacity-60 hover:opacity-100 transition"
+                key={logo.id ?? logo.name}
+                className="px-6 py-3 rounded-lg bg-card border border-border flex items-center justify-center opacity-60 hover:opacity-100 transition"
               >
-                {name}
+                <LogoCell logo={logo} textClassName="text-sm font-semibold text-muted-foreground" />
               </div>
             ))}
           </div>

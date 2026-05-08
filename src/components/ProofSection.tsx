@@ -1,33 +1,15 @@
+import { LogoCell } from '@/components/LogoCell'
+import type { LogoEntry } from '@/components/LogoCell'
+
 const metricsRows = [
   [
     { value: "500+", label: "Companies" },
     { value: "50,000+", label: "Farmers" },
     { value: "20", label: "Countries" },
-  ],
-  [
-    { value: "30%", label: "Waste Reduction" },
-    { value: "85%", label: "Efficiency Improvement" },
-    { value: "$50K+", label: "Annual Savings" },
-  ],
-  [
-    { value: "4.8/5", label: "Customer Rating" },
-    { value: "95%", label: "Retention Rate" },
-    { value: "20+", label: "Years in Business" },
-  ],
+  ]
 ];
 
-const logos = [
-  "Miyonga Fresh Greens",
-  "Swahili Honey",
-  "KenTrade",
-  "AgriFlora",
-  "EastAfrica Grains",
-  "FreshPick Ltd",
-  "SunCrop",
-  "AfriFarm Co",
-];
-
-const ProofSection = () => {
+const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntry[] }) => {
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">
@@ -52,12 +34,12 @@ const ProofSection = () => {
           Trusted by leading agribusinesses in East Africa, West Africa, and beyond.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-8">
-          {logos.map((name) => (
+          {agribusinessLogos.map((logo) => (
             <div
-              key={name}
-              className="px-6 py-3 rounded-lg bg-card border border-border text-sm font-semibold text-muted-foreground opacity-60 hover:opacity-100 transition"
+              key={logo.id ?? logo.name}
+              className="px-6 py-3 rounded-lg bg-card border border-border flex items-center justify-center opacity-60 hover:opacity-100 transition"
             >
-              {name}
+              <LogoCell logo={logo} textClassName="text-sm font-semibold text-muted-foreground" />
             </div>
           ))}
         </div>
