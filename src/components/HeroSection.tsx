@@ -23,14 +23,6 @@ const HeroSection = () => {
                 Request a Demo
                 <ArrowRight size={18} />
               </a>
-              <a
-                href="/eprod-supply-chain-guide.pdf"
-                download
-                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-secondary bg-transparent px-8 py-3.5 text-base font-semibold text-primary hover:bg-secondary/10 transition"
-              >
-                <Download size={18} className="text-secondary" />
-                Download Free Guide
-              </a>
             </div>
           </div>
 
