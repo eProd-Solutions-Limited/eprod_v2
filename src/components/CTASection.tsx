@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react";
+import { gaEvents } from "@/lib/ga-events";
 
 const CTASection = () => {
   const [form, setForm] = useState({ company: "", email: "", challenge: "" });
@@ -15,10 +16,11 @@ const CTASection = () => {
       const res = await fetch("/api/send-cta-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, sourceSection: "home_cta" }),
       });
 
       if (res.ok) {
+        gaEvents.formSubmitted("cta_form", form.company);
         setMessage("Thank you! We'll be in touch soon.");
         setForm({ company: "", email: "", challenge: "" });
       } else {

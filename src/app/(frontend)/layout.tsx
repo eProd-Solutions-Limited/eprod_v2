@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { getPayload } from "payload";
 import payloadConfig from "@/payload.config";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -56,6 +57,7 @@ export default async function RootLayout({
         {children}
         <Footer />
         <PopupClient popups={popups} />
+        <GoogleAnalytics gaId="G-PLACEHOLDER" />
       </body>
     </html>
   );
