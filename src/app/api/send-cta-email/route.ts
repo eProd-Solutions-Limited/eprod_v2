@@ -19,17 +19,27 @@ export async function POST(req: NextRequest) {
     const config = docs[0]
     const { to, subject, body: emailBody } = config.email
 
-    // Replace mail-tags
     let content = JSON.stringify(emailBody)
     content = content.replace(/{company}/g, body.company)
     content = content.replace(/{email}/g, body.email)
     content = content.replace(/{challenge}/g, body.challenge)
 
-    await payload.sendEmail({
-      to,
-      subject,
-      html: content,
-    })
+    await payload.sendEmail({ to, subject, html: content })
+
+    try {
+      await payload.create({
+        collection: 'enquiries',
+        data: {
+          company: body.company,
+          email: body.email,
+          challenge: body.challenge,
+          sourceSection: body.sourceSection ?? 'unknown',
+          status: 'new',
+        },
+      })
+    } catch (saveError) {
+      console.error('Failed to save enquiry to Payload:', saveError)
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
