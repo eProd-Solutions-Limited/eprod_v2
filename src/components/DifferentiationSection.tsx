@@ -1,4 +1,8 @@
+'use client'
+
+import { useEffect } from 'react'
 import { Globe, Smartphone, Tag, Trophy, Check, X } from "lucide-react";
+import { gaEvents } from '@/lib/ga-events'
 
 const differentiators = [
   {
@@ -32,6 +36,10 @@ const comparisonRows = [
 ];
 
 const DifferentiationSection = () => {
+  useEffect(() => {
+    gaEvents.viewPage('home_differentiation', 'differentiation')
+  }, [])
+
   return (
     <section className="bg-background py-20">
       <div className="container mx-auto px-4">

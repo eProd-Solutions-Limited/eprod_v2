@@ -1,6 +1,14 @@
+'use client'
+
+import { useEffect } from 'react'
 import { ArrowRight } from "lucide-react";
+import { gaEvents } from '@/lib/ga-events'
 
 const AboutCTA = () => {
+  useEffect(() => {
+    gaEvents.viewPage('about_cta', 'call_to_action')
+  }, [])
+
   return (
     <section className="gradient-primary py-20">
       <div className="container mx-auto px-4 text-center">

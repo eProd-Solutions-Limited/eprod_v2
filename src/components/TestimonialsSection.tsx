@@ -1,3 +1,8 @@
+'use client'
+
+import { useEffect } from 'react'
+import { gaEvents } from '@/lib/ga-events'
+
 const testimonials = [
   {
     quote: "eProd gave us complete traceability. Every farmer, every transaction, tracked and documented.",
@@ -23,6 +28,10 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
+  useEffect(() => {
+    gaEvents.viewPage('home_testimonials', 'testimonials')
+  }, [])
+
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">

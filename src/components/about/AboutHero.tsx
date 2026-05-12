@@ -1,4 +1,13 @@
+'use client'
+
+import { useEffect } from 'react'
+import { gaEvents } from '@/lib/ga-events'
+
 const AboutHero = () => {
+  useEffect(() => {
+    gaEvents.viewPage('about_hero', 'hero')
+  }, [])
+
   return (
     <section className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">

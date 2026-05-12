@@ -1,6 +1,10 @@
+'use client'
+
+import { useEffect } from 'react'
 import { ShieldCheck, Landmark, TrendingUp, Handshake } from "lucide-react";
 import { LogoCell } from '@/components/LogoCell'
 import type { LogoEntry } from '@/components/LogoCell'
+import { gaEvents } from '@/lib/ga-events'
 
 const benefits = [
   {
@@ -26,6 +30,10 @@ const benefits = [
 ];
 
 const BankPartnershipsSection = ({ bankLogos = [] }: { bankLogos?: LogoEntry[] }) => {
+  useEffect(() => {
+    gaEvents.viewPage('home_bank_partnerships', 'bank_partnerships')
+  }, [])
+
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">

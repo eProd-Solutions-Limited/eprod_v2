@@ -1,5 +1,9 @@
+'use client'
+
+import { useEffect } from 'react'
 import { LogoCell } from '@/components/LogoCell'
 import type { LogoEntry } from '@/components/LogoCell'
+import { gaEvents } from '@/lib/ga-events'
 
 const metricsRows = [
   [
@@ -10,6 +14,10 @@ const metricsRows = [
 ];
 
 const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntry[] }) => {
+  useEffect(() => {
+    gaEvents.viewPage('home_proof', 'proof')
+  }, [])
+
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">

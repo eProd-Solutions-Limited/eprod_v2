@@ -1,4 +1,8 @@
+'use client'
+
+import { useEffect } from 'react'
 import { Layers, ShieldAlert, TrendingDown } from "lucide-react";
+import { gaEvents } from '@/lib/ga-events'
 
 const problems = [
   {
@@ -19,6 +23,10 @@ const problems = [
 ];
 
 const ProblemSection = () => {
+  useEffect(() => {
+    gaEvents.viewPage('home_problem', 'problem')
+  }, [])
+
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">

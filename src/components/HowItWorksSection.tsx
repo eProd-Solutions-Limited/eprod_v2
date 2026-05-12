@@ -1,4 +1,8 @@
+'use client'
+
+import { useEffect } from 'react'
 import { Settings, Users, Link, TrendingUp } from "lucide-react";
+import { gaEvents } from '@/lib/ga-events'
 
 const steps = [
   {
@@ -28,6 +32,10 @@ const steps = [
 ];
 
 const HowItWorksSection = () => {
+  useEffect(() => {
+    gaEvents.viewPage('home_how_it_works', 'how_it_works')
+  }, [])
+
   return (
     <section className="bg-background py-20">
       <div className="container mx-auto px-4">

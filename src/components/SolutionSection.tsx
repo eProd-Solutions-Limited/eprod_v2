@@ -1,4 +1,8 @@
+'use client'
+
+import { useEffect } from 'react'
 import { Database, ClipboardCheck, BarChart3 } from "lucide-react";
+import { gaEvents } from '@/lib/ga-events'
 
 const solutions = [
   {
@@ -22,6 +26,10 @@ const solutions = [
 ];
 
 const SolutionSection = () => {
+  useEffect(() => {
+    gaEvents.viewPage('home_solution', 'solution')
+  }, [])
+
   return (
     <section className="bg-background py-20">
       <div className="container mx-auto px-4">

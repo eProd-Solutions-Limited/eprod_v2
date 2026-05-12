@@ -1,9 +1,13 @@
+'use client'
+
+import { useEffect } from 'react'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { gaEvents } from '@/lib/ga-events'
 
 const faqs = [
   {
@@ -49,6 +53,10 @@ const faqs = [
 ];
 
 const FAQSection = () => {
+  useEffect(() => {
+    gaEvents.viewPage('home_faq', 'faq')
+  }, [])
+
   // Generate JSON-LD FAQ Schema
   const faqSchema = {
     "@context": "https://schema.org",

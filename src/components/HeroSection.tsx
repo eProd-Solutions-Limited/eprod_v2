@@ -1,8 +1,16 @@
+'use client'
+
+import { useEffect } from 'react'
 import { ArrowRight, Download } from "lucide-react";
 import heroImage from "@/assets/hero_image.png";
 import Image from "next/image";
+import { gaEvents } from '@/lib/ga-events'
 
 const HeroSection = () => {
+  useEffect(() => {
+    gaEvents.viewPage('home_hero', 'hero')
+  }, [])
+
   return (
     <section id="home" className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
