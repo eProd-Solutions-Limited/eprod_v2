@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
+import { headers as nextHeaders } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function PATCH(
@@ -7,13 +8,23 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const payload = await getPayload({ config: payloadConfig })
+
+    const headersList = await nextHeaders()
+    const { user } = await payload.auth({ headers: headersList })
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const { id } = await params
     const body = await req.json()
-    const payload = await getPayload({ config: payloadConfig })
     const updated = await payload.update({
       collection: 'enquiries',
       id,
-      data: body,
+      data: {
+        ...(body.status !== undefined && { status: body.status }),
+        ...(body.notes !== undefined && { notes: body.notes }),
+      },
       overrideAccess: true,
     })
     return NextResponse.json(updated)
