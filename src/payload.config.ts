@@ -16,6 +16,7 @@ import { Team } from './collections/Team'
 import { CTAConfig } from './collections/CTAConfig'
 import { Popups } from './collections/Popups'
 import { Categories } from './collections/Categories'
+import { Enquiries } from './collections/Enquiries'
 import { LogoWall } from './globals/LogoWall'
 import { VoiceOfCustomer } from './globals/VoiceOfCustomer'
 
@@ -29,7 +30,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Articles, CaseStudies, TeamPages, Team, CTAConfig, Popups, Categories],
+  collections: [Users, Media, Articles, CaseStudies, TeamPages, Team, CTAConfig, Popups, Categories, Enquiries],
   globals: [LogoWall, VoiceOfCustomer],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
