@@ -19,6 +19,7 @@ describe('Enquiries collection', () => {
         challenge: 'efficiency',
         sourceSection: 'home_cta',
       },
+      overrideAccess: true,
     })
     expect(enquiry.company).toBe('Test Agri Corp')
     expect(enquiry.email).toBe('test@example.com')

@@ -9,6 +9,6 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     include: ['tests/int/**/*.int.spec.ts'],
     hookTimeout: 60000,
-    singleThread: true,
+    singleFork: true,
   },
 })
