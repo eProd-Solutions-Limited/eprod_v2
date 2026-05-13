@@ -8,6 +8,7 @@
 @theme {
   --color-primary: hsl(183 97% 18%);
   --color-primary-foreground: hsl(0 0% 100%);
+  --color-primary-lighter: hsl(183 38% 92%);
   --color-secondary: hsl(72 51% 53%);
   --color-secondary-foreground: hsl(0 0% 10%);
   --color-background: hsl(0 0% 100%);
@@ -211,5 +212,9 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .section-gray {
+    background-color: hsl(var(--section-gray));
   }
 }

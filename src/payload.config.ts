@@ -42,23 +42,30 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
   }),
-  email: nodemailerAdapter({
-    transportOptions: {
-      host: process.env.SMTP_HOST || 'localhost',
-      port: parseInt(process.env.SMTP_PORT || '1025'),
-      secure: false,
-      auth: process.env.SMTP_USER
-        ? {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-          }
-        : undefined,
-    },
-    defaultFromName: 'eProd Solutions',
-    defaultFromAddress: process.env.SMTP_FROM || 'noreply@eprod.local',
-  }),
+  ...(process.env.SMTP_HOST
+    ? {
+        email: nodemailerAdapter({
+          transportOptions: {
+            host: process.env.SMTP_HOST,
+            port: parseInt(process.env.SMTP_PORT || '587'),
+            secure: false,
+            auth: process.env.SMTP_USER
+              ? {
+                  user: process.env.SMTP_USER,
+                  pass: process.env.SMTP_PASS,
+                }
+              : undefined,
+          },
+          defaultFromName: 'eProd Solutions',
+          defaultFromAddress: process.env.SMTP_FROM || 'noreply@eprod.local',
+        }),
+      }
+    : {}),
   sharp,
   plugins: [
     vercelBlobStorage({
