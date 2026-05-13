@@ -26,7 +26,7 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground">
           <MapPin size={14} className="text-secondary" />
-          <span>Rosslyn, Nairobi</span>
+          <span>Nairobi, Kenya</span>
           <Phone size={14} className="ml-3 text-secondary" />
           <span>+254 0112203982</span>
           <Mail size={14} className="ml-3 text-secondary" />
