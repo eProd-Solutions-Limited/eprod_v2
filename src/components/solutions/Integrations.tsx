@@ -95,7 +95,8 @@ const Integrations = () => {
                       alt={partner.name}
                       width={96}
                       height={32}
-                      className="object-contain max-h-8 w-auto"
+                      style={{ width: 'auto', height: '32px' }}
+                      className="object-contain"
                     />
                   </div>
                 ))}
