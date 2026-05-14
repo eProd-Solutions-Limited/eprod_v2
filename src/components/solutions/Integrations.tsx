@@ -1,29 +1,53 @@
 import { Banknote, Calculator, Truck, BarChart3 } from "lucide-react";
+import Image from "next/image";
 
-const categories = [
+type Partner = { name: string; logo: string }
+
+const categories: { icon: React.ElementType; title: string; text: string; partners: Partner[] }[] = [
   {
     icon: Banknote,
     title: "Financial Services",
     text: "Connect to leading banks, mobile money providers, and insurance companies to unlock financial services for your farmers and your business.",
-    examples: ["I&M Bank", "NCBA", "Equity Bank", "M-Pesa", "Airtel Money"],
+    partners: [
+      { name: "I&M Bank",      logo: "/logos/integrations/im-bank.png" },
+      { name: "KCB",          logo: "/logos/integrations/kcb.png" },
+      { name: "V bank",          logo: "/logos/integrations/V-Bank.jpg" },
+      { name: "Equity Bank",   logo: "/logos/integrations/equity-bank.png" },
+      { name: "M-Pesa",        logo: "/logos/integrations/m-pesa.png" },
+      { name: "Airtel Money",  logo: "/logos/integrations/airtel-money.png" },
+    ],
   },
   {
     icon: Calculator,
     title: "ERP & Accounting",
     text: "Integrate with your existing ERP and accounting systems for seamless financial management.",
-    examples: ["SAP", "Oracle", "QuickBooks", "Xero", "Sage"],
+    partners: [
+      { name: "SAP",        logo: "/logos/integrations/sap.png" },
+      { name: "Oracle",     logo: "/logos/integrations/oracle.png" },
+      { name: "QuickBooks", logo: "/logos/integrations/quickbooks.svg" },
+      { name: "Xero",       logo: "/logos/integrations/xero.svg" },
+      { name: "Sage",       logo: "/logos/integrations/sage.svg" },
+      { name: "Tally",      logo: "/logos/integrations/tally.png" },
+    ],
   },
   {
     icon: Truck,
-    title: "Logistics & Warehousing",
-    text: "Connect to logistics platforms and warehouse management systems to optimize your supply chain.",
-    examples: ["Lori Systems", "Sendy", "Twiga", "WMS Providers"],
+    title: "Logistics and Supply Chain",
+    text: "Connect to logistics platforms and comply with international standards to optimize your supply chain.",
+    partners: [
+      { name: "DFTG",          logo: "/logos/integrations/itc.svg" },
+      { name: "WHISP",         logo: "/logos/integrations/whisp.png" },
+      { name: "Cargo Ledger",  logo: "/logos/integrations/cargo-ledger.png" }
+    ],
   },
   {
     icon: BarChart3,
     title: "Business Intelligence & Analytics",
     text: "Export your data to leading BI and analytics tools for advanced reporting and visualization.",
-    examples: ["Power BI", "Tableau", "Looker", "Google Data Studio"],
+    partners: [
+      { name: "Power BI",  logo: "/logos/integrations/power-bi.png" },
+      { name: "Metabase",  logo: "/logos/integrations/metabase.png" },
+    ],
   },
 ];
 
@@ -58,14 +82,22 @@ const Integrations = () => {
                   <p className="text-muted-foreground leading-relaxed text-sm">{cat.text}</p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2 pt-4 border-t border-border mt-4">
-                {cat.examples.map((ex) => (
-                  <span
-                    key={ex}
-                    className="px-3 py-1 rounded-full bg-primary-lighter text-primary text-xs font-semibold"
+
+              <div className="flex flex-wrap gap-3 pt-4 border-t border-border mt-4">
+                {cat.partners.map((partner) => (
+                  <div
+                    key={partner.name}
+                    className="flex items-center justify-center bg-white rounded-xl border border-border px-3 py-2 h-12 w-28"
+                    title={partner.name}
                   >
-                    {ex}
-                  </span>
+                    <Image
+                      src={partner.logo}
+                      alt={partner.name}
+                      width={96}
+                      height={32}
+                      className="object-contain max-h-8 w-auto"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
