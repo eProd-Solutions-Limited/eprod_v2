@@ -4,9 +4,10 @@ export interface LogoEntry {
   name: string
   id?: string | number
   image?: { url: string; alt?: string; width?: number; height?: number } | null
+  link?: string | null
 }
 
-export function LogoCell({ logo, textClassName }: { logo: LogoEntry; textClassName: string }) {
+function LogoContent({ logo, textClassName }: { logo: LogoEntry; textClassName: string }) {
   if (logo.image?.url) {
     return (
       <Image
@@ -19,4 +20,15 @@ export function LogoCell({ logo, textClassName }: { logo: LogoEntry; textClassNa
     )
   }
   return <span className={textClassName}>{logo.name}</span>
+}
+
+export function LogoCell({ logo, textClassName }: { logo: LogoEntry; textClassName: string }) {
+  if (logo.link) {
+    return (
+      <a href={logo.link} target="_blank" rel="noopener noreferrer" aria-label={logo.name}>
+        <LogoContent logo={logo} textClassName={textClassName} />
+      </a>
+    )
+  }
+  return <LogoContent logo={logo} textClassName={textClassName} />
 }

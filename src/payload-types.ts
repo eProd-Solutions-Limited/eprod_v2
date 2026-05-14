@@ -1032,6 +1032,10 @@ export interface LogoWall {
     | {
         name: string;
         image?: (number | null) | Media;
+        /**
+         * Optional URL — clicking the logo will open this link in a new tab.
+         */
+        link?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1039,6 +1043,10 @@ export interface LogoWall {
     | {
         name: string;
         image?: (number | null) | Media;
+        /**
+         * Optional URL — clicking the logo will open this link in a new tab.
+         */
+        link?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1076,6 +1084,7 @@ export interface LogoWallSelect<T extends boolean = true> {
     | {
         name?: T;
         image?: T;
+        link?: T;
         id?: T;
       };
   bankLogos?:
@@ -1083,6 +1092,7 @@ export interface LogoWallSelect<T extends boolean = true> {
     | {
         name?: T;
         image?: T;
+        link?: T;
         id?: T;
       };
   updatedAt?: T;

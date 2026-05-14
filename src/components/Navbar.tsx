@@ -28,7 +28,7 @@ const Navbar = () => {
           <MapPin size={14} className="text-secondary" />
           <span>Nairobi, Kenya</span>
           <Phone size={14} className="ml-3 text-secondary" />
-          <span>+254 0112203982</span>
+          <span>+254112203982</span>
           <Mail size={14} className="ml-3 text-secondary" />
           <span>info@eprod-solutions.com</span>
         </div>
