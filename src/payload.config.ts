@@ -72,6 +72,7 @@ export default buildConfig({
       enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
       collections: {
         media: true,
+        'case-studies-hero': true,
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
