@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Lock, Shield, FileSearch, BadgeCheck } from "lucide-react";
 import eudrLogo from "@/assets/EUDR.png";
 import gdprLogo from "@/assets/gdpr-compliant.webp";
+import csdddLogo from "@/assets/CSDDD.png";
 
 const items = [
   {
@@ -64,6 +65,7 @@ const SecurityCompliance = () => {
           <div className="flex items-center gap-10 flex-wrap justify-center">
             <Image src={eudrLogo} alt="EUDR Compliant" height={72} className="object-contain opacity-90 hover:opacity-100 transition" />
             <Image src={gdprLogo} alt="GDPR Compliant" height={72} className="object-contain opacity-90 hover:opacity-100 transition" />
+            <Image src={csdddLogo} alt="CSDDD Compliant" height={72} className="object-contain opacity-90 hover:opacity-100 transition" />
           </div>
         </div>
       </div>
