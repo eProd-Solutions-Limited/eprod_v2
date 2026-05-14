@@ -14,22 +14,24 @@ import type { CaseStudyCard } from '@/components/case-studies/ImpactGrid'
 const getData = cache(async () => {
   const payload = await getPayload({ config: payloadConfig })
 
-  const [storiesResult, logoWall, voiceOfCustomer] = await Promise.all([
+  const [storiesResult, logoWall, voiceOfCustomer, caseStudiesCta] = await Promise.all([
     payload.find({ collection: 'case-studies', limit: 50, depth: 1 }),
     payload.findGlobal({ slug: 'logo-wall', depth: 1 }),
     payload.findGlobal({ slug: 'voice-of-customer' }),
+    payload.findGlobal({ slug: 'case-studies-cta' }),
   ])
 
-  return { storiesResult, logoWall, voiceOfCustomer }
+  return { storiesResult, logoWall, voiceOfCustomer, caseStudiesCta }
 })
 
 export default async function CaseStudiesPage() {
-  const { storiesResult, logoWall, voiceOfCustomer } = await getData()
+  const { storiesResult, logoWall, voiceOfCustomer, caseStudiesCta } = await getData()
 
   const stories = storiesResult.docs as unknown as CaseStudyCard[]
   const agribusinessLogos = (logoWall as any).agribusinessLogos ?? []
   const bankLogos = (logoWall as any).bankLogos ?? []
   const quotes = (voiceOfCustomer as any).quotes ?? []
+  const cta = caseStudiesCta as any
 
   return (
     <main className="min-h-screen">
@@ -38,7 +40,14 @@ export default async function CaseStudiesPage() {
       <ImpactGrid stories={stories} />
       <DifferentiatorBanner />
       <VoiceOfCustomer quotes={quotes} />
-      <CaseStudiesCTA />
+      <CaseStudiesCTA
+        heading={cta.heading}
+        description={cta.description}
+        primaryButtonLabel={cta.primaryButtonLabel}
+        primaryButtonLink={cta.primaryButtonLink}
+        secondaryButtonLabel={cta.secondaryButtonLabel}
+        secondaryButtonLink={cta.secondaryButtonLink}
+      />
     </main>
   )
 }

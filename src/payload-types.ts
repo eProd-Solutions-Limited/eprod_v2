@@ -106,10 +106,12 @@ export interface Config {
   globals: {
     'logo-wall': LogoWall;
     'voice-of-customer': VoiceOfCustomer;
+    'case-studies-cta': CaseStudiesCta;
   };
   globalsSelect: {
     'logo-wall': LogoWallSelect<false> | LogoWallSelect<true>;
     'voice-of-customer': VoiceOfCustomerSelect<false> | VoiceOfCustomerSelect<true>;
+    'case-studies-cta': CaseStudiesCtaSelect<false> | CaseStudiesCtaSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1052,6 +1054,36 @@ export interface LogoWall {
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies-cta".
+ */
+export interface CaseStudiesCta {
+  id: number;
+  heading?: string | null;
+  description?: string | null;
+  primaryButtonLabel?: string | null;
+  primaryButtonLink?: string | null;
+  secondaryButtonLabel?: string | null;
+  secondaryButtonLink?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies-cta_select".
+ */
+export interface CaseStudiesCtaSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  primaryButtonLabel?: T;
+  primaryButtonLink?: T;
+  secondaryButtonLabel?: T;
+  secondaryButtonLink?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

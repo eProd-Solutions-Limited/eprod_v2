@@ -1,6 +1,22 @@
 import { ArrowRight, Layers } from 'lucide-react'
 
-export function CaseStudiesCTA() {
+interface CaseStudiesCTAProps {
+  heading?: string | null
+  description?: string | null
+  primaryButtonLabel?: string | null
+  primaryButtonLink?: string | null
+  secondaryButtonLabel?: string | null
+  secondaryButtonLink?: string | null
+}
+
+export function CaseStudiesCTA({
+  heading = "Ready to Write Your Own Success Story?",
+  description = "Stop managing your supply chain in spreadsheets. Start de-risking your operations and unlocking your capital today.",
+  primaryButtonLabel = "Request a Custom ROI Assessment",
+  primaryButtonLink = "/#contact",
+  secondaryButtonLabel = "Explore the Platform",
+  secondaryButtonLink = "/solutions",
+}: CaseStudiesCTAProps) {
   return (
     <section id="cta" className="relative overflow-hidden bg-background py-20">
       <div className="container mx-auto px-4">
@@ -11,29 +27,31 @@ export function CaseStudiesCTA() {
 
           <div className="relative max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-black text-primary-foreground leading-tight mb-5">
-              Ready to Write Your{' '}
-              <span className="text-secondary">Own Success Story?</span>
+              {heading}
             </h2>
             <p className="text-lg text-primary-foreground/90 leading-relaxed mb-10">
-              Stop managing your supply chain in spreadsheets. Start de-risking your operations and
-              unlocking your capital today.
+              {description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-7 py-3.5 text-base font-semibold text-secondary-foreground hover:brightness-110 transition shadow-lg"
-              >
-                Request a Custom ROI Assessment
-                <ArrowRight size={18} />
-              </a>
-              <a
-                href="/solutions"
-                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary-foreground/30 bg-primary-foreground/5 backdrop-blur px-7 py-3.5 text-base font-semibold text-primary-foreground hover:bg-primary-foreground/10 transition"
-              >
-                <Layers size={18} />
-                Explore the Platform
-              </a>
+              {primaryButtonLink && (
+                <a
+                  href={primaryButtonLink}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-7 py-3.5 text-base font-semibold text-secondary-foreground hover:brightness-110 transition shadow-lg"
+                >
+                  {primaryButtonLabel}
+                  <ArrowRight size={18} />
+                </a>
+              )}
+              {secondaryButtonLink && (
+                <a
+                  href={secondaryButtonLink}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary-foreground/30 bg-primary-foreground/5 backdrop-blur px-7 py-3.5 text-base font-semibold text-primary-foreground hover:bg-primary-foreground/10 transition"
+                >
+                  <Layers size={18} />
+                  {secondaryButtonLabel}
+                </a>
+              )}
             </div>
           </div>
         </div>

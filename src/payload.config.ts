@@ -19,6 +19,7 @@ import { Categories } from './collections/Categories'
 import { Enquiries } from './collections/Enquiries'
 import { LogoWall } from './globals/LogoWall'
 import { VoiceOfCustomer } from './globals/VoiceOfCustomer'
+import { CaseStudiesCta } from './globals/CaseStudiesCta'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,7 +32,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Articles, CaseStudies, TeamPages, Team, CTAConfig, Popups, Categories, Enquiries],
-  globals: [LogoWall, VoiceOfCustomer],
+  globals: [LogoWall, VoiceOfCustomer, CaseStudiesCta],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
   }),
