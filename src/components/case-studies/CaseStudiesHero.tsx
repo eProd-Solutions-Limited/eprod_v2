@@ -1,17 +1,29 @@
 import { ArrowRight, Users, Globe2, Building2 } from 'lucide-react'
-import Image from 'next/image'
+import { getPayload } from 'payload'
+import payloadConfig from '@/payload.config'
+import type { CaseStudiesHero as CaseStudiesHeroType } from '@/payload-types'
+import { CaseStudiesHeroCarousel } from './CaseStudiesHeroCarousel'
 
-export function CaseStudiesHero() {
+async function getHeroImages() {
+  const payload = await getPayload({ config: payloadConfig })
+  const result = await payload.find({
+    collection: 'case-studies-hero',
+    limit: 10,
+    depth: 0,
+  })
+  return (result.docs as CaseStudiesHeroType[]).map((doc) => ({
+    url: doc.url ?? '',
+    alt: doc.alt,
+  }))
+}
+
+export async function CaseStudiesHero() {
+  const images = await getHeroImages()
+
   return (
     <section className="relative overflow-hidden py-24 md:py-32">
       <div className="absolute inset-0">
-        <Image
-          src="/seed-images/case-hero.jpg"
-          alt="African agricultural landscape showing thriving farms and processing facilities"
-          fill
-          className="object-cover"
-          priority
-        />
+        <CaseStudiesHeroCarousel images={images} />
         <div className="absolute inset-0 gradient-primary opacity-90" />
       </div>
 
