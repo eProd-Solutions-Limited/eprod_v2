@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       { pathname: '/api/case-studies-hero/file/**' },
       { pathname: '/api/case-studies-hero/**' },
       { pathname: '/seed-images/**' },
+      { pathname: '/logos/**' },
     ],
     remotePatterns: [
       {
