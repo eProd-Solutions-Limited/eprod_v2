@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { Suspense, cache } from 'react'
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
@@ -84,24 +86,40 @@ export default async function InsightsPage({
   const totalPages = gridResult.totalPages
 
   return (
-    <main className="container mx-auto max-w-6xl px-4 py-12">
-      <h1 className="mb-8 text-4xl font-black text-foreground">Insights</h1>
+    <main className="min-h-screen">
+      <section className="bg-background py-20">
+        <div className="container mx-auto max-w-7xl px-4">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
+              Knowledge Hub
+            </p>
+            <h1 className="text-3xl md:text-5xl font-bold text-foreground leading-tight mb-5">
+              Insights &{' '}
+              <span className="gradient-primary-text">Expert Analysis</span>
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Trends, deep-dives, and practical guides from the intersection of agriculture,
+              finance, and technology.
+            </p>
+          </div>
+          <InsightsHero articles={heroArticles} />
+        </div>
+      </section>
 
-      <InsightsHero articles={heroArticles} />
-
-      {/* Suspense required: InsightsFilterBar uses useSearchParams() */}
-      <Suspense fallback={<div className="h-16" />}>
-        <InsightsFilterBar categories={categories} />
-      </Suspense>
-
-      <InsightsMasonryGrid articles={gridArticles} />
-
-      <InsightsPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        category={category || undefined}
-        q={safeQ || undefined}
-      />
+      <section className="section-gray py-20">
+        <div className="container mx-auto max-w-7xl px-4">
+          <Suspense fallback={<div className="h-16" />}>
+            <InsightsFilterBar categories={categories} />
+          </Suspense>
+          <InsightsMasonryGrid articles={gridArticles} />
+          <InsightsPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            category={category || undefined}
+            q={safeQ || undefined}
+          />
+        </div>
+      </section>
     </main>
   )
 }

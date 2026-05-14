@@ -1,10 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
-/**
- * Requires coverImage and category to be populated (depth >= 1) by the caller.
- * coverImage.url must be a string — do not pass un-populated Payload relations.
- */
 export interface InsightArticle {
   id: number
   title: string
@@ -20,46 +17,51 @@ function formatDate(iso?: string | null): string {
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-function ArticleCard({ article, large }: { article: InsightArticle; large?: boolean }) {
+function ArticleCard({ article }: { article: InsightArticle }) {
   const hasCover = !!article.coverImage?.url
 
   return (
     <Link
       href={`/articles/${article.slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition hover:shadow-md"
+      className="group bg-card rounded-2xl border border-border overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
     >
-      {/* Cover image or gradient placeholder */}
-      <div className={`relative w-full shrink-0 overflow-hidden ${large ? 'h-52' : 'h-28'}`}>
+      <div className="relative aspect-16/10 overflow-hidden bg-primary/10">
         {hasCover ? (
           <Image
             src={article.coverImage!.url}
             alt={article.title}
             fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div
-            className="absolute inset-0"
-            style={{ background: 'linear-gradient(135deg, hsl(183 97% 18%), hsl(183 97% 30%))' }}
-          />
+          <div className="absolute inset-0 gradient-primary" />
         )}
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-4">
+        <div className="absolute inset-0 bg-linear-to-t from-primary/60 via-transparent to-transparent" />
         {article.category && (
-          <span className="w-fit rounded-full bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
+          <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-secondary text-xs font-bold text-secondary-foreground uppercase tracking-wider">
             {article.category.name}
           </span>
         )}
-        <h3 className={`font-bold leading-snug text-foreground transition-colors group-hover:text-primary ${large ? 'text-lg' : 'text-sm'}`}>
+      </div>
+
+      <div className="p-6 flex flex-col flex-1 gap-3">
+        <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
           {article.title}
         </h3>
-        {large && article.excerpt && (
-          <p className="line-clamp-2 text-sm text-muted-foreground">{article.excerpt}</p>
+        {article.excerpt && (
+          <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed flex-1">
+            {article.excerpt}
+          </p>
         )}
-        {article.publishedAt && (
-          <time className="mt-auto text-xs text-muted-foreground">{formatDate(article.publishedAt)}</time>
-        )}
+        <div className="flex items-center mt-auto pt-2">
+          {article.publishedAt && (
+            <time className="text-xs text-muted-foreground">{formatDate(article.publishedAt)}</time>
+          )}
+          <span className="inline-flex items-center gap-1 text-sm font-bold text-primary group-hover:gap-2 transition-all ml-auto">
+            Read Article <ArrowRight size={14} />
+          </span>
+        </div>
       </div>
     </Link>
   )
@@ -81,25 +83,10 @@ export function InsightsMasonryGrid({ articles }: InsightsMasonryGridProps) {
     )
   }
 
-  // Group into sets of 3: [large, small, small]
-  const groups: InsightArticle[][] = []
-  for (let i = 0; i < articles.length; i += 3) {
-    groups.push(articles.slice(i, i + 3))
-  }
-
   return (
-    <div className="flex flex-col gap-6">
-      {groups.map((group) => (
-        <div key={group[0].id} className="grid grid-cols-1 gap-4 md:grid-cols-[1.5fr_1fr]">
-          {/* Large card — always first in group */}
-          <ArticleCard article={group[0]} large />
-          {/* Small cards stacked on the right */}
-          <div className="flex flex-col gap-4">
-            {group.slice(1).map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
-          </div>
-        </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {articles.map((article) => (
+        <ArticleCard key={article.id} article={article} />
       ))}
     </div>
   )
