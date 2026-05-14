@@ -297,8 +297,14 @@ export interface CaseStudy {
    */
   result?: string | null;
   ctaLabel?: string | null;
+  /**
+   * URL the CTA button links to, e.g. /articles/my-story or https://...
+   */
   ctaLink?: string | null;
   hasVideo?: boolean | null;
+  /**
+   * YouTube or Vimeo URL. Shown in the card cover when "Has Video" is checked.
+   */
   videoUrl?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -757,7 +763,9 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   action?: T;
   result?: T;
   ctaLabel?: T;
+  ctaLink?: T;
   hasVideo?: T;
+  videoUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }
