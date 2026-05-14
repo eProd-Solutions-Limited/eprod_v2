@@ -10,6 +10,7 @@ const getArticle = cache(async (slug: string) => {
   return payload.find({
     collection: 'articles',
     where: { slug: { equals: slug } },
+    depth: 1,
   })
 })
 
@@ -32,12 +33,29 @@ export default async function ArticlePage({
 
   const article = docs[0]
 
+  const coverImage = typeof article.coverImage === 'object' && article.coverImage !== null
+    ? article.coverImage
+    : null
+
   return (
     <article className="max-w-3xl mx-auto">
       <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
       <time className="text-gray-400">
         {article.publishedAt}
       </time>
+
+      {coverImage?.url && (
+        <div className="mt-8 rounded-2xl overflow-hidden">
+          <Image
+            src={coverImage.url}
+            alt={coverImage.alt ?? article.title}
+            width={coverImage.width ?? 1200}
+            height={coverImage.height ?? 630}
+            className="w-full h-auto object-cover"
+            priority
+          />
+        </div>
+      )}
 
       {/* Render blocks */}
       <div className="mt-8">
