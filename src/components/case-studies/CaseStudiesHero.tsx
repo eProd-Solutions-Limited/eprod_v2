@@ -24,7 +24,7 @@ export async function CaseStudiesHero() {
     <section className="relative overflow-hidden py-24 md:py-32">
       <div className="absolute inset-0">
         <CaseStudiesHeroCarousel images={images} />
-        <div className="absolute inset-0 gradient-primary opacity-10" />
+        <div className="absolute inset-0 gradient-primary opacity-30" />
       </div>
 
       <div className="container mx-auto px-4 relative">
