@@ -1,8 +1,12 @@
 import { Landmark } from "lucide-react";
+import { LogoCell } from "@/components/LogoCell";
+import type { LogoEntry } from "@/components/LogoCell";
 
-const partners = ["I&M Bank", "NCBA", "Equity Bank"];
+interface BankPartnersAboutProps {
+  bankLogos: LogoEntry[];
+}
 
-const BankPartnersAbout = () => {
+const BankPartnersAbout = ({ bankLogos }: BankPartnersAboutProps) => {
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4 text-center">
@@ -18,12 +22,12 @@ const BankPartnersAbout = () => {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl mx-auto">
-          {partners.map((name) => (
+          {bankLogos.map((logo) => (
             <div
-              key={name}
-              className="px-8 py-4 rounded-xl bg-card border border-border text-lg font-bold text-primary hover:shadow-md transition"
+              key={logo.id ?? logo.name}
+              className="px-8 py-4 rounded-xl bg-card border border-border hover:shadow-md transition flex items-center justify-center min-w-30 h-20"
             >
-              {name}
+              <LogoCell logo={logo} textClassName="text-lg font-bold text-primary" />
             </div>
           ))}
         </div>
