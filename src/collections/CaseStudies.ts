@@ -61,9 +61,24 @@ export const CaseStudies: CollectionConfig = {
       defaultValue: 'Read Full Case Study',
     },
     {
+      name: 'ctaLink',
+      type: 'text',
+      label: 'CTA Link',
+      admin: { description: 'URL the CTA button links to, e.g. /articles/my-story or https://...' },
+    },
+    {
       name: 'hasVideo',
       type: 'checkbox',
       defaultValue: false,
+    },
+    {
+      name: 'videoUrl',
+      type: 'text',
+      label: 'Video URL',
+      admin: {
+        description: 'YouTube or Vimeo URL. Shown in the card cover when "Has Video" is checked.',
+        condition: (_, siblingData) => Boolean(siblingData?.hasVideo),
+      },
     },
   ],
 }

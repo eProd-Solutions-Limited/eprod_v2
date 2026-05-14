@@ -71,7 +71,6 @@ export interface Config {
     media: Media;
     articles: Article;
     'case-studies': CaseStudy;
-    'team-pages': TeamPage;
     team: Team;
     'cta-config': CtaConfig;
     popups: Popup;
@@ -88,7 +87,6 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
-    'team-pages': TeamPagesSelect<false> | TeamPagesSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     'cta-config': CtaConfigSelect<false> | CtaConfigSelect<true>;
     popups: PopupsSelect<false> | PopupsSelect<true>;
@@ -106,12 +104,10 @@ export interface Config {
   globals: {
     'logo-wall': LogoWall;
     'voice-of-customer': VoiceOfCustomer;
-    'case-studies-cta': CaseStudiesCta;
   };
   globalsSelect: {
     'logo-wall': LogoWallSelect<false> | LogoWallSelect<true>;
     'voice-of-customer': VoiceOfCustomerSelect<false> | VoiceOfCustomerSelect<true>;
-    'case-studies-cta': CaseStudiesCtaSelect<false> | CaseStudiesCtaSelect<true>;
   };
   locale: null;
   widgets: {
@@ -301,56 +297,9 @@ export interface CaseStudy {
    */
   result?: string | null;
   ctaLabel?: string | null;
+  ctaLink?: string | null;
   hasVideo?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-pages".
- */
-export interface TeamPage {
-  id: number;
-  sections?:
-    | {
-        text: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        media?:
-          | (
-              | {
-                  image?: (number | null) | Media;
-                  position?: ('left' | 'right') | null;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'imageMedia';
-                }
-              | {
-                  url?: string | null;
-                  position?: ('left' | 'right') | null;
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'videoMedia';
-                }
-            )[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'section';
-      }[]
-    | null;
+  videoUrl?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -632,10 +581,6 @@ export interface PayloadLockedDocument {
         value: number | CaseStudy;
       } | null)
     | ({
-        relationTo: 'team-pages';
-        value: number | TeamPage;
-      } | null)
-    | ({
         relationTo: 'team';
         value: number | Team;
       } | null)
@@ -813,45 +758,6 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   result?: T;
   ctaLabel?: T;
   hasVideo?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-pages_select".
- */
-export interface TeamPagesSelect<T extends boolean = true> {
-  sections?:
-    | T
-    | {
-        section?:
-          | T
-          | {
-              text?: T;
-              media?:
-                | T
-                | {
-                    imageMedia?:
-                      | T
-                      | {
-                          image?: T;
-                          position?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                    videoMedia?:
-                      | T
-                      | {
-                          url?: T;
-                          position?: T;
-                          id?: T;
-                          blockName?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1054,36 +960,6 @@ export interface LogoWall {
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "case-studies-cta".
- */
-export interface CaseStudiesCta {
-  id: number;
-  heading?: string | null;
-  description?: string | null;
-  primaryButtonLabel?: string | null;
-  primaryButtonLink?: string | null;
-  secondaryButtonLabel?: string | null;
-  secondaryButtonLink?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "case-studies-cta_select".
- */
-export interface CaseStudiesCtaSelect<T extends boolean = true> {
-  heading?: T;
-  description?: T;
-  primaryButtonLabel?: T;
-  primaryButtonLink?: T;
-  secondaryButtonLabel?: T;
-  secondaryButtonLink?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

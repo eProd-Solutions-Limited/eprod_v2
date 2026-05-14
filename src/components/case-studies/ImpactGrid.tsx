@@ -26,12 +26,29 @@ export interface CaseStudyCard {
   action?: string | null
   result?: string | null
   ctaLabel?: string | null
+  ctaLink?: string | null
   hasVideo?: boolean | null
+  videoUrl?: string | null
 }
 
 function getCoverUrl(coverImage: CaseStudyCard['coverImage']): string | null {
   if (!coverImage || typeof coverImage !== 'object') return null
   return (coverImage as MediaDoc).url ?? null
+}
+
+function toEmbedUrl(url: string): string {
+  if (url.includes('youtube.com/watch')) {
+    return url.replace('watch?v=', 'embed/').split('&')[0]
+  }
+  if (url.includes('youtu.be/')) {
+    const id = url.split('youtu.be/')[1]?.split('?')[0]
+    return `https://www.youtube.com/embed/${id}`
+  }
+  if (url.includes('vimeo.com/') && !url.includes('player.vimeo.com')) {
+    const id = url.split('vimeo.com/')[1]?.split('?')[0]
+    return `https://player.vimeo.com/video/${id}`
+  }
+  return url
 }
 
 interface ImpactGridProps {
@@ -84,8 +101,16 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
                 key={story.id}
                 className="group bg-card rounded-2xl border border-border overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-primary/10">
-                  {coverUrl ? (
+                <div className="relative aspect-16/10 overflow-hidden bg-primary/10">
+                  {story.hasVideo && story.videoUrl ? (
+                    <iframe
+                      src={toEmbedUrl(story.videoUrl)}
+                      title={story.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full border-0"
+                    />
+                  ) : coverUrl ? (
                     <Image
                       src={coverUrl}
                       alt={story.client ?? story.title}
@@ -96,15 +121,17 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
                   ) : (
                     <div className="absolute inset-0 gradient-primary" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
-                  {story.hasVideo && (
+                  {!(story.hasVideo && story.videoUrl) && (
+                    <div className="absolute inset-0 bg-linear-to-t from-primary/60 via-transparent to-transparent" />
+                  )}
+                  {story.hasVideo && !story.videoUrl && (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-16 h-16 rounded-full bg-primary-foreground/90 backdrop-blur flex items-center justify-center shadow-lg group-hover:scale-110 transition">
                         <Play size={24} className="text-primary ml-1" fill="currentColor" />
                       </div>
                     </div>
                   )}
-                  {story.tag && (
+                  {story.tag && !(story.hasVideo && story.videoUrl) && (
                     <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-secondary text-xs font-bold text-secondary-foreground uppercase tracking-wider">
                       {story.tag}
                     </span>
@@ -138,13 +165,15 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
                       ))}
                   </dl>
 
-                  <a
-                    href="#cta"
-                    className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
-                  >
-                    {story.ctaLabel ?? 'Read Full Case Study'}
-                    <ArrowRight size={16} />
-                  </a>
+                  {story.ctaLink && (
+                    <a
+                      href={story.ctaLink}
+                      className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
+                    >
+                      {story.ctaLabel ?? 'Read Full Case Study'}
+                      <ArrowRight size={16} />
+                    </a>
+                  )}
                 </div>
               </article>
             )
