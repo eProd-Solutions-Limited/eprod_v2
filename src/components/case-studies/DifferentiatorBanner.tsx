@@ -1,21 +1,11 @@
+import Image from 'next/image'
 import { ShieldCheck, TrendingUp, Database } from 'lucide-react'
 
-const items = [
-  {
-    icon: Database,
-    title: 'Verifiable Data Layer',
-    text: 'Every transaction timestamped, geo-tagged, and audit-ready — the foundation of trust.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Regulator-Ready',
-    text: "Built for EUDR, CSDDD, and GlobalGAP out of the box. Compliance isn't an add-on.",
-  },
-  {
-    icon: TrendingUp,
-    title: 'Capital Unlocked',
-    text: 'Compliance data flows directly to partner banks — turning operations into credit scores.',
-  },
+const regulatorLogos = [
+  { src: '/logos/integrations/itc.svg', alt: 'ITC', width: 80, height: 40 },
+  { src: '/logos/integrations/wri.jpeg', alt: 'WRI', width: 80, height: 40 },
+  { src: '/logos/integrations/cargo-ledger.png', alt: 'Cargo Ledger', width: 80, height: 40 },
+  { src: '/logos/integrations/agrocares.jpeg', alt: 'AgroCares', width: 80, height: 40 },
 ]
 
 export function DifferentiatorBanner() {
@@ -44,19 +34,72 @@ export function DifferentiatorBanner() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {items.map((item) => (
-            <div
-              key={item.title}
-              className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6"
-            >
-              <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
-                <item.icon size={22} className="text-secondary" />
-              </div>
-              <h3 className="text-lg font-bold text-primary-foreground mb-2">{item.title}</h3>
-              <p className="text-sm text-primary-foreground/80 leading-relaxed">{item.text}</p>
-              
+          {/* Verifiable Data Layer */}
+          <div className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6 flex flex-col">
+            <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
+              <Database size={22} className="text-secondary" />
             </div>
-          ))}
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">Verifiable Data Layer</h3>
+            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
+              Every transaction timestamped, geo-tagged, and audit-ready — the foundation of trust.
+            </p>
+            <div className="mt-auto rounded-xl overflow-hidden">
+              <Image
+                src="/seed-images/case-hero.jpg"
+                alt="Verifiable Data Layer"
+                width={400}
+                height={200}
+                className="w-full h-36 object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Regulator-Ready */}
+          <div className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6 flex flex-col">
+            <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
+              <ShieldCheck size={22} className="text-secondary" />
+            </div>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">Regulator-Ready</h3>
+            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
+              Built for EUDR, CSDDD, and GlobalGAP out of the box. Compliance isn't an add-on.
+            </p>
+            <div className="mt-auto grid grid-cols-2 gap-3">
+              {regulatorLogos.map((logo) => (
+                <div
+                  key={logo.alt}
+                  className="bg-primary-foreground/90 rounded-lg p-2 flex items-center justify-center"
+                >
+                  <Image
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={logo.width}
+                    height={logo.height}
+                    className="max-h-8 w-auto object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Capital Unlocked */}
+          <div className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6 flex flex-col">
+            <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
+              <TrendingUp size={22} className="text-secondary" />
+            </div>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">Capital Unlocked</h3>
+            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
+              Compliance data flows directly to partner banks — turning operations into credit scores.
+            </p>
+            <div className="mt-auto rounded-xl overflow-hidden">
+              <Image
+                src="/seed-images/case-dairy.jpg"
+                alt="Capital Unlocked"
+                width={400}
+                height={200}
+                className="w-full h-36 object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
