@@ -5,20 +5,6 @@ import { gaEvents } from '@/lib/ga-events'
 
 const testimonials = [
   {
-    quote: "eProd gave us complete traceability. Every farmer, every transaction, tracked and documented.",
-    name: "Grace Njoroge",
-    title: "CEO, Miyonga Fresh Greens Ltd",
-    result: "Passed our first export audit with zero findings.",
-    challenge: "Export Compliance",
-  },
-  {
-    quote: "eProd automated payments, quality incentives, and farmer communication.",
-    name: "Julius & Josephine",
-    title: "Soy Bean Value Chain",
-    result: "Reduced operational overhead by 30%. Margins improved.",
-    challenge: "Operational Efficiency",
-  },
-  {
     quote: "We scaled from 500 to 2,000 farmers in 6 months with the same team.",
     name: "Joseph Kadendula",
     title: "CEO, Swahili Honey",

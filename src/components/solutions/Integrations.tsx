@@ -37,7 +37,11 @@ const categories: { icon: React.ElementType; title: string; text: string; partne
     partners: [
       { name: "DFTG",          logo: "/logos/integrations/itc.svg" },
       { name: "WHISP",         logo: "/logos/integrations/whisp.png" },
-      { name: "Cargo Ledger",  logo: "/logos/integrations/cargo-ledger.png" }
+      { name: "Cargo Ledger",  logo: "/logos/integrations/cargo-ledger.png" },
+      { name: "Agrocares",  logo: "/logos/integrations/agrocares.jpeg" },
+      { name: "Riceadvice",  logo: "/logos/integrations/riceadvice.jpeg" },
+      { name: "WRI",  logo: "/logos/integrations/wri.jpeg" },
+
     ],
   },
   {

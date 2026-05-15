@@ -54,6 +54,7 @@ export function DifferentiatorBanner() {
               </div>
               <h3 className="text-lg font-bold text-primary-foreground mb-2">{item.title}</h3>
               <p className="text-sm text-primary-foreground/80 leading-relaxed">{item.text}</p>
+              
             </div>
           ))}
         </div>
