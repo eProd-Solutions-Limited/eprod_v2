@@ -102,6 +102,35 @@ const quoteBlock: Block = {
   ],
 }
 
+const columnsBlock: Block = {
+  slug: 'columns',
+  labels: { singular: 'Columns', plural: 'Columns' },
+  fields: [
+    {
+      name: 'layout',
+      type: 'select',
+      defaultValue: '2',
+      options: [
+        { label: '2 Columns', value: '2' },
+        { label: '3 Columns', value: '3' },
+      ],
+    },
+    {
+      name: 'columns',
+      type: 'array',
+      minRows: 2,
+      maxRows: 3,
+      fields: [
+        {
+          name: 'content',
+          type: 'richText',
+          required: true,
+        },
+      ],
+    },
+  ],
+}
+
 const profileQuoteBlock: Block = {
   slug: 'profileQuote',
   labels: { singular: 'Profile Quote', plural: 'Profile Quotes' },
@@ -180,7 +209,7 @@ export const Articles: CollectionConfig = {
     {
       name: 'content',
       type: 'blocks',
-      blocks: [richTextBlock, imageBlock, videoBlock, gifBlock, quoteBlock, profileQuoteBlock],
+      blocks: [richTextBlock, imageBlock, videoBlock, gifBlock, quoteBlock, columnsBlock, profileQuoteBlock],
       required: true,
       localized: true,
     },

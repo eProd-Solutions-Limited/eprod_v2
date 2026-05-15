@@ -151,6 +151,21 @@ function BlockRenderer({ block }: BlockProps) {
         </blockquote>
       )
 
+    case 'columns': {
+      const colClass = block.layout === '3'
+        ? 'grid-cols-1 sm:grid-cols-3'
+        : 'grid-cols-1 sm:grid-cols-2'
+      return (
+        <div className={`grid gap-6 my-8 ${colClass}`}>
+          {block.columns?.map((col: any, i: number) => (
+            <div key={i}>
+              <RichTextRenderer data={col.content as any} />
+            </div>
+          ))}
+        </div>
+      )
+    }
+
     case 'profileQuote': {
       const photo = typeof block.photo === 'object' && block.photo !== null ? block.photo : null
       return (
