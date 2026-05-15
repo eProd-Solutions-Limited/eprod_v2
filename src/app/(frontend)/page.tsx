@@ -10,18 +10,96 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import DifferentiationSection from "@/components/DifferentiationSection";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
+import { faqs } from "@/data/faqs";
 
 export const dynamic = 'force-dynamic'
 
 export default async function IndexPage() {
   const payload = await getPayload({ config: payloadConfig })
-  const logoWall = await payload.findGlobal({ slug: 'logo-wall', depth: 1 }) as any
+  const [logoWall, teamResult] = await Promise.all([
+    payload.findGlobal({ slug: 'logo-wall', depth: 1 }),
+    payload.find({ collection: 'team', sort: 'order', limit: 20 }),
+  ])
 
-  const agribusinessLogos = logoWall.agribusinessLogos ?? []
-  const bankLogos = logoWall.bankLogos ?? []
+  const agribusinessLogos = (logoWall as any).agribusinessLogos ?? []
+  const bankLogos = (logoWall as any).bankLogos ?? []
+  const team = teamResult.docs
+
+  const bankPartnerNames: string[] = bankLogos
+    .filter((b: any) => b.name)
+    .map((b: any) => b.name as string)
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  }
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "eProd Solutions",
+    alternateName: "eProd",
+    description:
+      "eProd is an AgFinTech platform providing agricultural supply chain management software. eProd digitizes farmer relationships, supply chain traceability, and compliance reporting—unlocking access to capital for agribusinesses across Sub-Saharan Africa. Founded in 2004 in Kenya, eProd serves 250+ clients across 20+ countries and manages over 1 million farmer records.",
+    url: "https://www.eprod.io",
+    foundingDate: "2004",
+    foundingLocation: {
+      "@type": "Place",
+      name: "Kenya",
+      addressCountry: "KE",
+    },
+    areaServed: {
+      "@type": "Place",
+      name: "Sub-Saharan Africa",
+    },
+    knowsAbout: [
+      "Agricultural Supply Chain Management",
+      "AgFinTech",
+      "Smallholder Farmer Finance",
+      "Agricultural Lending De-risking",
+      "Supply Chain Traceability",
+      "Export Compliance Certification",
+      "Outgrower Management",
+    ],
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      name: "ISO 27001",
+    },
+    ...(team.length > 0 && {
+      employee: team.map((person: any) => ({
+        "@type": "Person",
+        name: person.name,
+        jobTitle: person.title,
+        ...(person.linkedin ? { sameAs: person.linkedin } : {}),
+      })),
+    }),
+    ...(bankPartnerNames.length > 0 && {
+      additionalProperty: {
+        "@type": "PropertyValue",
+        name: "Partner Financial Institutions",
+        value: bankPartnerNames.join(", "),
+      },
+    }),
+  }
 
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <HeroSection />
       <ProblemSection />
       <SolutionSection />
