@@ -36,15 +36,6 @@ export function DifferentiatorBanner() {
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {/* Verifiable Data Layer */}
           <div className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6 flex flex-col">
-            <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
-              <Database size={22} className="text-secondary" />
-            </div>
-            <h3 className="text-lg font-bold text-primary-foreground mb-2">
-              Verifiable Data Layer
-            </h3>
-            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
-              Every transaction timestamped, geo-tagged, and audit-ready — the foundation of trust.
-            </p>
             <div className="mt-auto rounded-xl overflow-hidden">
               <Image
                 src="/logos/farm_geo.jpeg"
@@ -54,18 +45,17 @@ export function DifferentiatorBanner() {
                 className="w-full h-36 object-cover"
               />
             </div>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">
+              Verifiable Data Layer
+            </h3>
+            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
+              Every transaction timestamped, geo-tagged, and audit-ready — the foundation of trust.
+            </p>
           </div>
 
           {/* Regulator-Ready */}
           <div className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6 flex flex-col">
-            <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
-              <ShieldCheck size={22} className="text-secondary" />
-            </div>
-            <h3 className="text-lg font-bold text-primary-foreground mb-2">Regulator-Ready</h3>
-            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
-              Built for EUDR, CSDDD, and GlobalGAP out of the box. Compliance isn't an add-on.
-            </p>
-            <div className="mt-auto grid grid-cols-2 gap-3">
+           <div className="mt-auto grid grid-cols-2 gap-3">
               {regulatorLogos.map((logo) => (
                 <div
                   key={logo.alt}
@@ -81,18 +71,14 @@ export function DifferentiatorBanner() {
                 </div>
               ))}
             </div>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">Regulator-Ready</h3>
+            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
+              Built for EUDR, CSDDD, and GlobalGAP out of the box. Compliance isn't an add-on.
+            </p>
           </div>
 
           {/* Capital Unlocked */}
           <div className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6 flex flex-col">
-            <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
-              <TrendingUp size={22} className="text-secondary" />
-            </div>
-            <h3 className="text-lg font-bold text-primary-foreground mb-2">Capital Unlocked</h3>
-            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
-              Compliance data flows directly to partner banks — turning operations into credit
-              scores.
-            </p>
             <div className="mt-auto rounded-xl overflow-hidden">
               <Image
                 src="/logos/capital_unlocked.jpeg"
@@ -102,6 +88,11 @@ export function DifferentiatorBanner() {
                 className="w-full h-36 object-cover"
               />
             </div>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">Capital Unlocked</h3>
+            <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
+              Compliance data flows directly to partner banks — turning operations into credit
+              scores.
+            </p>
           </div>
         </div>
       </div>
