@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Play } from 'lucide-react'
+import { RichTextRenderer } from '@/components/RichTextRenderer'
 
 type Category = 'All' | 'Financial Inclusion' | 'EUDR Traceability' | 'Operational Efficiency'
 
@@ -24,7 +25,7 @@ export interface CaseStudyCard {
   headline?: string | null
   situation?: string | null
   action?: string | null
-  result?: string | null
+  result?: Record<string, unknown> | null
   ctaLabel?: string | null
   ctaLink?: string | null
   hasVideo?: boolean | null
@@ -152,7 +153,6 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
                     {[
                       { label: 'Challenge', text: story.situation },
                       { label: 'Solution', text: story.action },
-                      { label: 'Impact', text: story.result },
                     ]
                       .filter((row) => row.text)
                       .map((row) => (
@@ -163,6 +163,19 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
                           <dd className="text-sm text-muted-foreground leading-relaxed">{row.text}</dd>
                         </div>
                       ))}
+                    {story.result && (
+                      <div className="border-l-2 border-secondary pl-3">
+                        <dt className="text-xs font-bold text-primary uppercase tracking-wider mb-0.5">
+                          Impact
+                        </dt>
+                        <dd className="text-sm text-muted-foreground leading-relaxed">
+                          <RichTextRenderer
+                            data={story.result as any}
+                            className="[&_ul]:my-1 [&_ul]:pl-4 [&_li]:my-0"
+                          />
+                        </dd>
+                      </div>
+                    )}
                   </dl>
 
                   {story.ctaLink && (

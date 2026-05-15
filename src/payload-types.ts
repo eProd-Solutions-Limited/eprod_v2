@@ -332,9 +332,23 @@ export interface CaseStudy {
    */
   action?: string | null;
   /**
-   * Impact — measurable outcome
+   * Impact — measurable outcome (supports bullet points)
    */
-  result?: string | null;
+  result?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   ctaLabel?: string | null;
   /**
    * URL the CTA button links to, e.g. /articles/my-story or https://...

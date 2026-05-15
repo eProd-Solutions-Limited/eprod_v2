@@ -52,8 +52,8 @@ export const CaseStudies: CollectionConfig = {
     },
     {
       name: 'result',
-      type: 'textarea',
-      admin: { description: 'Impact — measurable outcome' },
+      type: 'richText',
+      admin: { description: 'Impact — measurable outcome (supports bullet points)' },
     },
     {
       name: 'ctaLabel',
