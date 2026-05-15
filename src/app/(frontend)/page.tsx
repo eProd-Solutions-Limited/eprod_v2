@@ -16,14 +16,16 @@ export const dynamic = 'force-dynamic'
 
 export default async function IndexPage() {
   const payload = await getPayload({ config: payloadConfig })
-  const [logoWall, teamResult] = await Promise.all([
+  const [logoWall, teamResult, voiceOfCustomer] = await Promise.all([
     payload.findGlobal({ slug: 'logo-wall', depth: 1 }),
     payload.find({ collection: 'team', sort: 'order', limit: 20 }),
+    payload.findGlobal({ slug: 'voice-of-customer' }),
   ])
 
   const agribusinessLogos = (logoWall as any).agribusinessLogos ?? []
   const bankLogos = (logoWall as any).bankLogos ?? []
   const team = teamResult.docs
+  const vocQuotes = (voiceOfCustomer as any).quotes ?? []
 
   const bankPartnerNames: string[] = bankLogos
     .filter((b: any) => b.name)
@@ -106,7 +108,7 @@ export default async function IndexPage() {
       <BankPartnershipsSection bankLogos={bankLogos} />
       <ProofSection agribusinessLogos={agribusinessLogos} />
       <HowItWorksSection />
-      <TestimonialsSection />
+      <TestimonialsSection quotes={vocQuotes} />
       <DifferentiationSection />
       <FAQSection />
       <CTASection />

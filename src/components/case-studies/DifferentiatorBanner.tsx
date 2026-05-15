@@ -1,11 +1,10 @@
+import { Database, ShieldCheck, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
-import { ShieldCheck, TrendingUp, Database } from 'lucide-react'
 
 const regulatorLogos = [
-  { src: '/logos/integrations/itc.svg', alt: 'ITC', width: 80, height: 40 },
-  { src: '/logos/integrations/wri.jpeg', alt: 'WRI', width: 80, height: 40 },
-  { src: '/logos/integrations/cargo-ledger.png', alt: 'Cargo Ledger', width: 80, height: 40 },
-  { src: '/logos/integrations/agrocares.jpeg', alt: 'AgroCares', width: 80, height: 40 },
+  { src: '/logos/fairtrade.jpeg', alt: 'Fairtrade', width: 80, height: 40 },
+  { src: '/logos/integrations/global gap.jpeg', alt: 'GlobalGAP', width: 80, height: 40 },
+  { src: '/logos/integrations/usda.jpeg', alt: 'USDA', width: 80, height: 40 },
 ]
 
 export function DifferentiatorBanner() {
@@ -27,9 +26,10 @@ export function DifferentiatorBanner() {
             <span className="text-secondary">We Make Them Bankable.</span>
           </h2>
           <p className="text-lg text-primary-foreground/90 leading-relaxed">
-            Unlike generic agricultural software, eProd is built as an enterprise-grade AgFinTech engine.
-            Our platform is uniquely designed to transform operational data into the rigorous, verifiable
-            intelligence required by financial institutions and global regulators.
+            Unlike generic agricultural software, eProd is built as an enterprise-grade AgFinTech
+            engine. Our platform is uniquely designed to transform operational data into the
+            rigorous, verifiable intelligence required by financial institutions and global
+            regulators.
           </p>
         </div>
 
@@ -39,13 +39,15 @@ export function DifferentiatorBanner() {
             <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-4">
               <Database size={22} className="text-secondary" />
             </div>
-            <h3 className="text-lg font-bold text-primary-foreground mb-2">Verifiable Data Layer</h3>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">
+              Verifiable Data Layer
+            </h3>
             <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
               Every transaction timestamped, geo-tagged, and audit-ready — the foundation of trust.
             </p>
             <div className="mt-auto rounded-xl overflow-hidden">
               <Image
-                src="/seed-images/case-hero.jpg"
+                src="/logos/farm_geo.jpeg"
                 alt="Verifiable Data Layer"
                 width={400}
                 height={200}
@@ -88,11 +90,12 @@ export function DifferentiatorBanner() {
             </div>
             <h3 className="text-lg font-bold text-primary-foreground mb-2">Capital Unlocked</h3>
             <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
-              Compliance data flows directly to partner banks — turning operations into credit scores.
+              Compliance data flows directly to partner banks — turning operations into credit
+              scores.
             </p>
             <div className="mt-auto rounded-xl overflow-hidden">
               <Image
-                src="/seed-images/case-dairy.jpg"
+                src="/logos/capital_unlocked.jpeg"
                 alt="Capital Unlocked"
                 width={400}
                 height={200}
