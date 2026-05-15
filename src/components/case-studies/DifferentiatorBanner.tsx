@@ -85,7 +85,7 @@ export function DifferentiatorBanner() {
                 alt="Capital Unlocked"
                 width={400}
                 height={400}
-                className="w-full h-36 object-cover"
+                className="w-full object-cover"
               />
             </div>
             <h3 className="text-lg font-bold text-primary-foreground mb-2">Capital Unlocked</h3>
