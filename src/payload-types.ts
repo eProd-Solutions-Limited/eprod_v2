@@ -248,6 +248,43 @@ export interface Article {
         blockName?: string | null;
         blockType: 'quote';
       }
+    | {
+        layout?: ('2' | '3') | null;
+        columns?:
+          | {
+              content: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'columns';
+      }
+    | {
+        photo: number | Media;
+        name: string;
+        jobTitle?: string | null;
+        company?: string | null;
+        question?: string | null;
+        answer: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'profileQuote';
+      }
   )[];
   updatedAt: string;
   createdAt: string;
@@ -767,6 +804,31 @@ export interface ArticlesSelect<T extends boolean = true> {
           | {
               text?: T;
               author?: T;
+              id?: T;
+              blockName?: T;
+            };
+        columns?:
+          | T
+          | {
+              layout?: T;
+              columns?:
+                | T
+                | {
+                    content?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        profileQuote?:
+          | T
+          | {
+              photo?: T;
+              name?: T;
+              jobTitle?: T;
+              company?: T;
+              question?: T;
+              answer?: T;
               id?: T;
               blockName?: T;
             };
