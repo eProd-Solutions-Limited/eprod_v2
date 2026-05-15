@@ -102,6 +102,41 @@ const quoteBlock: Block = {
   ],
 }
 
+const profileQuoteBlock: Block = {
+  slug: 'profileQuote',
+  labels: { singular: 'Profile Quote', plural: 'Profile Quotes' },
+  fields: [
+    {
+      name: 'photo',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
+      name: 'name',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'jobTitle',
+      type: 'text',
+    },
+    {
+      name: 'company',
+      type: 'text',
+    },
+    {
+      name: 'question',
+      type: 'text',
+    },
+    {
+      name: 'answer',
+      type: 'textarea',
+      required: true,
+    },
+  ],
+}
+
 export const Articles: CollectionConfig = {
   slug: 'articles',
   admin: {
@@ -145,7 +180,7 @@ export const Articles: CollectionConfig = {
     {
       name: 'content',
       type: 'blocks',
-      blocks: [richTextBlock, imageBlock, videoBlock, gifBlock, quoteBlock],
+      blocks: [richTextBlock, imageBlock, videoBlock, gifBlock, quoteBlock, profileQuoteBlock],
       required: true,
       localized: true,
     },

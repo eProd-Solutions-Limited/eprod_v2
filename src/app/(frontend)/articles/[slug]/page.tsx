@@ -151,6 +151,36 @@ function BlockRenderer({ block }: BlockProps) {
         </blockquote>
       )
 
+    case 'profileQuote': {
+      const photo = typeof block.photo === 'object' && block.photo !== null ? block.photo : null
+      return (
+        <div className="my-10 flex flex-col sm:flex-row gap-6 items-start">
+          {photo?.url && (
+            <div className="shrink-0 w-36 sm:w-44">
+              <Image
+                src={photo.url}
+                alt={photo.alt ?? block.name}
+                width={photo.width ?? 176}
+                height={photo.height ?? 176}
+                className="rounded-xl w-full h-auto object-cover"
+              />
+              <div className="mt-3 text-sm leading-snug">
+                <p className="font-semibold text-white">{block.name}</p>
+                {block.jobTitle && <p className="text-gray-400">{block.jobTitle}</p>}
+                {block.company && <p className="text-gray-400">{block.company}</p>}
+              </div>
+            </div>
+          )}
+          <div className="flex-1">
+            {block.question && (
+              <p className="font-semibold text-white mb-2 italic">{block.question}</p>
+            )}
+            <p className="text-gray-300 leading-relaxed whitespace-pre-line">{block.answer}</p>
+          </div>
+        </div>
+      )
+    }
+
     default:
       return null
   }
