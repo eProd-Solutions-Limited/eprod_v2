@@ -24,7 +24,6 @@ export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
         <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           <div className="bg-card rounded-2xl p-8 border border-border">
             <div className="mb-6">
-              <span className="text-xs font-bold text-secondary uppercase tracking-wider">Grid A</span>
               <h3 className="text-xl font-bold text-foreground mt-2 mb-1">Agribusiness Leaders</h3>
               <p className="text-sm text-muted-foreground">
                 Digitalizing complex value chains from seed to export.
@@ -44,7 +43,6 @@ export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
 
           <div className="bg-card rounded-2xl p-8 border border-border">
             <div className="mb-6">
-              <span className="text-xs font-bold text-secondary uppercase tracking-wider">Grid B</span>
               <h3 className="text-xl font-bold text-foreground mt-2 mb-1">Strategic Financial Partners</h3>
               <p className="text-sm text-muted-foreground">
                 De-risking agricultural lending through verifiable data.
