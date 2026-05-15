@@ -3,8 +3,8 @@ import Image from 'next/image'
 
 const regulatorLogos = [
   { src: '/logos/fairtrade.jpeg', alt: 'Fairtrade', width: 80, height: 40 },
-  { src: '/logos/integrations/global gap.jpeg', alt: 'GlobalGAP', width: 80, height: 40 },
-  { src: '/logos/integrations/usda.jpeg', alt: 'USDA', width: 80, height: 40 },
+  { src: '/logos/global gap.jpeg', alt: 'GlobalGAP', width: 80, height: 40 },
+  { src: '/logos/usda.jpeg', alt: 'USDA', width: 80, height: 40 },
 ]
 
 export function DifferentiatorBanner() {
@@ -98,7 +98,7 @@ export function DifferentiatorBanner() {
                 src="/logos/capital_unlocked.jpeg"
                 alt="Capital Unlocked"
                 width={400}
-                height={200}
+                height={300}
                 className="w-full h-36 object-cover"
               />
             </div>
