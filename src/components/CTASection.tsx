@@ -40,7 +40,7 @@ const CTASection = () => {
           Ready to Simplify Your Supply Chain?
         </h2>
         <p className="text-center text-primary-foreground/70 mb-12 max-w-xl mx-auto">
-          Join 500+ agribusinesses already using eProd to transform their operations.
+          Join 250+ agribusinesses already using eProd to transform their operations.
         </p>
 
         <div className="max-w-lg mx-auto bg-card rounded-2xl p-8 shadow-2xl">
@@ -108,7 +108,7 @@ const CTASection = () => {
         </div>
 
         <p className="text-center text-primary-foreground/60 text-sm mt-8">
-          Join 500+ agribusinesses already using eProd
+          Join 250+ agribusinesses already using eProd
         </p>
       </div>
     </section>
