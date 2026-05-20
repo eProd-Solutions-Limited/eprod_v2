@@ -58,6 +58,7 @@ const HowItWorksSection = () => {
                     src={step.image}
                     alt={step.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 25vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
