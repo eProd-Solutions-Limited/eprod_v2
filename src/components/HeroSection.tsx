@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { ArrowRight, Download } from "lucide-react";
-import heroImage from "@/assets/hero_image.png";
+import heroImage from "@/assets/Homepage image.jpg.jpeg";
 import Image from "next/image";
 import { gaEvents } from '@/lib/ga-events'
 
