@@ -35,6 +35,12 @@ export const Team: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'isLeadership',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Leadership member',
+    },
+    {
       name: 'order',
       type: 'number',
       required: true,
