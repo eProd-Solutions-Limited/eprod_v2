@@ -22,8 +22,8 @@ export default async function IndexPage() {
     payload.findGlobal({ slug: 'voice-of-customer' }),
   ])
 
-  const agribusinessLogos = (logoWall as any).agribusinessLogos ?? []
-  const bankLogos = (logoWall as any).bankLogos ?? []
+  const agribusinessLogos = ((logoWall as any).agribusinessLogos ?? []).filter((l: any) => l.active !== false)
+  const bankLogos = ((logoWall as any).bankLogos ?? []).filter((l: any) => l.active !== false)
   const team = teamResult.docs
   const vocQuotes = (voiceOfCustomer as any).quotes ?? []
 
