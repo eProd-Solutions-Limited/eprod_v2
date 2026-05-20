@@ -6,6 +6,7 @@ import * as migration_20260514_add_case_studies_cta_link_video from './20260514_
 import * as migration_20260514_add_logo_links from './20260514_add_logo_links';
 import * as migration_20260515_063736 from './20260515_063736';
 import * as migration_20260515_case_studies_result_richtext from './20260515_case_studies_result_richtext';
+import * as migration_20260520_072301 from './20260520_072301';
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20260515_case_studies_result_richtext.up,
     down: migration_20260515_case_studies_result_richtext.down,
     name: '20260515_case_studies_result_richtext',
+  },
+  {
+    up: migration_20260520_072301.up,
+    down: migration_20260520_072301.down,
+    name: '20260520_072301'
   },
 ];

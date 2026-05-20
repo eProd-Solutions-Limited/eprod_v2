@@ -60,6 +60,7 @@ export default async function LeadershipTeam() {
                           {person.linkedin && (
                             <a
                               href={person.linkedin}
+                              target="_blank"
                               rel="noopener noreferrer"
                               className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition"
                               aria-label={`${person.name}'s LinkedIn`}

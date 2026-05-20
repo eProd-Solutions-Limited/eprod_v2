@@ -374,6 +374,10 @@ export interface Team {
   bio: string;
   linkedin?: string | null;
   /**
+   * Tick to show in the Leadership section; unticked members appear in the general Team section.
+   */
+  isLeadership?: boolean | null;
+  /**
    * Display order
    */
   order: number;
@@ -880,6 +884,7 @@ export interface TeamSelect<T extends boolean = true> {
   photo?: T;
   bio?: T;
   linkedin?: T;
+  isLeadership?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;
