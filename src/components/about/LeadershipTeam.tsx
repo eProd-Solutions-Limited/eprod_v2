@@ -15,9 +15,14 @@ const getTeam = cache(async () => {
 export default async function LeadershipTeam() {
   const { docs: team } = await getTeam()
 
+  const leaders = team.filter((p: any) => p.isLeadership)
+  const rest = team.filter((p: any) => !p.isLeadership)
+
   return (
     <section className="bg-background py-20">
       <div className="container mx-auto px-4">
+
+        {/* Leadership */}
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Meet Our <span className="gradient-primary-text">Leadership</span>
@@ -28,7 +33,7 @@ export default async function LeadershipTeam() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {team.map((person: any) => (
+          {leaders.map((person: any) => (
             <div key={person.id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
               <div className="aspect-square overflow-hidden">
                 <Image
@@ -60,6 +65,41 @@ export default async function LeadershipTeam() {
             </div>
           ))}
         </div>
+
+        {/* Rest of team */}
+        {rest.length > 0 && (
+          <div className="mt-20">
+            <div className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Meet The <span className="gradient-primary-text">Team</span>
+              </h2>
+            </div>
+
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+              {rest.map((person: any) => (
+                <div key={person.id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
+                  <div className="aspect-square overflow-hidden">
+                    <Image
+                      src={person.photo.url}
+                      alt={`${person.name}, ${person.title}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      width={512}
+                      height={512}
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-foreground">{person.name}</h3>
+                    <p className="text-sm font-medium text-secondary">{person.title}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed mt-3">
+                      {person.bio}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </section>
   );
