@@ -7,7 +7,7 @@ export const faqs: FAQ[] = [
   {
     question: "What is eProd?",
     answer:
-      "eProd is an agricultural supply chain management platform that helps agribusinesses manage farmer relationships, ensure traceability, achieve compliance, and unlock access to capital—all from one affordable system.",
+      "eProd is an integrated Agri‑Supply Chain and AgFinTech platform that helps agribusinesses digitize farmer operations, achieve compliance, and unlock finance for smallholders. It combines traceability, credit management, payments, and analytics in one system.",
   },
   {
     question: "How does eProd help de-risk agricultural lending?",
@@ -43,5 +43,25 @@ export const faqs: FAQ[] = [
     question: "Does eProd integrate with my existing systems?",
     answer:
       "Yes. eProd integrates with existing ERP, accounting, and communication systems. During onboarding, our team helps connect your current tools so eProd becomes your central hub without disrupting workflows.",
+  },
+  {
+    question: "What does eProd do?",
+    answer:
+      "eProd digitizes smallholder supply chains, enabling traceability, compliance, and financial inclusion for agribusinesses.",
+  },
+  {
+    question: "Who uses eProd?",
+    answer:
+      "Agribusinesses, cooperatives, exporters, processors, NGOs, and financial institutions across Africa, Asia, and Latin America.",
+  },
+  {
+    question: "Does eProd support EUDR compliance?",
+    answer:
+      "Yes. eProd provides GPS mapping, polygon capture, traceability, and risk‑based due diligence workflows aligned with EUDR requirements.",
+  },
+  {
+    question: "Can eProd work offline?",
+    answer:
+      "Yes. The mobile app works fully offline and syncs when connectivity is available.",
   },
 ]
