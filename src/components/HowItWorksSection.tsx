@@ -1,35 +1,36 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Settings, Users, Link, TrendingUp } from "lucide-react";
+import Image from 'next/image'
+import { ArrowRight } from 'lucide-react'
 import { gaEvents } from '@/lib/ga-events'
 
 const steps = [
   {
-    icon: Settings,
+    image: "/steps/SetUp.png",
     title: "Setup",
     time: "Week 1",
     text: "We configure eProd for your specific supply chain.",
   },
   {
-    icon: Users,
+    image: "/steps/Onboard.jpeg",
     title: "Onboard",
     time: "Week 2-3",
     text: "Your team and farmers get trained on the platform.",
   },
   {
-    icon: Link,
+    image: "/steps/Integrate.png",
     title: "Integrate",
     time: "Week 3-4",
     text: "Connect existing systems. eProd becomes your central hub.",
   },
   {
-    icon: TrendingUp,
+    image: "/steps/Optimize.png",
     title: "Optimize",
     time: "Ongoing",
     text: "Monitor metrics and optimize operations with our support.",
   },
-];
+]
 
 const HowItWorksSection = () => {
   useEffect(() => {
@@ -43,23 +44,45 @@ const HowItWorksSection = () => {
           Get Started in <span className="gradient-primary-text">4 Simple Steps</span>
         </h2>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-          {/* Progress line */}
-          <div className="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-border z-0">
-            <div className="absolute inset-0 gradient-primary-horizontal rounded-full" style={{ opacity: 0.3 }} />
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-0 items-start mb-10">
           {steps.map((step, i) => (
-            <div key={step.title} className="relative z-10 text-center">
-              <div className="w-20 h-20 rounded-full gradient-primary flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <step.icon size={32} className="text-primary-foreground" />
+            <>
+              {/* Card */}
+              <div
+                key={step.title}
+                className="group bg-card border border-border rounded-2xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 transition-all duration-200"
+              >
+                {/* Image with number badge + gradient overlay */}
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={step.image}
+                    alt={step.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <span className="absolute top-3 left-3 w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-black text-sm shadow-lg">
+                    {i + 1}
+                  </span>
+                </div>
+
+                {/* Body */}
+                <div className="p-4">
+                  <span className="inline-block text-xs font-bold rounded-full bg-secondary/20 text-secondary px-3 py-1 mb-2">
+                    {step.time}
+                  </span>
+                  <h3 className="text-base font-bold text-foreground mb-1">{step.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{step.text}</p>
+                </div>
               </div>
-              <span className="inline-block text-xs font-bold rounded-full bg-secondary/20 text-secondary px-3 py-1 mb-2">
-                {step.time}
-              </span>
-              <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
-              <p className="text-sm text-muted-foreground">{step.text}</p>
-            </div>
+
+              {/* Arrow connector — shown only between cards, not after last */}
+              {i < steps.length - 1 && (
+                <div key={`arrow-${i}`} className="hidden md:flex items-center justify-center px-2 pt-12">
+                  <ArrowRight size={20} className="text-primary/40" />
+                </div>
+              )}
+            </>
           ))}
         </div>
 
@@ -70,7 +93,7 @@ const HowItWorksSection = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default HowItWorksSection;
+export default HowItWorksSection
