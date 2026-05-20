@@ -27,8 +27,8 @@ export default async function CaseStudiesPage() {
   const { storiesResult, logoWall, voiceOfCustomer } = await getData()
 
   const stories = storiesResult.docs as unknown as CaseStudyCard[]
-  const agribusinessLogos = (logoWall as any).agribusinessLogos ?? []
-  const bankLogos = (logoWall as any).bankLogos ?? []
+  const agribusinessLogos = ((logoWall as any).agribusinessLogos ?? []).filter((l: any) => l.active !== false)
+  const bankLogos = ((logoWall as any).bankLogos ?? []).filter((l: any) => l.active !== false)
   const quotes = (voiceOfCustomer as any).quotes ?? []
 
   return (

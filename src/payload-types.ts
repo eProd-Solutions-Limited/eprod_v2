@@ -1076,6 +1076,10 @@ export interface LogoWall {
          * Optional URL — clicking the logo will open this link in a new tab.
          */
         link?: string | null;
+        /**
+         * Uncheck to hide this logo from the site.
+         */
+        active?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -1087,6 +1091,10 @@ export interface LogoWall {
          * Optional URL — clicking the logo will open this link in a new tab.
          */
         link?: string | null;
+        /**
+         * Uncheck to hide this logo from the site.
+         */
+        active?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -1125,6 +1133,7 @@ export interface LogoWallSelect<T extends boolean = true> {
         name?: T;
         image?: T;
         link?: T;
+        active?: T;
         id?: T;
       };
   bankLogos?:
@@ -1133,6 +1142,7 @@ export interface LogoWallSelect<T extends boolean = true> {
         name?: T;
         image?: T;
         link?: T;
+        active?: T;
         id?: T;
       };
   updatedAt?: T;
