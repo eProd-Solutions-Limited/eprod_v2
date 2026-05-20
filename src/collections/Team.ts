@@ -39,6 +39,9 @@ export const Team: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       label: 'Leadership member',
+      admin: {
+        description: 'Tick to show in the Leadership section; unticked members appear in the general Team section.',
+      },
     },
     {
       name: 'order',
