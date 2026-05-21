@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { PopupClient, type SerializedPopup } from "@/components/PopupClient";
+import { DemoRequestFAB } from "@/components/DemoRequestFAB";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
@@ -57,6 +58,7 @@ export default async function RootLayout({
         {children}
         <Footer />
         <PopupClient popups={popups} />
+        <DemoRequestFAB />
         <GoogleAnalytics gaId="G-PLACEHOLDER" />
       </body>
     </html>
