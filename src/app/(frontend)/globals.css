@@ -91,6 +91,11 @@
   --section-gray: 183 20% 8%;
 }
 
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @layer base {
   * {
     @apply border-border;

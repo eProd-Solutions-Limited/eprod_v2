@@ -15,7 +15,7 @@ function LogoContent({ logo, textClassName }: { logo: LogoEntry; textClassName: 
         alt={logo.image.alt ?? logo.name}
         width={logo.image.width ?? 120}
         height={logo.image.height ?? 60}
-        className="max-h-10 w-auto object-contain"
+        className="max-h-16 w-auto object-contain"
       />
     )
   }

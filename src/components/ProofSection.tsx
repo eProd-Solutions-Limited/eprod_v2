@@ -60,16 +60,34 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
           <p className="text-center text-sm text-muted-foreground mb-6">
             Trusted by leading agribusinesses in East Africa, West Africa, and beyond.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {agribusinessLogos.map((logo) => (
+          {agribusinessLogos.length > 0 && (
+            <div
+              className="overflow-hidden"
+              style={{
+                maskImage:
+                  'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+                WebkitMaskImage:
+                  'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+              }}
+            >
               <div
-                key={logo.id ?? logo.name}
-                className="px-6 py-3 rounded-lg bg-card border border-border flex items-center justify-center opacity-60 hover:opacity-100 transition"
+                className="flex items-center"
+                style={{
+                  animation: 'marquee 30s linear infinite',
+                  width: 'max-content',
+                }}
               >
-                <LogoCell logo={logo} textClassName="text-sm font-semibold text-muted-foreground" />
+                {[...agribusinessLogos, ...agribusinessLogos].map((logo, i) => (
+                  <div
+                    key={`${logo.id ?? logo.name}-${i}`}
+                    className="flex items-center justify-center mx-10 opacity-60 hover:opacity-100 transition-opacity duration-300"
+                  >
+                    <LogoCell logo={{ ...logo, image: logo.image ? { ...logo.image, width: (logo.image.width ?? 120) * 1.5, height: (logo.image.height ?? 60) * 1.5 } : undefined }} textClassName="text-base font-bold text-muted-foreground" />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 
