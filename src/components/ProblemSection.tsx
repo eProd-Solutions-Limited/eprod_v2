@@ -1,24 +1,31 @@
 'use client'
 
 import { useEffect } from 'react'
-import { Layers, ShieldAlert, TrendingDown } from "lucide-react";
+import Image, { StaticImageData } from 'next/image'
 import { gaEvents } from '@/lib/ga-events'
+import ledgerImg from '@/assets/Ledger.jpg'
+import euMarketImg from '@/assets/EU-market.webp'
+import marginErosionImg from '@/assets/Margin erosion.png'
 
-const problems = [
+const problems: { title: string; text: string; image: StaticImageData; imageAlt: string; contain?: boolean }[] = [
   {
-    icon: Layers,
     title: "Fragmentation",
     text: "Managing 500+ farmers means juggling spreadsheets, WhatsApp, and notebooks. Data is scattered. Insights are hidden.",
+    image: ledgerImg,
+    imageAlt: "Fragmented ledger records representing data silos",
   },
   {
-    icon: ShieldAlert,
     title: "Compliance Risk",
     text: "Export requirements are tightening. One missed farmer record or quality issue can mean failed certification and lost market access.",
+    image: euMarketImg,
+    imageAlt: "EU market representing compliance and export requirements",
   },
   {
-    icon: TrendingDown,
     title: "Margin Erosion",
     text: "Without visibility, waste goes undetected. Manual payments and inefficient communication with farmers cost you money every day.",
+    image: marginErosionImg,
+    imageAlt: "Declining margins illustrating cost inefficiencies",
+    contain: true,
   },
 ];
 
@@ -42,13 +49,20 @@ const ProblemSection = () => {
           {problems.map((p) => (
             <div
               key={p.title}
-              className="bg-card rounded-xl p-8 shadow-sm border border-border hover:shadow-md transition group"
+              className="bg-card rounded-xl overflow-hidden shadow-sm border border-border hover:shadow-md transition group"
             >
-              <div className="w-12 h-12 rounded-lg bg-secondary/15 flex items-center justify-center mb-5 group-hover:bg-secondary/25 transition">
-                <p.icon size={24} className="text-secondary" />
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={p.image}
+                  alt={p.imageAlt}
+                  fill
+                  className={`${p.contain ? 'object-contain' : 'object-cover'} group-hover:scale-105 transition-transform duration-500`}
+                />
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">{p.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{p.text}</p>
+              <div className="p-8">
+                <h3 className="text-xl font-bold text-foreground mb-3">{p.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{p.text}</p>
+              </div>
             </div>
           ))}
         </div>
