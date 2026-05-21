@@ -45,7 +45,7 @@ Three info rows (icon in `primary-lighter` pill + label + value):
 
 | Icon | Label | Value |
 |------|-------|-------|
-| MapPin | Nairobi, Kenya | eProd Solutions Headquarters, Westlands Business Park, 4th Floor, Ring Road, Nairobi |
+| MapPin | Nairobi, Kenya | Nairobi, Kenya |
 | Phone | Phone | +254 112 203 982 |
 | Mail | Email | info@eprod-solutions.com (clickable `mailto:`) |
 
@@ -57,8 +57,6 @@ Three info rows (icon in `primary-lighter` pill + label + value):
 | Twitter | `https://twitter.com/eProdSolutions` |
 | Facebook | `https://www.facebook.com/eProdSolutions` |
 | Youtube | `https://www.youtube.com/@eprodsolutionslimited3557` |
-
-**Map** — Google Maps iframe below social links, pinned to Nairobi, Kenya. Height ~200px, rounded corners. Use a standard embed URL (no API key required for basic iframe embed).
 
 ### Right: Enquiry Form
 
@@ -144,5 +142,6 @@ Page description: `Get in touch with the eProd team. Reach us in Nairobi, Kenya 
 ## Out of Scope
 
 - Payload CMS schema changes (phone/message stored in `notes`, no migration needed)
+- Embedded map (removed — address is text only)
 - Office hours display (not in the approved design)
 - Any new API routes

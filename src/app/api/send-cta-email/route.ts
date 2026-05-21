@@ -27,6 +27,11 @@ export async function POST(req: NextRequest) {
     await payload.sendEmail({ to, subject, html: content })
 
     try {
+      const notes = [
+        body.phone && `Phone: ${body.phone}`,
+        body.message && `Message: ${body.message}`,
+      ].filter(Boolean).join('\n\n')
+
       await payload.create({
         collection: 'enquiries',
         data: {
@@ -35,6 +40,7 @@ export async function POST(req: NextRequest) {
           challenge: body.challenge,
           sourceSection: body.sourceSection ?? 'unknown',
           status: 'new',
+          ...(notes && { notes }),
         },
       })
     } catch (saveError) {
