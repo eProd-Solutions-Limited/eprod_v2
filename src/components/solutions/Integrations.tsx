@@ -91,15 +91,15 @@ const Integrations = () => {
                 {cat.partners.map((partner) => (
                   <div
                     key={partner.name}
-                    className="flex items-center justify-center bg-white rounded-xl border border-border px-3 py-2 h-12 w-28"
+                    className="flex items-center justify-center px-3 py-2 h-14 w-32"
                     title={partner.name}
                   >
                     <Image
                       src={partner.logo}
                       alt={partner.name}
-                      width={96}
-                      height={32}
-                      style={{ width: 'auto', height: '32px' }}
+                      width={112}
+                      height={40}
+                      style={{ width: 'auto', height: '40px' }}
                       className="object-contain"
                     />
                   </div>
