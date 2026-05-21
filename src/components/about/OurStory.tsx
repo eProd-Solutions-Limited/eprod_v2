@@ -6,9 +6,6 @@ const OurStory = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
-            <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center mx-auto mb-5">
-              <Sprout size={28} className="text-primary-foreground" />
-            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Built from Necessity,{" "}
               <span className="gradient-primary-text">Forged in the Field</span>
