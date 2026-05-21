@@ -37,7 +37,7 @@ export default async function LeadershipTeam() {
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div className="grid md:grid-cols-4 gap-8 mx-auto">
                   {leaders.map((person: any) => (
                     <div key={person.id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
                       {person.photo?.url && (
