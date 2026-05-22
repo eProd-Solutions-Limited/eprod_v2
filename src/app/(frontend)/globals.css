@@ -96,6 +96,17 @@
   100% { transform: translateX(-50%); }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -227,5 +238,9 @@
 
   .section-gray {
     background-color: hsl(var(--section-gray));
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
   }
 }

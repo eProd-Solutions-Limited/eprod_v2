@@ -1,4 +1,7 @@
+"use client";
+
 import { MapPin, Cpu, Building2, ArrowRight } from "lucide-react";
+import { useInView } from "@/hooks/useInView";
 
 const steps = [
   {
@@ -31,10 +34,18 @@ const steps = [
 ];
 
 const DataFlow = () => {
+  const heading = useInView();
+  const cards = useInView();
+
   return (
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div
+          ref={heading.ref}
+          className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${
+            heading.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Data Flow</p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5 leading-tight">
             Transforming Raw Data into{" "}
@@ -46,10 +57,16 @@ const DataFlow = () => {
           </p>
         </div>
 
-        <div className="relative">
+        <div ref={cards.ref} className="relative">
           <div className="grid md:grid-cols-3 gap-6 lg:gap-4 relative">
             {steps.map((s, i) => (
-              <div key={s.title} className="relative">
+              <div
+                key={s.title}
+                className={`relative transition-all duration-500 ${
+                  cards.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: cards.inView ? `${i * 150}ms` : "0ms" }}
+              >
                 <div className="bg-card rounded-2xl p-7 border border-border h-full shadow-sm hover:shadow-lg transition">
                   <div className="flex items-center justify-between mb-5">
                     <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center">
