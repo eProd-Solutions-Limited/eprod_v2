@@ -18,7 +18,7 @@ const faqs = [
   {
     question: 'Which compliance standards does eProd support?',
     answer:
-      'EUDR, Organic, Fairtrade, Rainforest Alliance, GlobalG.A.P., and national traceability frameworks.',
+      'EUDR, Organic, Fairtrade, GlobalG.A.P., and national traceability frameworks.',
   },
   {
     question: 'Is eProd suitable for large and small agribusinesses?',

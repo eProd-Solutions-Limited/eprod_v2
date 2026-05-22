@@ -34,7 +34,7 @@ const faqSchema = {
       name: 'Can eProd handle certification audits?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. The platform stores all required data for Organic, Fairtrade, Rainforest Alliance, and EUDR audits.',
+        text: 'Yes. The platform stores all required data for Organic, Fairtrade and EUDR audits.',
       },
     },
   ],

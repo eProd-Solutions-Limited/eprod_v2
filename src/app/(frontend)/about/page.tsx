@@ -37,7 +37,7 @@ const aboutFaqSchema = {
       name: "Which compliance standards does eProd support?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "EUDR, Organic, Fairtrade, Rainforest Alliance, GlobalG.A.P., and national traceability frameworks.",
+        text: "EUDR, Organic, Fairtrade, GlobalG.A.P., and national traceability frameworks.",
       },
     },
     {
