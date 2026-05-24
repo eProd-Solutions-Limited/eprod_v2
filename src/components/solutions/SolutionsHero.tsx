@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ArrowRight, Layers } from "lucide-react";
-import desktopMobile from "@/assets/Desktop and Mobile.jpeg";
+import desktopMobile from "@/assets/Desktop and Mobile.png";
 
 const SolutionsHero = () => {
   return (

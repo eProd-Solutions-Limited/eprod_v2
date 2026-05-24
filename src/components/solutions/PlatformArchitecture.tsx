@@ -3,7 +3,7 @@
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
-import desktopMobile from "@/assets/Desktop and Mobile.jpeg";
+import desktopMobile from "@/assets/Desktop and Mobile.png";
 import phone from "@/assets/Phone.png";
 import dftgIntergation from "@/assets/DFTG-intergration.png";
 
