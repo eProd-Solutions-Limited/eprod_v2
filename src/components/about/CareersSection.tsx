@@ -41,20 +41,21 @@ export default async function CareersSection() {
       },
     },
     employmentType: job.type,
+    datePosted: new Date(job.createdAt).toISOString().split('T')[0],
   }))
 
   return (
-    <section className="bg-muted/30 py-20">
+    <>
       {jobPostingSchemas.map((schema: any, i: number) => (
         <script
-          key={i}
+          key={jobs[i].id}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+      <section className="bg-muted/30 py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-3">
             Careers
           </p>
@@ -75,50 +76,50 @@ export default async function CareersSection() {
               🚀 Fast-moving
             </span>
           </div>
-        </div>
 
-        {jobs.length === 0 ? (
-          <div className="max-w-md mx-auto text-center border-2 border-dashed border-border rounded-xl p-10">
-            <div className="text-4xl mb-4">🌾</div>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              No open roles right now — but great things grow slowly.
-            </h3>
-            <p className="text-muted-foreground text-sm mb-6">
-              Interested in joining us anyway? We&apos;d love to hear from you.
-            </p>
-            <a
-              href={`mailto:${FALLBACK_EMAIL}`}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition"
-            >
-              Email us at {FALLBACK_EMAIL} →
-            </a>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {jobs.map((job: any) => (
-              <article
-                key={job.id}
-                className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition"
+          {jobs.length === 0 ? (
+            <div className="max-w-md mx-auto text-center border-2 border-dashed border-border rounded-xl p-10">
+              <div className="text-4xl mb-4">🌾</div>
+              <h3 className="text-lg font-bold text-foreground mb-2">
+                No open roles right now — but great things grow slowly.
+              </h3>
+              <p className="text-muted-foreground text-sm mb-6">
+                Interested in joining us anyway? We&apos;d love to hear from you.
+              </p>
+              <a
+                href={`mailto:${FALLBACK_EMAIL}`}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:brightness-110 transition"
               >
-                <p className="text-xs font-bold uppercase tracking-widest text-secondary mb-2">
-                  {job.department}
-                </p>
-                <h3 className="text-lg font-bold text-foreground mb-1">{job.title}</h3>
-                <p className="text-sm text-muted-foreground mb-5">
-                  📍 {job.location} · {TYPE_LABELS[job.type] ?? job.type}
-                </p>
-                <a
-                  href={`mailto:${job.applyEmail || FALLBACK_EMAIL}?subject=Application for ${encodeURIComponent(job.title)}`}
-                  aria-label={`Apply for ${job.title}`}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:brightness-110 transition"
+                Email us at {FALLBACK_EMAIL} →
+              </a>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {jobs.map((job: any) => (
+                <article
+                  key={job.id}
+                  className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition"
                 >
-                  Apply →
-                </a>
-              </article>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+                  <p className="text-xs font-bold uppercase tracking-widest text-secondary mb-2">
+                    {job.department}
+                  </p>
+                  <h3 className="text-lg font-bold text-foreground mb-1">{job.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-5">
+                    📍 {job.location} · {TYPE_LABELS[job.type] ?? job.type}
+                  </p>
+                  <a
+                    href={`mailto:${job.applyEmail || FALLBACK_EMAIL}?subject=Application for ${encodeURIComponent(job.title)}`}
+                    aria-label={`Apply for ${job.title}`}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:brightness-110 transition"
+                  >
+                    Apply →
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   )
 }
