@@ -11,6 +11,7 @@ import AgFintechIdentity from "@/components/about/AgFintechIdentity";
 import MarketLeadership from "@/components/about/MarketLeadership";
 import BankPartnersAbout from "@/components/about/BankPartnersAbout";
 import LeadershipTeam from "@/components/about/LeadershipTeam";
+import CareersSection from "@/components/about/CareersSection";
 import AboutFAQ from "@/components/about/AboutFAQ";
 import AboutCTA from "@/components/about/AboutCTA";
 
@@ -69,6 +70,7 @@ const AboutUs = async () => {
       <MarketLeadership />
       <BankPartnersAbout bankLogos={bankLogos} />
       <LeadershipTeam />
+      <CareersSection />
       <AboutFAQ />
       <AboutCTA />
     </div>
