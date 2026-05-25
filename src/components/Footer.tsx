@@ -10,7 +10,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li><a href="/solutions" className="text-primary-foreground/80 hover:text-primary-foreground transition">Solutions</a></li>
               <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Features</a></li>
-              <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Pricing</a></li>
+              <li><a href="/sectors" className="text-primary-foreground/80 hover:text-primary-foreground transition">Sectors</a></li>
               <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Security</a></li>
             </ul>
           </div>

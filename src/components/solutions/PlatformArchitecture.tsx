@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import desktopMobile from "@/assets/Desktop and Mobile.png";
 import phone from "@/assets/Phone.png";
-import dftgIntergation from "@/assets/DFTG-intergration.png";
+import dftgIntergation from "@/assets/Intergrations.png";
 
 const pillars: {
   number: string;
@@ -60,7 +60,7 @@ const pillars: {
       "Webhooks for real-time data exchange",
     ],
     image: dftgIntergation,
-    imageClass: "object-contain p-6",
+    imageClass: "h-auto w-full object-contain",
     imageBg: "bg-white",
   },
 ];
