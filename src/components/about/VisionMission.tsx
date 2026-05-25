@@ -5,12 +5,12 @@ const VisionMission = () => {
     <section className="section-gray py-20">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-8 max-w-5xl mx-auto">
-          <div className="relative w-full h-72 rounded-xl overflow-hidden">
+          <div className="relative w-2/3 h-56 mx-auto rounded-xl overflow-hidden">
             <Image
               src="/logos/integrations/about-mission.jpeg"
               alt="eProd vision and mission"
               fill
-              className="object-cover"
+              className="object-contain"
             />
           </div>
 
