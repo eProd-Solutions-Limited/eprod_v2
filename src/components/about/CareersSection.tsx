@@ -76,6 +76,7 @@ export default async function CareersSection() {
               🚀 Fast-moving
             </span>
           </div>
+          </div>
 
           {jobs.length === 0 ? (
             <div className="max-w-md mx-auto text-center border-2 border-dashed border-border rounded-xl p-10">
