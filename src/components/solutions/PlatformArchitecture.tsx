@@ -1,7 +1,6 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import desktopMobile from "@/assets/Desktop and Mobile.png";
 import phone from "@/assets/Phone.png";
@@ -17,6 +16,7 @@ const pillars: {
   image: StaticImageData;
   imageClass: string;
   imageBg: string;
+  imagePadding: string;
 }[] = [
   {
     number: "01",
@@ -30,8 +30,9 @@ const pillars: {
       "Granular role-based access control",
     ],
     image: desktopMobile,
-    imageClass: "object-cover object-top",
+    imageClass: "object-contain",
     imageBg: "bg-gray-100",
+    imagePadding: "p-4",
   },
   {
     number: "02",
@@ -47,6 +48,7 @@ const pillars: {
     image: phone,
     imageClass: "object-contain",
     imageBg: "bg-gray-50",
+    imagePadding: "p-6",
   },
   {
     number: "03",
@@ -60,27 +62,15 @@ const pillars: {
       "Webhooks for real-time data exchange",
     ],
     image: dftgIntergation,
-    imageClass: "h-auto w-full object-contain",
+    imageClass: "object-contain",
     imageBg: "bg-white",
+    imagePadding: "p-4",
   },
 ];
 
 const PlatformArchitecture = () => {
-  const [active, setActive] = useState(0);
-  const [fading, setFading] = useState(false);
   const heading = useInView();
   const body = useInView();
-
-  const handleSelect = (i: number) => {
-    if (i === active) return;
-    setFading(true);
-    setTimeout(() => {
-      setActive(i);
-      setFading(false);
-    }, 180);
-  };
-
-  const pillar = pillars[active];
 
   return (
     <section className="bg-background py-20">
@@ -103,64 +93,45 @@ const PlatformArchitecture = () => {
 
         <div
           ref={body.ref}
-          className={`max-w-6xl mx-auto flex flex-col md:flex-row gap-6 lg:gap-10 transition-all duration-700 ${
+          className={`max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-700 ${
             body.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Left sticky nav */}
-          <div className="md:w-56 lg:w-64 shrink-0 md:sticky md:top-24 md:self-start flex flex-row md:flex-col gap-2">
-            {pillars.map((p, i) => (
-              <button
-                key={p.label}
-                onClick={() => handleSelect(i)}
-                className={`w-full text-left px-4 py-4 rounded-xl transition-all duration-200 cursor-pointer focus:outline-none ${
-                  i === active
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted hover:bg-primary-lighter text-foreground"
-                }`}
-              >
-                <span className={`block text-xs font-bold uppercase tracking-widest mb-1 ${i === active ? "text-secondary" : "text-muted-foreground"}`}>
-                  {p.number}
-                </span>
-                <span className="block text-sm font-bold">{p.label}</span>
-                <span className={`block text-xs mt-0.5 ${i === active ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
-                  {p.subtitle}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          {/* Right content */}
-          <div className="flex-1 min-w-0">
-            {/* Image */}
+          {pillars.map((pillar) => (
             <div
-              className={`relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-8 border border-border transition-opacity duration-180 ${pillar.imageBg} ${fading ? "opacity-0" : "opacity-100"}`}
+              key={pillar.label}
+              className="flex flex-col rounded-2xl border border-border bg-card overflow-hidden"
             >
-              <Image
-                key={active}
-                src={pillar.image}
-                alt={pillar.title}
-                fill
-                className={pillar.imageClass}
-                priority
-              />
-            </div>
+              {/* Image */}
+              <div className={`relative w-full h-72 ${pillar.imageBg} ${pillar.imagePadding}`}>
+                <Image
+                  src={pillar.image}
+                  alt={pillar.title}
+                  fill
+                  className={pillar.imageClass}
+                />
+              </div>
 
-            {/* Text */}
-            <div className={`transition-opacity duration-180 ${fading ? "opacity-0" : "opacity-100"}`}>
-              <p className="text-xs font-bold text-secondary uppercase tracking-widest mb-3">{pillar.label}</p>
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">{pillar.title}</h3>
-              <p className="text-muted-foreground leading-relaxed mb-8 max-w-2xl">{pillar.description}</p>
-              <ul className="space-y-3">
-                {pillar.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-sm text-foreground">
-                    <span className="mt-2 w-4 h-px bg-secondary shrink-0 inline-block" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
+              {/* Content */}
+              <div className="flex flex-col flex-1 p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs font-bold text-secondary uppercase tracking-widest">{pillar.number}</span>
+                  <span className="text-xs text-muted-foreground">{pillar.subtitle}</span>
+                </div>
+                <span className="text-xs font-bold text-secondary uppercase tracking-widest mb-1">{pillar.label}</span>
+                <h3 className="text-lg font-bold text-foreground mb-3 leading-snug">{pillar.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5">{pillar.description}</p>
+                <ul className="space-y-2 mt-auto">
+                  {pillar.features.map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-sm text-foreground">
+                      <span className="mt-2 w-4 h-px bg-secondary shrink-0 inline-block" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
