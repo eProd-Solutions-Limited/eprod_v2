@@ -17,7 +17,7 @@ export default async function LeadershipTeam() {
   const { docs: team } = await getTeam()
 
   const leaders = team.filter((p: any) => p.isLeadership)
-  const rest = team.filter((p: any) => !p.isLeadership)
+  const rest = team.filter((p: any) => !p.isLeadership).sort((a: any, b: any) => a.name.localeCompare(b.name))
 
   return (
     <section className="bg-background py-20">
