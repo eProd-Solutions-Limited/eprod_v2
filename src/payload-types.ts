@@ -77,6 +77,7 @@ export interface Config {
     categories: Category;
     enquiries: Enquiry;
     'case-studies-hero': CaseStudiesHero;
+    jobs: Job;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     enquiries: EnquiriesSelect<false> | EnquiriesSelect<true>;
     'case-studies-hero': CaseStudiesHeroSelect<false> | CaseStudiesHeroSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -623,6 +625,35 @@ export interface CaseStudiesHero {
   focalY?: number | null;
 }
 /**
+ * Open job listings shown on the About page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs".
+ */
+export interface Job {
+  id: number;
+  title: string;
+  /**
+   * e.g. Engineering, Product, Sales
+   */
+  department: string;
+  /**
+   * e.g. Nairobi, Remote
+   */
+  location: string;
+  type: 'FULL_TIME' | 'PART_TIME' | 'CONTRACT';
+  /**
+   * Optional. Defaults to careers@eprod-solutions.com if left blank.
+   */
+  applyEmail?: string | null;
+  /**
+   * Uncheck to hide this role without deleting it.
+   */
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -685,6 +716,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'case-studies-hero';
         value: number | CaseStudiesHero;
+      } | null)
+    | ({
+        relationTo: 'jobs';
+        value: number | Job;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1021,6 +1056,20 @@ export interface CaseStudiesHeroSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs_select".
+ */
+export interface JobsSelect<T extends boolean = true> {
+  title?: T;
+  department?: T;
+  location?: T;
+  type?: T;
+  applyEmail?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
