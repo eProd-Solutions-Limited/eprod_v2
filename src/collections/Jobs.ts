@@ -35,6 +35,15 @@ export const Jobs: CollectionConfig = {
       },
     },
     {
+      name: 'description',
+      type: 'textarea',
+      required: false,
+      label: 'Job Description',
+      admin: {
+        description: 'Optional brief description shown on the About page and in Google job search results.',
+      },
+    },
+    {
       name: 'type',
       type: 'select',
       required: true,

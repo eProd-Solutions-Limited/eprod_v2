@@ -42,6 +42,7 @@ export default async function CareersSection() {
     },
     employmentType: job.type,
     datePosted: new Date(job.createdAt).toISOString().split('T')[0],
+    ...(job.description ? { description: job.description } : {}),
   }))
 
   return (
@@ -50,7 +51,7 @@ export default async function CareersSection() {
         <script
           key={jobs[i].id}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/\//g, '\\/') }}
         />
       ))}
       <section className="bg-muted/30 py-20">
@@ -108,6 +109,9 @@ export default async function CareersSection() {
                   <p className="text-sm text-muted-foreground mb-5">
                     📍 {job.location} · {TYPE_LABELS[job.type] ?? job.type}
                   </p>
+                  {job.description && (
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{job.description}</p>
+                  )}
                   <a
                     href={`mailto:${job.applyEmail || FALLBACK_EMAIL}?subject=Application for ${encodeURIComponent(job.title)}`}
                     aria-label={`Apply for ${job.title}`}
