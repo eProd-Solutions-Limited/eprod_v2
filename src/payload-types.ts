@@ -641,6 +641,10 @@ export interface Job {
    * e.g. Nairobi, Remote
    */
   location: string;
+  /**
+   * Optional brief description shown on the About page and in Google job search results.
+   */
+  description?: string | null;
   type: 'FULL_TIME' | 'PART_TIME' | 'CONTRACT';
   /**
    * Optional. Defaults to careers@eprod-solutions.com if left blank.
@@ -1065,6 +1069,7 @@ export interface JobsSelect<T extends boolean = true> {
   title?: T;
   department?: T;
   location?: T;
+  description?: T;
   type?: T;
   applyEmail?: T;
   isActive?: T;

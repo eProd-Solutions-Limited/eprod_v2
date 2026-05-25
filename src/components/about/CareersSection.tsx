@@ -66,22 +66,10 @@ export default async function CareersSection() {
           <p className="text-muted-foreground text-base max-w-2xl mx-auto mb-6">
             We&apos;re a mission-driven team building the infrastructure for African agriculture. Join us.
           </p>
-          <div className="flex flex-wrap gap-2 justify-center">
-            <span className="bg-secondary/10 text-secondary rounded-full px-4 py-1.5 text-sm font-semibold">
-              🌱 Impact-driven
-            </span>
-            <span className="bg-secondary/10 text-secondary rounded-full px-4 py-1.5 text-sm font-semibold">
-              🌍 Pan-African
-            </span>
-            <span className="bg-secondary/10 text-secondary rounded-full px-4 py-1.5 text-sm font-semibold">
-              🚀 Fast-moving
-            </span>
-          </div>
           </div>
 
           {jobs.length === 0 ? (
             <div className="max-w-md mx-auto text-center border-2 border-dashed border-border rounded-xl p-10">
-              <div className="text-4xl mb-4">🌾</div>
               <h3 className="text-lg font-bold text-foreground mb-2">
                 No open roles right now — but great things grow slowly.
               </h3>
@@ -107,7 +95,7 @@ export default async function CareersSection() {
                   </p>
                   <h3 className="text-lg font-bold text-foreground mb-1">{job.title}</h3>
                   <p className="text-sm text-muted-foreground mb-5">
-                    📍 {job.location} · {TYPE_LABELS[job.type] ?? job.type}
+                    {job.location} · {TYPE_LABELS[job.type] ?? job.type}
                   </p>
                   {job.description && (
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{job.description}</p>
