@@ -80,7 +80,7 @@ export function DemoRequestFAB() {
         className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-secondary px-5 py-3.5 text-sm font-bold text-secondary-foreground shadow-lg hover:brightness-105 active:scale-95 transition-all duration-150"
       >
         <CalendarCheck size={18} strokeWidth={2.5} />
-        <span className="hidden sm:inline">Request a Demo</span>
+        <span className="hidden sm:inline">Contact Us</span>
       </button>
 
       {/* Overlay */}
@@ -95,9 +95,9 @@ export function DemoRequestFAB() {
             {/* Header */}
             <div className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-border">
               <div>
-                <h2 className="text-xl font-bold text-foreground">Request a Demo</h2>
+                <h2 className="text-xl font-bold text-foreground">Contact Us</h2>
                 <p className="text-sm text-muted-foreground mt-0.5">
-                  See eProd in action — we&apos;ll reach out to schedule your session.
+                  Have questions or want to learn more? Reach out to our team.
                 </p>
               </div>
               <button
@@ -214,7 +214,7 @@ export function DemoRequestFAB() {
                     disabled={loading}
                     className="w-full rounded-full bg-secondary py-3 text-sm font-bold text-secondary-foreground hover:brightness-105 transition shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
                   >
-                    {loading ? "Submitting..." : <>Book My Demo <span aria-hidden>→</span></>}
+                    {loading ? "Submitting..." : <> Contact Us <span aria-hidden>→</span></>}
                   </button>
 
                   {status === "error" && (
