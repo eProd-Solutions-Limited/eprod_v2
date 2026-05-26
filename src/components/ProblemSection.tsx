@@ -5,7 +5,7 @@ import Image, { StaticImageData } from 'next/image'
 import { gaEvents } from '@/lib/ga-events'
 import ledgerImg from '@/assets/Ledger.jpg'
 import euMarketImg from '@/assets/EU-market.webp'
-import marginErosionImg from '@/assets/Margin erosion.png'
+import marginErosionImg from '@/assets/margin erosin.png'
 
 const problems: { title: string; text: string; image: StaticImageData; imageAlt: string; contain?: boolean }[] = [
   {
@@ -24,8 +24,8 @@ const problems: { title: string; text: string; image: StaticImageData; imageAlt:
     title: "Margin Erosion",
     text: "Without visibility, waste goes undetected. Manual payments and inefficient communication with farmers cost you money every day.",
     image: marginErosionImg,
-    imageAlt: "Declining margins illustrating cost inefficiencies",
-    contain: true,
+      imageAlt: "Declining margins illustrating cost inefficiencies",
+      contain: true,
   },
 ];
 
