@@ -2,7 +2,7 @@ const ContactHero = () => {
   return (
     <section
       className="relative py-32 md:py-48 bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/steps/optimize.png')" }}
+      style={{ backgroundImage: "url('/steps/Optimize.png')" }}
     >
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10 container mx-auto px-4 text-center">
