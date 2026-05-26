@@ -1,17 +1,16 @@
 import Image, { type StaticImageData } from 'next/image'
 import coffeeImg from '@/assets/eprod-coffee-clients.jpg'
-import farmerImg from '@/assets/hero-farmer.jpg'
-import heroImg from '@/assets/hero_image.png'
 import horticultureImg from '@/assets/Horticulture-eprod.jpg'
-import dairyImg from '@/assets/Value-chains-eProd-Solutions-Dairy.webp'
+import dairyImg from '@/assets/cow.jpg'
 import seedsImg from '@/assets/Seed-producers-eprod.jpg'
 import spicesImg from '@/assets/Value-chain-eProd-Solutions-spices.jpg'
 import grainsImg from '@/assets/grains.jpg'
 import nutsImg from '@/assets/Value-chain-eProd-Solutions-nuts.jpg'
 import apicultureImg from '@/assets/Value-chain-eProd-Solutions-apiculture.jpg'
-import piscicultureImg from '@/assets/Value-chains-eProd-Solutions-Fish.webp'
-import poultryImg from '@/assets/Value-chain-eProd-Solutions-Ltd-poultry.jpg'
+import piscicultureImg from '@/assets/Fish.jpg'
+import poultryImg from '@/assets/poultry.jpg'
 import palmoilImg from '@/assets/Palm-oil-eProd-Products.jpg'
+import rubberTreeImg from '@/assets/rubber-tree.jpg'
 
 type Sector = {
   name: string
@@ -109,6 +108,14 @@ const sectors: Sector[] = [
       "Hatchlings are fully traceable and distributed to farmers on loan with feed. Covers vaccination scheduling, survival tracking, and egg/broiler purchasing through to complete feed production management.",
     features: ['Hatchery Management', 'Vaccination Scheduling', 'Survival Rate Tracking', 'Broiler Purchasing', 'Feed Production'],
     image: poultryImg,
+  },
+  {
+    name: 'Rubber & Gum',
+    color: '#4A7C2F',
+    description:
+      'Rubber and gum producers manage large smallholder tapping networks. eProd tracks individual tree blocks, tapping schedules, and latex volumes. Quality grading at collection points drives differential payments and full chain traceability.',
+    features: ['Tree Block Mapping', 'Tapping Schedules', 'Latex Collection', 'Quality Grading', 'Differential Payments'],
+    image: rubberTreeImg,
   },
 ]
 

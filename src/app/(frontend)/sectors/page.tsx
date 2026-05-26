@@ -7,11 +7,11 @@ import SectorsFAQ from '@/components/sectors/SectorsFAQ'
 export const metadata: Metadata = {
   title: 'Sectors We Serve | eProd — Agricultural Cooperative Management',
   description:
-    'Tailored solutions for coffee, cocoa, horticulture, dairy, seeds, grains, spices, nuts, apiculture, pisciculture, and poultry agribusinesses. Traceability, EUDR compliance, and automated payments.',
+    'Tailored solutions for coffee, cocoa, horticulture, dairy, seeds, grains, spices, nuts, apiculture, pisciculture, poultry, and rubber & gum agribusinesses. Traceability, EUDR compliance, and automated payments.',
   openGraph: {
     title: 'Sectors We Serve — Tailored Solutions for Every Value Chain | eProd',
     description:
-      'Tailored solutions for coffee, cocoa, horticulture, dairy, seeds, grains, spices, nuts, apiculture, pisciculture, and poultry agribusinesses. Traceability, EUDR compliance, and automated payments.',
+      'Tailored solutions for coffee, cocoa, horticulture, dairy, seeds, grains, spices, nuts, apiculture, pisciculture, poultry, and rubber & gum agribusinesses. Traceability, EUDR compliance, and automated payments.',
     type: 'website',
     siteName: 'eProd',
   },
@@ -56,6 +56,7 @@ const itemListSchema = {
     { '@type': 'ListItem', position: 9, name: 'Oil & Tree Crops' },
     { '@type': 'ListItem', position: 10, name: 'Pisciculture' },
     { '@type': 'ListItem', position: 11, name: 'Poultry' },
+    { '@type': 'ListItem', position: 12, name: 'Rubber & Gum' },
   ],
 }
 
