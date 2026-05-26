@@ -3,7 +3,7 @@ import { cache } from 'react'
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
 
-const FALLBACK_EMAIL = 'careers@eprod-solutions.com'
+const FALLBACK_EMAIL = 'hr@eprod-solutions.com'
 
 const getJobs = cache(async () => {
   const payload = await getPayload({ config: payloadConfig })
