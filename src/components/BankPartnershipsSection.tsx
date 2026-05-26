@@ -64,11 +64,11 @@ const BankPartnershipsSection = ({ bankLogos = [] }: { bankLogos?: LogoEntry[] }
           <p className="text-sm text-muted-foreground mb-6 font-medium uppercase tracking-wider">
             Trusted by Leading Financial Institutions
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-6">
+          <div className="flex flex-nowrap items-center justify-center gap-6">
             {bankLogos.map((logo) => (
               <div
                 key={logo.id ?? logo.name}
-                className="px-6 py-3 rounded-lg bg-card border border-border flex items-center justify-center opacity-60 hover:opacity-100 transition"
+                className="px-6 py-3 rounded-lg bg-card flex items-center justify-center opacity-60 hover:opacity-100 transition"
               >
                 <LogoCell logo={logo} textClassName="text-sm font-semibold text-muted-foreground" />
               </div>
