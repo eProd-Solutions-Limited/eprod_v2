@@ -57,7 +57,7 @@
   --radius: 0.5rem;
   --gradient-primary: linear-gradient(135deg, hsl(183, 97%, 18%), hsl(183, 38%, 42%));
   --gradient-primary-horizontal: linear-gradient(90deg, hsl(183, 97%, 18%), hsl(183, 38%, 42%));
-  --section-gray: 210 20% 97.5%;
+  --section-gray: 210 20% 94%;
   --sidebar-background: 0 0% 98%;
   --sidebar-foreground: 240 5.3% 26.1%;
   --sidebar-primary: 240 5.9% 10%;
