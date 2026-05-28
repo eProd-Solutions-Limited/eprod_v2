@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { MapPin, Phone, Mail, LinkedinIcon, XIcon, FacebookIcon, YoutubeIcon } from "lucide-react"
 import { gaEvents } from "@/lib/ga-events"
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const socialLinks = [
   {
@@ -76,8 +77,9 @@ const ContactForm = () => {
     "w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
 
   return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="relative overflow-hidden py-16 bg-background">
+      <CircleBackground />
+      <div className="relative z-10 container mx-auto px-4">
         <div className="grid md:grid-cols-[1fr_1.6fr] gap-12 items-start">
 
           {/* Left — Contact info */}
