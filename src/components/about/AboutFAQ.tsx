@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { gaEvents } from '@/lib/ga-events'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const faqs = [
   {
@@ -32,8 +33,9 @@ const AboutFAQ = () => {
   }, [])
 
   return (
-    <section className="section-gray py-20">
-      <div className="container mx-auto px-4">
+    <section className="section-gray py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto">
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-4 text-center">
             FAQ

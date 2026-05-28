@@ -1,4 +1,5 @@
 import { Linkedin } from "lucide-react";
+import { CircleBackground } from '@/components/ui/CircleBackground'
 import Image from "next/image";
 import { cache } from 'react'
 import { getPayload } from 'payload'
@@ -20,8 +21,9 @@ export default async function LeadershipTeam() {
   const rest = team.filter((p: any) => !p.isLeadership).sort((a: any, b: any) => a.name.localeCompare(b.name))
 
   return (
-    <section className="bg-background py-20">
-      <div className="container mx-auto px-4">
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
 
         {(leaders.length > 0 || rest.length > 0) && (
           <>

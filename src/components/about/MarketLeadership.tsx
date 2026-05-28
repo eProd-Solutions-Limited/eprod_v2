@@ -1,4 +1,5 @@
 import { Users, Building2, Globe, Layers, ShieldCheck } from "lucide-react";
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const metrics = [
   { icon: Users, value: "1,000,000+", label: "Farmers Managed", description: "on our platform" },
@@ -10,8 +11,9 @@ const metrics = [
 
 const MarketLeadership = () => {
   return (
-    <section className="bg-background py-20">
-      <div className="container mx-auto px-4">
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-14 max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Market Leadership{" "}

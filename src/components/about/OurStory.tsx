@@ -1,9 +1,11 @@
 import { Sprout } from "lucide-react";
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const OurStory = () => {
   return (
-    <section className="bg-background py-20">
-      <div className="container mx-auto px-4">
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">

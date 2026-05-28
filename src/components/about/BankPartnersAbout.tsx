@@ -1,4 +1,5 @@
 import { Landmark } from "lucide-react";
+import { CircleBackground } from '@/components/ui/CircleBackground'
 import { LogoCell } from "@/components/LogoCell";
 import type { LogoEntry } from "@/components/LogoCell";
 
@@ -8,8 +9,9 @@ interface BankPartnersAboutProps {
 
 const BankPartnersAbout = ({ bankLogos }: BankPartnersAboutProps) => {
   return (
-    <section className="section-gray py-20">
-      <div className="container mx-auto px-4 text-center">
+    <section className="section-gray py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 text-center relative z-10">
         <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center mx-auto mb-5">
           <Landmark size={28} className="text-primary-foreground" />
         </div>
