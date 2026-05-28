@@ -2,9 +2,9 @@ import { Database, ShieldCheck, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
 
 const regulatorLogos = [
-  { src: '/logos/fairtrade.jpeg', alt: 'Fairtrade', width: 80, height: 40 },
-  { src: '/logos/global gap.jpeg', alt: 'GlobalGAP', width: 80, height: 40 },
-  { src: '/logos/USDA.jpeg', alt: 'USDA', width: 80, height: 40 },
+  { src: '/logos/fairtrade.jpeg', alt: 'Fairtrade', width: 140, height: 70 },
+  { src: '/logos/global gap.jpeg', alt: 'GlobalGAP', width: 140, height: 70 },
+  { src: '/logos/USDA.jpeg', alt: 'USDA', width: 140, height: 70 },
 ]
 
 export function DifferentiatorBanner() {
@@ -55,20 +55,16 @@ export function DifferentiatorBanner() {
 
           {/* Regulator-Ready */}
           <div className="bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 rounded-2xl p-6 flex flex-col">
-           <div className="mt-auto grid grid-cols-2 gap-3">
+           <div className="my-auto flex items-center justify-around gap-4 py-4">
               {regulatorLogos.map((logo) => (
-                <div
+                <Image
                   key={logo.alt}
-                  className="bg-primary-foreground/90 rounded-lg p-2 flex items-center justify-center"
-                >
-                  <Image
-                    src={logo.src}
-                    alt={logo.alt}
-                    width={logo.width}
-                    height={logo.height}
-                    className="max-h-8 w-auto object-contain"
-                  />
-                </div>
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className="max-h-16 w-auto object-contain"
+                />
               ))}
             </div>
             <h3 className="text-lg font-bold text-primary-foreground mb-2">Regulator-Ready</h3>
