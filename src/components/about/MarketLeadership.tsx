@@ -1,11 +1,11 @@
-import { Users, Building2, Globe, Layers, ShieldCheck } from "lucide-react";
+import { Users, Building2, Globe, Clock, Banknote } from "lucide-react";
 
 const metrics = [
-  { icon: Users, value: "1,000,000+", label: "Farmers Managed", description: "on our platform" },
-  { icon: Building2, value: "250+", label: "Clients", description: "agribusinesses & cooperatives" },
-  { icon: Globe, value: "20+", label: "Countries", description: "across Africa" },
-  { icon: Layers, value: "30+", label: "Sectors", description: "served" },
-  { icon: ShieldCheck, value: "95%+", label: "Retention Rate", description: "deep product-market fit" },
+  { icon: Users, value: "1M+", label: "Farmers digitalized", description: "" },
+  { icon: Building2, value: "250+", label: "Agribusiness Clients", description: "" },
+  { icon: Globe, value: "20+", label: "Countries", description: "" },
+  { icon: Clock, value: "15+", label: "Years of Experience", description: "" },
+  { icon: Banknote, value: "Millions", label: "in Loans De-risked Annually", description: "" },
 ];
 
 const MarketLeadership = () => {

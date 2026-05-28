@@ -11,7 +11,8 @@ import eudrLogo from '@/assets/EUDR.png'
 import organicLogo from '@/assets/eu-organic-logo-600x400_0.png'
 import fairtradeLogoSrc from '@/assets/Fairtrade-Logo.jpg'
 import financeImage from '@/assets/Finance-2.png'
-import supplyChainImage from '@/assets/supply-chain-digitalisation.png'
+import supplyChainImage from '@/assets/From farm to market Fully digitalized.png'
+import traceabilityImage from '@/assets/Traceability & Compliance 2.png'
 
 const impactMetrics = [
   { value: '1M+', label: 'Farmers digitalized' },
@@ -134,38 +135,15 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-border pt-6 flex flex-col gap-4">
-                <div className="grid grid-cols-3 gap-2">
-                  {complianceLogos.map((logo) => (
-                    <div
-                      key={logo.alt}
-                      className="bg-card rounded-lg p-2.5 flex items-center justify-center h-16"
-                    >
-                      <Image
-                        src={logo.src}
-                        alt={logo.alt}
-                        width={80}
-                        height={40}
-                        className="object-contain max-h-full max-w-full"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="bg-card rounded-xl p-4 flex items-center gap-4">
-                  <QRCodeSVG value="http://whoproducedthis.info/" size={72} level="M" />
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-1">
-                      Trace your product
-                    </p>
-                    <a
-                      href="http://whoproducedthis.info/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-mono text-primary hover:underline"
-                    >
-                      whoproducedthis.info
-                    </a>
-                  </div>
+              <div className="border-t border-border pt-6 mt-auto">
+                <div className="relative aspect-[3/2] rounded-xl overflow-hidden border border-border">
+                  <Image
+                    src={traceabilityImage}
+                    alt="Traceability & Compliance"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
               </div>
             </div>
@@ -195,14 +173,14 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-border pt-6 flex-1">
-                <div className="rounded-xl overflow-hidden border border-border">
+              <div className="border-t border-border pt-6 mt-auto">
+                <div className="relative aspect-[3/2] rounded-xl overflow-hidden border border-border">
                   <Image
                     src={financeImage}
                     alt="Financial Inclusion Engine"
-                    width={480}
-                    height={320}
-                    className="object-contain w-full h-auto"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>
               </div>
@@ -233,13 +211,13 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
                   </li>
                 ))}
               </ul>
-              <div className="border-t border-border pt-6 flex-1">
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border">
+              <div className="border-t border-border pt-6 mt-auto">
+                <div className="relative aspect-[3/2] rounded-xl overflow-hidden border border-border">
                   <Image
                     src={supplyChainImage}
                     alt="Supply Chain Digitization"
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 </div>

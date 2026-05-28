@@ -25,7 +25,7 @@ const problems: { title: string; text: string; image: StaticImageData; imageAlt:
     text: "Without visibility, waste goes undetected. Manual payments and inefficient communication with farmers cost you money every day.",
     image: marginErosionImg,
       imageAlt: "Declining margins illustrating cost inefficiencies",
-      contain: true,
+      contain: false,
   },
 ];
 
