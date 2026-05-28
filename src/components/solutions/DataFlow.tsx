@@ -2,6 +2,7 @@
 
 import { MapPin, Cpu, Building2, ArrowRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
+import { CircleBackground } from '@/components/ui/CircleBackground';
 
 const steps = [
   {
@@ -38,8 +39,9 @@ const DataFlow = () => {
   const cards = useInView();
 
   return (
-    <section className="section-gray py-20">
-      <div className="container mx-auto px-4">
+    <section className="section-gray py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div
           ref={heading.ref}
           className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${

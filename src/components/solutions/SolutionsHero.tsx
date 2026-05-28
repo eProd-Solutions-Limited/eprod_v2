@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRight, Layers } from "lucide-react";
 import desktopMobile from "@/assets/Desktop and Mobile.png";
+import { CircleBackground } from '@/components/ui/CircleBackground';
 
 const SolutionsHero = () => {
   return (
@@ -17,8 +18,14 @@ const SolutionsHero = () => {
         {/* Left-to-right gradient: opaque brand color on left, fades to semi-transparent on right */}
         <div className="absolute inset-0 bg-linear-to-r from-primary via-primary/92 to-primary/40" />
       </div>
+      <CircleBackground variant="dark" />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(0 0% 100%)', borderRadius: '60px 0 0 0' }}
+      />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-2xl">
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 mb-6 animate-fade-in-up"

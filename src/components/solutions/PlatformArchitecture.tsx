@@ -5,6 +5,7 @@ import { useInView } from "@/hooks/useInView";
 import desktopMobile from "@/assets/Desktop and Mobile.png";
 import phone from "@/assets/Phone.png";
 import dftgIntergation from "@/assets/Intergrations.png";
+import { CircleBackground } from '@/components/ui/CircleBackground';
 
 const pillars: {
   number: string;
@@ -73,8 +74,9 @@ const PlatformArchitecture = () => {
   const body = useInView();
 
   return (
-    <section className="bg-background py-20">
-      <div className="container mx-auto px-4">
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div
           ref={heading.ref}
           className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${
