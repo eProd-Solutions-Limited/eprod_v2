@@ -8,7 +8,7 @@ const chains = [
 
 const ValueChainBlock = () => (
   <section
-    className="gradient-primary py-16 relative overflow-hidden"
+    className="gradient-primary py-40 relative overflow-hidden"
     aria-label="Value chains supported by eProd"
   >
     <div
