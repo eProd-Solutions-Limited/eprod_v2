@@ -6,7 +6,6 @@ import payloadConfig from '@/payload.config'
 import AboutHero from "@/components/about/AboutHero";
 import VisionMission from "@/components/about/VisionMission";
 import OurStory from "@/components/about/OurStory";
-import MeetTheFounders from "@/components/about/MeetTheFounders";
 import AgFintechIdentity from "@/components/about/AgFintechIdentity";
 import MarketLeadership from "@/components/about/MarketLeadership";
 import BankPartnersAbout from "@/components/about/BankPartnersAbout";
@@ -70,7 +69,6 @@ const AboutUs = async () => {
       <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_GRAY} />
       <VisionMission />
       <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />
-      <MeetTheFounders />
       <OurStory />
       <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_GRAY} />
       <AgFintechIdentity />
