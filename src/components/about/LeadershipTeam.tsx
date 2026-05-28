@@ -20,7 +20,7 @@ export default async function LeadershipTeam() {
   const rest = team.filter((p: any) => !p.isLeadership).sort((a: any, b: any) => a.name.localeCompare(b.name))
 
   return (
-    <section className="bg-background py-20">
+    <section id="team" className="bg-background py-20">
       <div className="container mx-auto px-4">
 
         {(leaders.length > 0 || rest.length > 0) && (
