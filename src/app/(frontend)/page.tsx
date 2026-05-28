@@ -9,6 +9,7 @@ import HowItWorksSection from '@/components/HowItWorksSection'
 import TestimonialsSection from '@/components/TestimonialsSection'
 import DifferentiationSection from '@/components/DifferentiationSection'
 import ProductShowcaseSection from '@/components/ProductShowcaseSection'
+import VideoHighlightsSection from '@/components/VideoHighlightsSection'
 import TeamBannerSection from '@/components/TeamBannerSection'
 import FAQSection from '@/components/FAQSection'
 import CTASection from '@/components/CTASection'
@@ -132,6 +133,7 @@ export default async function IndexPage() {
       <DifferentiationSection />
       {/* Differentiation (white) → FAQ (white) — same bg, no scoop */}
       <ProductShowcaseSection />
+      <VideoHighlightsSection />
       <TeamBannerSection />
       <FAQSection />
       <CTASection />
