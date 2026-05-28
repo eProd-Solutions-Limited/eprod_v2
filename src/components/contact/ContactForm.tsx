@@ -12,11 +12,6 @@ const socialLinks = [
     icon: LinkedinIcon,
   },
   {
-    label: "Twitter",
-    href: "https://twitter.com/eProdSolutions",
-    icon: XIcon,
-  },
-  {
     label: "Facebook",
     href: "https://www.facebook.com/eProdSolutions",
     icon: FacebookIcon,
