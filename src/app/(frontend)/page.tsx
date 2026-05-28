@@ -11,6 +11,11 @@ import DifferentiationSection from "@/components/DifferentiationSection";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import { faqs } from "@/data/faqs";
+import { SectionScoop } from "@/components/ui/SectionScoop"
+
+const BG_WHITE = 'hsl(0 0% 100%)'
+const BG_GRAY  = 'hsl(210 20% 97.5%)'
+const BG_TEAL  = 'hsl(183 97% 18%)'
 
 export const dynamic = 'force-dynamic'
 
@@ -103,14 +108,29 @@ export default async function IndexPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <HeroSection />
+      {/* white → gray */}
+      <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_GRAY} />
       <ProblemSection />
+      {/* gray → white */}
+      <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />
       <SolutionSection />
+      {/* white → gray */}
+      <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_GRAY} />
       <BankPartnershipsSection bankLogos={bankLogos} />
+      {/* BankPartnerships (gray) → ProofSection first subsection (gray) — same bg, no scoop */}
       <ProofSection agribusinessLogos={agribusinessLogos} />
+      {/* ProofSection second subsection (white) → HowItWorks (white) — same bg, no scoop */}
       <HowItWorksSection />
+      {/* white → gray */}
+      <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_GRAY} />
       <TestimonialsSection quotes={vocQuotes} />
+      {/* gray → white */}
+      <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />
       <DifferentiationSection />
+      {/* Differentiation (white) → FAQ (white) — same bg, no scoop */}
       <FAQSection />
+      {/* white → teal */}
+      <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_TEAL} />
       <CTASection />
     </div>
   );
