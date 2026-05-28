@@ -6,6 +6,9 @@ import { QRCodeSVG } from 'qrcode.react'
 import { LogoCell } from '@/components/LogoCell'
 import type { LogoEntry } from '@/components/LogoCell'
 import { gaEvents } from '@/lib/ga-events'
+import { useInView } from '@/hooks/useInView'
+import { CircleBackground } from '@/components/ui/CircleBackground'
+import { SectionScoop } from '@/components/ui/SectionScoop'
 
 import eudrLogo from '@/assets/EUDR.png'
 import organicLogo from '@/assets/eu-organic-logo-600x400_0.png'
@@ -33,15 +36,30 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
     gaEvents.viewPage('home_proof', 'proof')
   }, [])
 
+  const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.25 })
+
   return (
     <>
       {/* ── Trust & Metrics ──────────────────────────────────────────────────── */}
-      <section className="section-gray py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14">
-            Trusted by <span className="gradient-primary-text">250+ Agribusinesses</span> to manage
-            1M+ farmers Across 20 Countries
-          </h2>
+      <section className="section-gray py-20 relative">
+        <CircleBackground />
+        <div className="container mx-auto px-4 relative z-10">
+          <div ref={headingRef} className="relative mb-14">
+            <div
+              className={`pointer-events-none absolute left-6 top-0 h-9 w-9 rounded-full border border-primary/20 circle-reveal${headingInView ? ' is-visible' : ''}`}
+              style={{ transitionDelay: '0ms' }}
+              aria-hidden="true"
+            />
+            <div
+              className={`pointer-events-none absolute left-2 -top-2 h-14 w-14 rounded-full border border-primary/15 circle-reveal${headingInView ? ' is-visible' : ''}`}
+              style={{ transitionDelay: '150ms' }}
+              aria-hidden="true"
+            />
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14">
+              Trusted by <span className="gradient-primary-text">250+ Agribusinesses</span> to manage
+              1M+ farmers Across 20 Countries
+            </h2>
+          </div>
 
           {/* Impact Metrics */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto mb-16">
@@ -91,10 +109,13 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
           )}
         </div>
       </section>
+      {/* gray → white internal transition */}
+      <SectionScoop direction="left" fromBg="hsl(210 20% 91%)" nextBg="hsl(0 0% 100%)" />
 
       {/* ── Value Proposition — Layout E (minimal type-first) ───────────────── */}
-      <section className="bg-background py-20">
-        <div className="container mx-auto px-4">
+      <section className="bg-background py-20 relative">
+        <CircleBackground />
+        <div className="container mx-auto px-4 relative z-10">
 
           {/* Section header */}
           <div className="text-center mb-16">
