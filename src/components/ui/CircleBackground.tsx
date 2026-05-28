@@ -14,9 +14,9 @@ export function CircleBackground({ variant = 'light' }: Props) {
         style={{
           top: '8%',
           right: '6%',
-          width: 160,
-          height: 160,
-          background: isLight ? 'rgba(2, 85, 90, 0.18)' : 'rgba(255, 255, 255, 0.10)',
+          width: 110,
+          height: 110,
+          background: isLight ? 'rgba(2, 85, 90, 0.15)' : 'rgba(255, 255, 255, 0.12)',
           filter: 'blur(40px)',
         }}
       />
@@ -25,10 +25,10 @@ export function CircleBackground({ variant = 'light' }: Props) {
         style={{
           bottom: '12%',
           left: '5%',
-          width: 120,
-          height: 120,
-          background: isLight ? 'rgba(139, 180, 58, 0.20)' : 'rgba(139, 180, 58, 0.18)',
-          filter: 'blur(32px)',
+          width: 80,
+          height: 80,
+          background: isLight ? 'rgba(139, 180, 58, 0.11)' : 'rgba(139, 180, 58, 0.10)',
+          filter: 'blur(24px)',
         }}
       />
     </div>
