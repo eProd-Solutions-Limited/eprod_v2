@@ -1,25 +1,43 @@
 'use client'
 
 import { useEffect } from 'react'
-import { ArrowRight, Download } from "lucide-react";
-import heroImage from "@/assets/Homepage image.jpg.jpeg";
-import Image from "next/image";
+import { ArrowRight } from "lucide-react"
+import heroImage from "@/assets/Homepage image.jpg.jpeg"
+import Image from "next/image"
 import { gaEvents } from '@/lib/ga-events'
+import { useInView } from '@/hooks/useInView'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const HeroSection = () => {
   useEffect(() => {
     gaEvents.viewPage('home_hero', 'hero')
   }, [])
 
+  const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.25 })
+
   return (
-    <section id="home" className="bg-background">
-      <div className="container mx-auto px-4 py-16 md:py-24">
+    <section id="home" className="bg-background relative">
+      <CircleBackground />
+      <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-foreground">
-              De-Risk Your Supply Chain.{" "}
-              <span className="gradient-primary-text">Unlock Your Capital.</span>
-            </h1>
+            {/* Ring accent on heading — reveals when heading enters viewport */}
+            <div ref={headingRef} className="relative">
+              <div
+                className={`pointer-events-none absolute left-6 top-0 h-9 w-9 rounded-full border border-primary/20 circle-reveal${headingInView ? ' is-visible' : ''}`}
+                style={{ transitionDelay: '0ms' }}
+                aria-hidden="true"
+              />
+              <div
+                className={`pointer-events-none absolute left-2 -top-2 h-14 w-14 rounded-full border border-primary/15 circle-reveal${headingInView ? ' is-visible' : ''}`}
+                style={{ transitionDelay: '150ms' }}
+                aria-hidden="true"
+              />
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-foreground">
+                De-Risk Your Supply Chain.{" "}
+                <span className="gradient-primary-text">Unlock Your Capital.</span>
+              </h1>
+            </div>
             <h2 className="text-lg md:text-xl text-muted-foreground leading-relaxed">
               eProd helps agribusinesses manage 1,000+ farmers, ensure traceability, de-risk lending for financial partners, and reduce waste—all in one affordable platform.
             </h2>
@@ -45,13 +63,16 @@ const HeroSection = () => {
                 priority
               />
             </div>
-            <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-full bg-secondary/20 blur-2xl" />
-            <div className="absolute -top-4 -right-4 w-32 h-32 rounded-full bg-primary/10 blur-2xl" />
+            {/* Subtle ring outline around the image */}
+            <div
+              className="pointer-events-none absolute -inset-2.5 rounded-3xl border border-primary/10"
+              aria-hidden="true"
+            />
           </div>
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default HeroSection;
+export default HeroSection
