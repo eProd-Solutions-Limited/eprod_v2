@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 interface QuoteEntry {
   id?: string | number
@@ -24,8 +25,9 @@ export function VoiceOfCustomer({ quotes }: VoiceOfCustomerProps) {
   const visible = quotes.slice(page * CARDS_PER_PAGE, page * CARDS_PER_PAGE + CARDS_PER_PAGE)
 
   return (
-    <section className="bg-muted/40 py-20">
-      <div className="container mx-auto px-4">
+    <section className="section-gray relative overflow-hidden py-20">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-14">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
             The Voice of the Customer

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Play, ChevronDown, ChevronUp } from 'lucide-react'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const TEXT_LIMIT = 160
 
@@ -182,8 +183,9 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
   const visible = active === 'All' ? stories : stories.filter((s) => s.tag === active)
 
   return (
-    <section id="impact-grid" className="bg-background py-20">
-      <div className="container mx-auto px-4">
+    <section id="impact-grid" className="bg-background relative overflow-hidden py-20">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
             Success Stories
