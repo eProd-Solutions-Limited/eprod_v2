@@ -9,25 +9,31 @@ import ledgerImg from '@/assets/Ledger.jpg'
 import euMarketImg from '@/assets/EU-market.webp'
 import marginErosionImg from '@/assets/margin erosin.png'
 
-const problems: { title: string; text: string; image: StaticImageData; imageAlt: string; contain?: boolean }[] = [
+const problems: {
+  title: string
+  text: string
+  image: StaticImageData
+  imageAlt: string
+  contain?: boolean
+}[] = [
   {
-    title: "Fragmentation",
-    text: "Managing 500+ farmers means juggling spreadsheets, WhatsApp, and notebooks. Data is scattered. Insights are hidden.",
+    title: 'Fragmentation',
+    text: 'Managing 500+ farmers means juggling spreadsheets, WhatsApp, and notebooks. Data is scattered. Insights are hidden.',
     image: ledgerImg,
-    imageAlt: "Fragmented ledger records representing data silos",
+    imageAlt: 'Fragmented ledger records representing data silos',
   },
   {
-    title: "Compliance Risk",
-    text: "Export requirements are tightening. One missed farmer record or quality issue can mean failed certification and lost market access.",
+    title: 'Compliance Risk',
+    text: 'Export requirements are tightening. One missed farmer record or quality issue can mean failed certification and lost market access.',
     image: euMarketImg,
-    imageAlt: "EU market representing compliance and export requirements",
+    imageAlt: 'EU market representing compliance and export requirements',
   },
   {
-    title: "Margin Erosion",
-    text: "Without visibility, waste goes undetected. Manual payments and inefficient communication with farmers cost you money every day.",
+    title: 'Margin Erosion',
+    text: 'Without visibility, waste goes undetected. Manual payments and inefficient communication with farmers cost you money every day.',
     image: marginErosionImg,
-    imageAlt: "Declining margins illustrating cost inefficiencies",
-    contain: true,
+    imageAlt: 'Declining margins illustrating cost inefficiencies',
+    contain: false,
   },
 ]
 
@@ -54,11 +60,12 @@ const ProblemSection = () => {
             aria-hidden="true"
           />
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
-            The Challenge: Managing Agricultural Supply Chains{" "}
+            The Challenge: Managing Agricultural Supply Chains{' '}
             <span className="gradient-primary-text">at Scale</span>
           </h2>
           <p className="text-center md:text-2xl text-muted-foreground mb-14 max-w-2xl mx-auto">
-            Agribusinesses face growing complexity every day. Here are the three biggest pain points.
+            Agribusinesses face growing complexity every day. Here are the three biggest pain
+            points.
           </p>
         </div>
 
