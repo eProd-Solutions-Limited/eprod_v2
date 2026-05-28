@@ -3,17 +3,13 @@
 import { useState } from "react"
 import { MapPin, Phone, Mail, LinkedinIcon, XIcon, FacebookIcon, YoutubeIcon } from "lucide-react"
 import { gaEvents } from "@/lib/ga-events"
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const socialLinks = [
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/company/eprod-solutions-limited/posts/?feedView=all",
     icon: LinkedinIcon,
-  },
-  {
-    label: "Twitter",
-    href: "https://twitter.com/eProdSolutions",
-    icon: XIcon,
   },
   {
     label: "Facebook",
@@ -76,8 +72,9 @@ const ContactForm = () => {
     "w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
 
   return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="relative overflow-hidden py-16 bg-background">
+      <CircleBackground />
+      <div className="relative z-10 container mx-auto px-4">
         <div className="grid md:grid-cols-[1fr_1.6fr] gap-12 items-start">
 
           {/* Left — Contact info */}
@@ -123,6 +120,28 @@ const ContactForm = () => {
                     info@eprod-solutions.com
                   </a>
                 </div>
+              </div>
+            </div>
+
+            {/* Map embed */}
+            <div className="rounded-xl overflow-hidden border border-border mb-10">
+              <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=36.7794%2C-1.2250%2C36.7994%2C-1.2050&layer=mapnik&marker=-1.214994%2C36.789431"
+                width="100%"
+                height="220"
+                style={{ display: "block", border: "none" }}
+                loading="lazy"
+                title="eProd office location"
+              />
+              <div className="bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground text-right">
+                <a
+                  href="https://www.openstreetmap.org/?mlat=-1.214994&mlon=36.789431#map=15/-1.214994/36.789431"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  View larger map ↗
+                </a>
               </div>
             </div>
 

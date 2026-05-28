@@ -1,4 +1,5 @@
 import { Plus } from 'lucide-react'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const faqs = [
   {
@@ -12,8 +13,9 @@ const faqs = [
 ]
 
 const SectorsFAQ = () => (
-  <section className="section-gray py-20" aria-labelledby="faq-heading">
-    <div className="container mx-auto px-4">
+  <section className="section-gray py-20 relative overflow-hidden" aria-labelledby="faq-heading">
+    <CircleBackground />
+    <div className="container mx-auto px-4 relative z-10">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">FAQ</p>

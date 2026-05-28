@@ -9,6 +9,7 @@ import { ImpactGrid } from '@/components/case-studies/ImpactGrid'
 import { DifferentiatorBanner } from '@/components/case-studies/DifferentiatorBanner'
 import { VoiceOfCustomer } from '@/components/case-studies/VoiceOfCustomer'
 import { CaseStudiesCTA } from '@/components/case-studies/CaseStudiesCTA'
+import { SectionScoop } from '@/components/ui/SectionScoop'
 import type { CaseStudyCard } from '@/components/case-studies/ImpactGrid'
 
 const getData = cache(async () => {
@@ -31,13 +32,20 @@ export default async function CaseStudiesPage() {
   const bankLogos = ((logoWall as any).bankLogos ?? []).filter((l: any) => l.active !== false)
   const quotes = (voiceOfCustomer as any).quotes ?? []
 
+  const BG_WHITE = 'hsl(0 0% 100%)'
+  const BG_GRAY  = 'hsl(210 20% 91%)'
+
   return (
     <main className="min-h-screen">
       <CaseStudiesHero />
+      {/* CaseStudiesHero bottom overlay handles dark→gray transition */}
       <LogoWall agribusinessLogos={agribusinessLogos} bankLogos={bankLogos} />
+      <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />
       <ImpactGrid stories={stories} />
+      {/* No scoop around DifferentiatorBanner — mid-page gradient */}
       <DifferentiatorBanner />
       <VoiceOfCustomer quotes={quotes} />
+      <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />
       <CaseStudiesCTA />
     </main>
   )

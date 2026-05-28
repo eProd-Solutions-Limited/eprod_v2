@@ -6,6 +6,7 @@ import eudrLogo from "@/assets/EUDR.png";
 import gdprLogo from "@/assets/gdpr-compliant.webp";
 import csdddLogo from "@/assets/CSDDD.png";
 import { useInView } from "@/hooks/useInView";
+import { CircleBackground } from '@/components/ui/CircleBackground';
 
 const items = [
   {
@@ -36,8 +37,9 @@ const SecurityCompliance = () => {
   const logos = useInView();
 
   return (
-    <section className="bg-background py-20">
-      <div className="container mx-auto px-4">
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div
           ref={heading.ref}
           className={`max-w-3xl mx-auto text-center mb-16 transition-all duration-700 ${

@@ -1,9 +1,11 @@
 import { ArrowRight, Layers } from 'lucide-react'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 export function CaseStudiesCTA() {
   return (
     <section id="cta" className="relative overflow-hidden bg-background py-20">
-      <div className="container mx-auto px-4">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="relative overflow-hidden rounded-3xl gradient-primary p-10 md:p-16 max-w-6xl mx-auto">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-secondary blur-3xl" />

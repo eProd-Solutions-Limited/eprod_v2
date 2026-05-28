@@ -1,5 +1,6 @@
 import { LogoCell } from '@/components/LogoCell'
 import type { LogoEntry } from '@/components/LogoCell'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 interface LogoWallProps {
   agribusinessLogos: LogoEntry[]
@@ -8,8 +9,9 @@ interface LogoWallProps {
 
 export function LogoWall({ agribusinessLogos, bankLogos }: LogoWallProps) {
   return (
-    <section className="bg-muted/40 py-20">
-      <div className="container mx-auto px-4">
+    <section className="section-gray relative overflow-hidden py-20">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-14">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
             The Ecosystem We Power

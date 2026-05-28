@@ -1,5 +1,6 @@
 import { Banknote, Calculator, Truck, BarChart3 } from "lucide-react";
 import Image from "next/image";
+import { CircleBackground } from '@/components/ui/CircleBackground';
 
 type Partner = { name: string; logo: string }
 
@@ -57,8 +58,9 @@ const categories: { icon: React.ElementType; title: string; text: string; partne
 
 const Integrations = () => {
   return (
-    <section id="integrations" className="section-gray py-20">
-      <div className="container mx-auto px-4">
+    <section id="integrations" className="section-gray py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Integrations</p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5 leading-tight">

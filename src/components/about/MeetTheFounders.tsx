@@ -1,5 +1,6 @@
 import Image from "next/image";
 import foundersImg from "@/assets/Meet-the-founders.png";
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const VIDEOS = [
   { id: "PN6xMDbZzBw", title: "eProd Founders – Minding Your Business with Jodi-Tatiana" },
@@ -8,18 +9,9 @@ const VIDEOS = [
 
 const MeetTheFounders = () => {
   return (
-    <section className="bg-muted/30 py-20">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Meet the{" "}
-            <span className="gradient-primary-text">Founders</span>
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-            Hear directly from the people who built eProd from the ground up.
-          </p>
-        </div>
-
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="flex justify-center mb-10">
           <div className="flex flex-col items-center gap-4">
             <a
@@ -56,7 +48,7 @@ const MeetTheFounders = () => {
                   href={`https://www.youtube.com/watch?v=${id}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors max-w-[160px] text-center leading-tight"
+                  className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors max-w-40 text-center leading-tight"
                 >
                   Watch video {i + 1}
                 </a>
@@ -65,19 +57,6 @@ const MeetTheFounders = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {VIDEOS.map(({ id, title }) => (
-            <div key={id} className="rounded-xl overflow-hidden shadow-lg aspect-video">
-              <iframe
-                src={`https://www.youtube.com/embed/${id}`}
-                title={title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

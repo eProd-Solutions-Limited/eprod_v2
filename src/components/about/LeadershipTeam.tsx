@@ -1,5 +1,6 @@
-import { Linkedin } from "lucide-react";
-import Image from "next/image";
+import { Linkedin } from 'lucide-react'
+import { CircleBackground } from '@/components/ui/CircleBackground'
+import Image from 'next/image'
 import { cache } from 'react'
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
@@ -17,12 +18,14 @@ export default async function LeadershipTeam() {
   const { docs: team } = await getTeam()
 
   const leaders = team.filter((p: any) => p.isLeadership)
-  const rest = team.filter((p: any) => !p.isLeadership).sort((a: any, b: any) => a.name.localeCompare(b.name))
+  const rest = team
+    .filter((p: any) => !p.isLeadership)
+    .sort((a: any, b: any) => a.name.localeCompare(b.name))
 
   return (
-    <section id="team" className="bg-background py-20">
-      <div className="container mx-auto px-4">
-
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         {(leaders.length > 0 || rest.length > 0) && (
           <>
             {/* Leadership */}
@@ -39,7 +42,10 @@ export default async function LeadershipTeam() {
 
                 <div className="grid md:grid-cols-4 gap-8 mx-auto">
                   {leaders.map((person: any) => (
-                    <div key={person.id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
+                    <div
+                      key={person.id}
+                      className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group"
+                    >
                       {person.photo?.url && (
                         <div className="aspect-square overflow-hidden">
                           <Image
@@ -90,7 +96,10 @@ export default async function LeadershipTeam() {
 
                 <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
                   {rest.map((person: any) => (
-                    <div key={person.id} className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group">
+                    <div
+                      key={person.id}
+                      className="bg-card border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition group"
+                    >
                       {person.photo?.url && (
                         <div className="aspect-square overflow-hidden">
                           <Image
@@ -116,8 +125,7 @@ export default async function LeadershipTeam() {
             )}
           </>
         )}
-
       </div>
     </section>
-  );
+  )
 }

@@ -4,6 +4,8 @@ import { Globe, ArrowRight } from 'lucide-react'
 import Image, { type StaticImageData } from 'next/image'
 import { useState, useEffect } from 'react'
 
+import { CircleBackground } from '@/components/ui/CircleBackground'
+
 import coffeeImg from '@/assets/eprod-coffee-clients.jpg'
 import horticultureImg from '@/assets/Horticulture-eprod.jpg'
 import dairyImg from '@/assets/Value-chains-eProd-Solutions-Dairy.webp'
@@ -249,11 +251,12 @@ const SectorsHero = () => {
         />
       </div>
 
-      {/* Decorative blobs */}
-      <div className="absolute inset-0 opacity-10" aria-hidden="true">
-        <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-secondary blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-primary-foreground blur-3xl" />
-      </div>
+      <CircleBackground variant="dark" />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(0 0% 100%)', borderRadius: '60px 0 0 0' }}
+      />
 
       {/* Dot grid */}
       <div
@@ -266,7 +269,7 @@ const SectorsHero = () => {
       />
 
       {/* Hero content */}
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-[1fr_500px] gap-10 items-center">
 
           {/* Text */}

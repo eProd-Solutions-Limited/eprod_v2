@@ -1,3 +1,5 @@
+import { CircleBackground } from '@/components/ui/CircleBackground'
+
 const chains = [
   'Coffee', 'Cocoa', 'Tea', 'Horticulture', 'Dairy',
   'Seeds', 'Grains', 'Pulses', 'Spices', 'Nuts',
@@ -6,10 +8,21 @@ const chains = [
 
 const ValueChainBlock = () => (
   <section
-    className="gradient-primary py-16"
+    className="gradient-primary py-40 relative overflow-hidden"
     aria-label="Value chains supported by eProd"
   >
-    <div className="container mx-auto px-4 text-center">
+    <div
+      className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"
+      aria-hidden="true"
+      style={{ backgroundColor: 'hsl(0 0% 100%)', borderRadius: '0 0 0 60px' }}
+    />
+    <CircleBackground variant="dark" />
+    <div
+      className="pointer-events-none absolute inset-x-0 bottom-0 h-16 z-1"
+      aria-hidden="true"
+      style={{ backgroundColor: 'hsl(210 20% 91%)', borderRadius: '60px 0 0 0' }}
+    />
+    <div className="container mx-auto px-4 text-center relative z-10">
       <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-4">Platform Reach</p>
       <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-3">
         Value Chains Supported

@@ -1,5 +1,6 @@
 import { Database, ShieldCheck, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const regulatorLogos = [
   { src: '/logos/fairtrade.jpeg', alt: 'Fairtrade', width: 140, height: 70 },
@@ -10,12 +11,9 @@ const regulatorLogos = [
 export function DifferentiatorBanner() {
   return (
     <section className="relative overflow-hidden gradient-primary py-20">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-secondary blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-primary-foreground blur-3xl" />
-      </div>
+      <CircleBackground variant="dark" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
             The eProd Difference

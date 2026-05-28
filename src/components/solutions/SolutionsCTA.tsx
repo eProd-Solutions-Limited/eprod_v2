@@ -1,13 +1,17 @@
 import { ArrowRight, Code2, Puzzle } from "lucide-react";
+import { CircleBackground } from '@/components/ui/CircleBackground';
 
 const SolutionsCTA = () => {
   return (
     <section id="cta" className="gradient-primary py-20 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-secondary blur-3xl" />
-      </div>
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(210 20% 91%)', borderRadius: '0 0 0 60px' }}
+      />
+      <CircleBackground variant="dark" />
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-5 leading-tight">
             Ready to Build Your <span className="text-secondary">AgFinTech Ecosystem?</span>
