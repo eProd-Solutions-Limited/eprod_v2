@@ -133,7 +133,8 @@ export default async function IndexPage() {
       <DifferentiationSection />
       {/* white → gradient-primary — scoop built into ProductShowcaseSection top */}
       <ProductShowcaseSection />
-      {/* gradient → photo — different visual idioms, no scoop */}
+      <VideoHighlightsSection />
+      {/* white → photo — different visual idioms, no scoop */}
       <TeamBannerSection />
       {/* photo → white — scoop built into TeamBannerSection bottom */}
       <FAQSection />
