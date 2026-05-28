@@ -2,6 +2,7 @@
 import { cache } from 'react'
 import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const FALLBACK_EMAIL = 'hr@eprod-solutions.com'
 
@@ -54,8 +55,9 @@ export default async function CareersSection() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/\//g, '\\/') }}
         />
       ))}
-      <section className="bg-muted/30 py-20">
-        <div className="container mx-auto px-4">
+      <section className="bg-background py-20 relative overflow-hidden">
+        <CircleBackground />
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-3">
             Careers

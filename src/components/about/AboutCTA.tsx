@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { ArrowRight } from "lucide-react";
 import { gaEvents } from '@/lib/ga-events'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const AboutCTA = () => {
   useEffect(() => {
@@ -10,8 +11,14 @@ const AboutCTA = () => {
   }, [])
 
   return (
-    <section className="gradient-primary py-20">
-      <div className="container mx-auto px-4 text-center">
+    <section className="gradient-primary py-20 relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(210 20% 91%)', borderRadius: '0 0 0 60px' }}
+      />
+      <CircleBackground variant="dark" />
+      <div className="container mx-auto px-4 text-center relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
           Join Us in Building the Future of African Agriculture
         </h2>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import foundersImg from "@/assets/Meet-the-founders.png";
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const VIDEOS = [
   { id: "PN6xMDbZzBw", title: "eProd Founders – Minding Your Business with Jodi-Tatiana" },
@@ -8,8 +9,9 @@ const VIDEOS = [
 
 const MeetTheFounders = () => {
   return (
-    <section className="bg-muted/30 py-20">
-      <div className="container mx-auto px-4">
+    <section className="bg-background py-20 relative overflow-hidden">
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
             Meet the{" "}
@@ -56,7 +58,7 @@ const MeetTheFounders = () => {
                   href={`https://www.youtube.com/watch?v=${id}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors max-w-[160px] text-center leading-tight"
+                  className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors max-w-40 text-center leading-tight"
                 >
                   Watch video {i + 1}
                 </a>
