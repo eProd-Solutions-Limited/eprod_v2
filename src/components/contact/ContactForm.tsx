@@ -128,6 +128,28 @@ const ContactForm = () => {
               </div>
             </div>
 
+            {/* Map embed */}
+            <div className="rounded-xl overflow-hidden border border-border mb-10">
+              <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=36.7794%2C-1.2250%2C36.7994%2C-1.2050&layer=mapnik&marker=-1.214994%2C36.789431"
+                width="100%"
+                height="220"
+                style={{ display: "block", border: "none" }}
+                loading="lazy"
+                title="eProd office location"
+              />
+              <div className="bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground text-right">
+                <a
+                  href="https://www.openstreetmap.org/?mlat=-1.214994&mlon=36.789431#map=15/-1.214994/36.789431"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  View larger map ↗
+                </a>
+              </div>
+            </div>
+
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
                 Connect With Us
