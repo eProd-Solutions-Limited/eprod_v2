@@ -3,6 +3,8 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Quote } from 'lucide-react'
 import { gaEvents } from '@/lib/ga-events'
+import { useInView } from '@/hooks/useInView'
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 interface QuoteEntry {
   id?: string | number
@@ -39,20 +41,35 @@ const TestimonialsSection = ({ quotes }: Props) => {
     return () => clearInterval(id)
   }, [paused, advance, totalPages])
 
+  const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.25 })
+
   if (!quotes.length) return null
 
   const visible = quotes.slice(page * CARDS_PER_PAGE, page * CARDS_PER_PAGE + CARDS_PER_PAGE)
 
   return (
     <section
-      className="section-gray py-20"
+      className="section-gray py-20 relative"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14">
-          Real Results from <span className="gradient-primary-text">Real Customers</span>
-        </h2>
+      <CircleBackground />
+      <div className="container mx-auto px-4 relative z-10">
+        <div ref={headingRef} className="relative mb-14">
+          <div
+            className={`pointer-events-none absolute left-6 top-0 h-9 w-9 rounded-full border border-primary/20 circle-reveal${headingInView ? ' is-visible' : ''}`}
+            style={{ transitionDelay: '0ms' }}
+            aria-hidden="true"
+          />
+          <div
+            className={`pointer-events-none absolute left-2 -top-2 h-14 w-14 rounded-full border border-primary/15 circle-reveal${headingInView ? ' is-visible' : ''}`}
+            style={{ transitionDelay: '150ms' }}
+            aria-hidden="true"
+          />
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground">
+            Real Results from <span className="gradient-primary-text">Real Customers</span>
+          </h2>
+        </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-10 min-h-64">
           {visible.map((q) => (
