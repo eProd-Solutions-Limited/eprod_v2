@@ -9,6 +9,8 @@ import { InsightsMasonryGrid } from '@/components/insights/InsightsMasonryGrid'
 import { InsightsPagination } from '@/components/insights/InsightsPagination'
 import type { InsightArticle } from '@/components/insights/InsightsMasonryGrid'
 import type { Where } from 'payload'
+import { CircleBackground } from '@/components/ui/CircleBackground'
+import { SectionScoop } from '@/components/ui/SectionScoop'
 
 const PAGE_SIZE = 12
 
@@ -85,10 +87,14 @@ export default async function InsightsPage({
   const gridArticles = gridResult.docs.map(toArticle)
   const totalPages = gridResult.totalPages
 
+  const BG_WHITE = 'hsl(0 0% 100%)'
+  const BG_GRAY  = 'hsl(210 20% 91%)'
+
   return (
     <main className="min-h-screen">
-      <section className="bg-background py-20">
-        <div className="container mx-auto max-w-7xl px-4">
+      <section className="bg-background py-20 relative overflow-hidden">
+        <CircleBackground />
+        <div className="container mx-auto max-w-7xl px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
               Knowledge Hub
@@ -105,9 +111,10 @@ export default async function InsightsPage({
           <InsightsHero articles={heroArticles} />
         </div>
       </section>
-
-      <section className="section-gray py-20">
-        <div className="container mx-auto max-w-7xl px-4">
+      <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_GRAY} />
+      <section className="section-gray py-20 relative overflow-hidden">
+        <CircleBackground />
+        <div className="container mx-auto max-w-7xl px-4 relative z-10">
           <Suspense fallback={<div className="h-16" />}>
             <InsightsFilterBar categories={categories} />
           </Suspense>
