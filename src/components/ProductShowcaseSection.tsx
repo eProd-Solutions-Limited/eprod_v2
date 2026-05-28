@@ -10,7 +10,12 @@ const ProductShowcaseSection = () => {
   }
 
   return (
-    <section className="gradient-primary py-20 overflow-hidden">
+    <section className="gradient-primary py-20 overflow-hidden relative">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(0 0% 100%)', borderRadius: '0 0 60px 0' }}
+      />
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 

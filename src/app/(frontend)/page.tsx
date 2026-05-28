@@ -131,10 +131,11 @@ export default async function IndexPage() {
       {/* gray → white */}
       <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />
       <DifferentiationSection />
-      {/* Differentiation (white) → FAQ (white) — same bg, no scoop */}
+      {/* white → gradient-primary — scoop built into ProductShowcaseSection top */}
       <ProductShowcaseSection />
-      <VideoHighlightsSection />
+      {/* gradient → photo — different visual idioms, no scoop */}
       <TeamBannerSection />
+      {/* photo → white — scoop built into TeamBannerSection bottom */}
       <FAQSection />
       <CTASection />
     </div>

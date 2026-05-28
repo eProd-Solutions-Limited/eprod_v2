@@ -4,7 +4,7 @@ import teamImg from '@/assets/team1.png'
 
 const TeamBannerSection = () => {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: '420px' }}>
+    <section className="relative w-full overflow-hidden" style={{ minHeight: '560px' }}>
       {/* Background image */}
       <Image
         src={teamImg}
@@ -18,7 +18,7 @@ const TeamBannerSection = () => {
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Text card — right side */}
-      <div className="relative z-10 flex items-center justify-end h-full min-h-[420px]">
+      <div className="relative z-10 flex items-center justify-end h-full min-h-[560px]">
         <div className="m-6 md:m-12 bg-white rounded-2xl shadow-2xl p-8 md:p-10 max-w-sm w-full">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             We are <span className="gradient-primary-text">eProd!</span>
@@ -34,6 +34,11 @@ const TeamBannerSection = () => {
           </Link>
         </div>
       </div>
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-16 z-20"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(0 0% 100%)', borderRadius: '60px 0 0 0' }}
+      />
     </section>
   )
 }
