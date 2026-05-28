@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import desktopMobileImg from '@/assets/Desktop and Mobile.png'
+import desktopMobileImg from '@/assets/Desktop and Mobile 3.png'
 
 const ProductShowcaseSection = () => {
   const openDemoModal = () => {
@@ -22,7 +22,7 @@ const ProductShowcaseSection = () => {
                 alt="eProd platform on desktop and mobile"
                 width={600}
                 height={420}
-                className="w-full h-auto mix-blend-screen brightness-110 drop-shadow-2xl"
+                className="w-full h-auto"
                 priority
               />
             </div>
@@ -35,7 +35,7 @@ const ProductShowcaseSection = () => {
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-primary-foreground leading-tight">
               eProd — Everything you need to{' '}
-              <span className="text-secondary">digitize your agri-supply chain</span>
+              <span className="text-secondary">digitalize your agri-supply chain</span>
             </h2>
             <p className="text-primary-foreground/80 text-base leading-relaxed">
               With our end-to-end platform, your farmer management, supply chain traceability, and
