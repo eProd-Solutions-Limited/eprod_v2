@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import { gaEvents } from "@/lib/ga-events";
+import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const CTASection = () => {
   const [form, setForm] = useState({ company: "", email: "", challenge: "" });
@@ -34,8 +35,18 @@ const CTASection = () => {
   };
 
   return (
-    <section id="cta" className="gradient-primary py-20">
-      <div className="container mx-auto px-4">
+    <section id="cta" className="gradient-primary py-20 relative overflow-hidden">
+      <CircleBackground variant="dark" />
+      {/* Static concentric rings centred in background */}
+      <div
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        aria-hidden="true"
+      >
+        <div className="absolute h-[300px] w-[300px] rounded-full border border-white/[0.07]" />
+        <div className="absolute h-[200px] w-[200px] rounded-full border border-white/[0.07]" />
+        <div className="absolute h-[120px] w-[120px] rounded-full border border-white/[0.12]" />
+      </div>
+      <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-primary-foreground mb-4">
           Ready to Simplify Your Supply Chain?
         </h2>
