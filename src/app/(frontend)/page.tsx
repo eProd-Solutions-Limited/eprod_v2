@@ -14,7 +14,7 @@ import { faqs } from "@/data/faqs";
 import { SectionScoop } from "@/components/ui/SectionScoop"
 
 const BG_WHITE = 'hsl(0 0% 100%)'
-const BG_GRAY  = 'hsl(210 20% 94%)'
+const BG_GRAY  = 'hsl(210 20% 91%)'
 const BG_TEAL  = 'hsl(183 97% 18%)'
 
 export const dynamic = 'force-dynamic'

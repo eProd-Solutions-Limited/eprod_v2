@@ -109,7 +109,7 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
         </div>
       </section>
       {/* gray → white internal transition */}
-      <SectionScoop direction="left" fromBg="hsl(210 20% 94%)" nextBg="hsl(0 0% 100%)" />
+      <SectionScoop direction="left" fromBg="hsl(210 20% 91%)" nextBg="hsl(0 0% 100%)" />
 
       {/* ── Value Proposition — Layout E (minimal type-first) ───────────────── */}
       <section className="bg-background py-20 relative">
