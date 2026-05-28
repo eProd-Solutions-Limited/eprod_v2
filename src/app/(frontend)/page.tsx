@@ -15,7 +15,6 @@ import { SectionScoop } from "@/components/ui/SectionScoop"
 
 const BG_WHITE = 'hsl(0 0% 100%)'
 const BG_GRAY  = 'hsl(210 20% 91%)'
-const BG_TEAL  = 'hsl(183 97% 18%)'
 
 export const dynamic = 'force-dynamic'
 
@@ -129,8 +128,6 @@ export default async function IndexPage() {
       <DifferentiationSection />
       {/* Differentiation (white) → FAQ (white) — same bg, no scoop */}
       <FAQSection />
-      {/* white → teal */}
-      <SectionScoop direction="right" fromBg={BG_WHITE} nextBg={BG_TEAL} />
       <CTASection />
     </div>
   );

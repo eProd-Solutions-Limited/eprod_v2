@@ -36,6 +36,12 @@ const CTASection = () => {
 
   return (
     <section id="cta" className="gradient-primary py-20 relative overflow-hidden">
+      {/* White corner scoop — sits on top of gradient so no color mismatch with FAQ above */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(0 0% 100%)', borderRadius: '0 0 0 60px' }}
+      />
       <CircleBackground variant="dark" />
       {/* Static concentric rings centred in background */}
       <div
