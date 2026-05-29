@@ -78,6 +78,7 @@ export interface Config {
     enquiries: Enquiry;
     'case-studies-hero': CaseStudiesHero;
     jobs: Job;
+    events: Event;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     enquiries: EnquiriesSelect<false> | EnquiriesSelect<true>;
     'case-studies-hero': CaseStudiesHeroSelect<false> | CaseStudiesHeroSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -172,7 +174,10 @@ export interface User {
  */
 export interface Media {
   id: number;
-  alt: string;
+  /**
+   * Optional — event images are auto-named by the system.
+   */
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -658,6 +663,57 @@ export interface Job {
   createdAt: string;
 }
 /**
+ * Manage events — conferences, expos, and field visits.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  name: string;
+  venue: string;
+  startDate: string;
+  /**
+   * Leave blank if the event is a single day.
+   */
+  endDate?: string | null;
+  /**
+   * Full event description. Supports bold, italic, underline, colour, links, lists, and more.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Select or upload all event photos at once. They are automatically named "[Event Name] 1", "[Event Name] 2", etc.
+   */
+  images?: (number | Media)[] | null;
+  /**
+   * Override the auto-name for specific photos. Enter the photo number (1 = first photo) and your custom label. Check the box to activate it.
+   */
+  imageLabels?:
+    | {
+        enabled?: boolean | null;
+        photoNumber?: number | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -724,6 +780,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'jobs';
         value: number | Job;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1073,6 +1133,28 @@ export interface JobsSelect<T extends boolean = true> {
   type?: T;
   applyEmail?: T;
   isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  name?: T;
+  venue?: T;
+  startDate?: T;
+  endDate?: T;
+  description?: T;
+  images?: T;
+  imageLabels?:
+    | T
+    | {
+        enabled?: T;
+        photoNumber?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

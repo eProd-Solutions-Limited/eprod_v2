@@ -1,12 +1,11 @@
 import { cache } from 'react'
 import Image from 'next/image'
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
+import { getPayloadClient } from '@/lib/payload-client'
 import { cn } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 
 const getArticle = cache(async (slug: string) => {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   return payload.find({
     collection: 'articles',
     where: { slug: { equals: slug } },

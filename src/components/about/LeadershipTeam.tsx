@@ -1,12 +1,11 @@
+﻿import { getPayloadClient } from '@/lib/payload-client'
 import { Linkedin } from 'lucide-react'
 import { CircleBackground } from '@/components/ui/CircleBackground'
 import Image from 'next/image'
 import { cache } from 'react'
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
 
 const getTeam = cache(async () => {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   return payload.find({
     collection: 'team',
     sort: 'order',

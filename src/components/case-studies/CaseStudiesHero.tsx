@@ -1,12 +1,11 @@
+﻿import { getPayloadClient } from '@/lib/payload-client'
 import { ArrowRight, Users, Globe2, Building2 } from 'lucide-react'
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
 import type { CaseStudiesHero as CaseStudiesHeroType } from '@/payload-types'
 import { CaseStudiesHeroCarousel } from './CaseStudiesHeroCarousel'
 import { CircleBackground } from '@/components/ui/CircleBackground'
 
 async function getHeroImages() {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   const result = await payload.find({
     collection: 'case-studies-hero',
     limit: 10,
