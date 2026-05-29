@@ -62,4 +62,88 @@ describe('gaEvents', () => {
     expect(() => gaEvents.formSubmitted('cta_form')).not.toThrow()
     expect(() => gaEvents.clickCTA('Get Started', 'home_cta')).not.toThrow()
   })
+
+  it('demoRequestClicked fires demo_request_clicked with source', () => {
+    gaEvents.demoRequestClicked('fab')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'demo_request_clicked', {
+      source: 'fab',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('demoRequestSubmitted fires demo_request_submitted with company', () => {
+    gaEvents.demoRequestSubmitted('Acme Ltd')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'demo_request_submitted', {
+      company: 'Acme Ltd',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('demoRequestSubmitted defaults company to "not_provided"', () => {
+    gaEvents.demoRequestSubmitted()
+    expect(window.gtag).toHaveBeenCalledWith('event', 'demo_request_submitted', {
+      company: 'not_provided',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('contactFormSubmitted fires contact_form_submitted with company', () => {
+    gaEvents.contactFormSubmitted('Acme Ltd')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'contact_form_submitted', {
+      company: 'Acme Ltd',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('popupShown fires popup_shown with title and id', () => {
+    gaEvents.popupShown('Summer Offer', 'popup-42')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'popup_shown', {
+      popup_title: 'Summer Offer',
+      popup_id: 'popup-42',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('popupCtaClicked fires popup_cta_clicked', () => {
+    gaEvents.popupCtaClicked('Summer Offer', 'Learn More')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'popup_cta_clicked', {
+      popup_title: 'Summer Offer',
+      cta_text: 'Learn More',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('videoSelected fires video_selected with title', () => {
+    gaEvents.videoSelected('eProd Platform Overview')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'video_selected', {
+      video_title: 'eProd Platform Overview',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('faqOpened fires faq_opened with question and section', () => {
+    gaEvents.faqOpened('What is eProd?', 'home')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'faq_opened', {
+      question: 'What is eProd?',
+      section: 'home',
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('articleRead fires article_read with slug and depth', () => {
+    gaEvents.articleRead('smallholder-finance', 50)
+    expect(window.gtag).toHaveBeenCalledWith('event', 'article_read', {
+      slug: 'smallholder-finance',
+      depth: 50,
+      timestamp: expect.any(String),
+    })
+  })
+
+  it('caseStudyViewed fires case_study_viewed with slug', () => {
+    gaEvents.caseStudyViewed('equity-bank')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'case_study_viewed', {
+      slug: 'equity-bank',
+      timestamp: expect.any(String),
+    })
+  })
 })
