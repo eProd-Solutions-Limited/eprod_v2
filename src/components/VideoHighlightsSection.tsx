@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Play } from 'lucide-react'
+import { gaEvents } from '@/lib/ga-events'
 
 const videos = [
   {
@@ -53,7 +54,7 @@ const VideoHighlightsSection = () => {
             {watchNext.map((v) => (
               <button
                 key={v.id}
-                onClick={() => setActiveId(v.id)}
+                onClick={() => { gaEvents.videoSelected(v.title); setActiveId(v.id) }}
                 className="flex items-start gap-3 rounded-xl p-2 hover:bg-muted transition-colors text-left group"
               >
                 {/* Thumbnail */}
