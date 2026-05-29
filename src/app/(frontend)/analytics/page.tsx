@@ -1,80 +1,81 @@
 export default function AnalyticsDashboard() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Analytics Dashboard</h1>
+    <div className="container mx-auto px-4 py-12 max-w-3xl">
+      <h1 className="text-3xl font-bold mb-2">GA4 Event Reference</h1>
+      <p className="text-gray-500 mb-8">
+        All custom events sent to Google Analytics 4 from this site.
+        View live data in the{' '}
+        <a
+          href="https://analytics.google.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline"
+        >
+          GA4 console
+        </a>{' '}
+        under Reports → Realtime or Explore.
+      </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-lg border">
-          <h2 className="text-xl font-semibold mb-4">Traffic Overview</h2>
-          <p className="text-gray-600 mb-4">
-            Visit your{' '}
-            <a
-              href="https://analytics.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary underline"
-            >
-              Google Analytics Dashboard
-            </a>{' '}
-            to view:
-          </p>
-          <ul className="list-disc list-inside space-y-2 text-gray-700">
-            <li>Page views and sessions</li>
-            <li>User engagement by page</li>
-            <li>CTA click-through rates</li>
-            <li>Time spent on each section</li>
-            <li>Traffic sources (organic, direct, referral)</li>
-          </ul>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg border">
-          <h2 className="text-xl font-semibold mb-4">Events Tracked</h2>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-600">page_engagement</span>
-              <span className="font-mono text-xs">section mounts</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">cta_clicked</span>
-              <span className="font-mono text-xs">CTA button clicks</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">lead_form_submission</span>
-              <span className="font-mono text-xs">CTA form submits</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">section_viewed</span>
-              <span className="font-mono text-xs">scroll depth</span>
+      <div className="space-y-6">
+        {[
+          {
+            group: 'Lead Events',
+            events: [
+              { name: 'demo_request_clicked', trigger: 'FAB button pressed', params: 'source' },
+              { name: 'demo_request_submitted', trigger: 'FAB form successfully submitted', params: 'company' },
+              { name: 'contact_form_submitted', trigger: 'Contact page form submitted', params: 'company' },
+              { name: 'lead_form_submission', trigger: 'Any form submitted (legacy)', params: 'form_name, company' },
+            ],
+          },
+          {
+            group: 'Content Engagement',
+            events: [
+              { name: 'section_viewed', trigger: 'Major section scrolled into view (once)', params: 'section_name' },
+              { name: 'article_read', trigger: 'Article scroll depth milestone', params: 'slug, depth (25/50/75/100)' },
+              { name: 'case_study_viewed', trigger: 'Case study selected in carousel', params: 'slug' },
+              { name: 'video_selected', trigger: 'Sidebar video thumbnail clicked', params: 'video_title' },
+              { name: 'faq_opened', trigger: 'FAQ accordion item expanded', params: 'question, section' },
+            ],
+          },
+          {
+            group: 'Popup Events',
+            events: [
+              { name: 'popup_shown', trigger: 'Popup becomes visible after delay', params: 'popup_title, popup_id' },
+              { name: 'popup_cta_clicked', trigger: 'CTA inside popup clicked', params: 'popup_title, cta_text' },
+            ],
+          },
+          {
+            group: 'Navigation',
+            events: [
+              { name: 'cta_clicked', trigger: 'CTA button clicked', params: 'cta_text, section, target_url' },
+              { name: 'page_engagement', trigger: 'Page/section mounted', params: 'page_name, section' },
+            ],
+          },
+        ].map(({ group, events }) => (
+          <div key={group}>
+            <h2 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-3">{group}</h2>
+            <div className="rounded-lg border overflow-hidden">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 text-xs text-gray-500">
+                  <tr>
+                    <th className="text-left px-4 py-2 font-medium">Event Name</th>
+                    <th className="text-left px-4 py-2 font-medium">Trigger</th>
+                    <th className="text-left px-4 py-2 font-medium">Parameters</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {events.map((e) => (
+                    <tr key={e.name}>
+                      <td className="px-4 py-2.5 font-mono text-xs text-indigo-700 whitespace-nowrap">{e.name}</td>
+                      <td className="px-4 py-2.5 text-gray-700">{e.trigger}</td>
+                      <td className="px-4 py-2.5 font-mono text-xs text-gray-500">{e.params}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-        <h3 className="text-lg font-semibold mb-3">Setup Remaining</h3>
-        <ol className="list-decimal list-inside space-y-2 text-gray-700">
-          <li>
-            Get your Measurement ID from the{' '}
-            <a
-              href="https://analytics.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary underline"
-            >
-              Google Analytics console
-            </a>{' '}
-            (format: G-XXXXXXXXXX)
-          </li>
-          <li>
-            Replace{' '}
-            <code className="bg-white px-1 rounded border text-sm">G-PLACEHOLDER</code> in{' '}
-            <code className="bg-white px-1 rounded border text-sm">
-              src/app/(frontend)/layout.tsx
-            </code>
-          </li>
-          <li>Set up conversion goals for form submissions in GA4</li>
-          <li>Wait 24 hours for data to populate</li>
-        </ol>
+        ))}
       </div>
     </div>
   )
