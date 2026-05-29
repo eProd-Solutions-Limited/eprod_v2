@@ -14,9 +14,14 @@ const HeroSection = () => {
   }, [])
 
   const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.25 })
+  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
+
+  useEffect(() => {
+    if (sectionInView) gaEvents.sectionViewed('hero')
+  }, [sectionInView])
 
   return (
-    <section id="home" className="bg-background relative">
+    <section id="home" className="bg-background relative" ref={sectionRef}>
       <CircleBackground />
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">

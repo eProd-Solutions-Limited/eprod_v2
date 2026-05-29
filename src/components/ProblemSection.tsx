@@ -43,9 +43,14 @@ const ProblemSection = () => {
   }, [])
 
   const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.25 })
+  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
+
+  useEffect(() => {
+    if (sectionInView) gaEvents.sectionViewed('problem')
+  }, [sectionInView])
 
   return (
-    <section className="section-gray py-20 relative">
+    <section className="section-gray py-20 relative" ref={sectionRef}>
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <div ref={headingRef} className="relative mb-4">

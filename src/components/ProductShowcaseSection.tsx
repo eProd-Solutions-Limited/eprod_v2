@@ -1,16 +1,25 @@
 'use client'
 
+import { useEffect } from 'react'
 import Image from 'next/image'
+import { gaEvents } from '@/lib/ga-events'
+import { useInView } from '@/hooks/useInView'
 import desktopMobileImg from '@/assets/Desktop and Mobile 3.png'
 
 const ProductShowcaseSection = () => {
+  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
+
+  useEffect(() => {
+    if (sectionInView) gaEvents.sectionViewed('product_showcase')
+  }, [sectionInView])
+
   const openDemoModal = () => {
     const fab = document.querySelector('[aria-label="Request a Demo"]') as HTMLButtonElement | null
     fab?.click()
   }
 
   return (
-    <section className="gradient-primary py-20 overflow-hidden relative">
+    <section className="gradient-primary py-20 overflow-hidden relative" ref={sectionRef}>
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"
         aria-hidden="true"

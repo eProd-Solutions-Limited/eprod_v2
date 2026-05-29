@@ -1,10 +1,21 @@
+'use client'
+
+import { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { gaEvents } from '@/lib/ga-events'
+import { useInView } from '@/hooks/useInView'
 import teamImg from '@/assets/team1.png'
 
 const TeamBannerSection = () => {
+  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
+
+  useEffect(() => {
+    if (sectionInView) gaEvents.sectionViewed('team_banner')
+  }, [sectionInView])
+
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: '560px' }}>
+    <section className="relative w-full overflow-hidden" style={{ minHeight: '560px' }} ref={sectionRef}>
       {/* Background image */}
       <Image
         src={teamImg}

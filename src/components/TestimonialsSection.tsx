@@ -42,6 +42,11 @@ const TestimonialsSection = ({ quotes }: Props) => {
   }, [paused, advance, totalPages])
 
   const { ref: headingRef, inView: headingInView } = useInView({ threshold: 0.25 })
+  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
+
+  useEffect(() => {
+    if (sectionInView) gaEvents.sectionViewed('testimonials')
+  }, [sectionInView])
 
   if (!quotes.length) return null
 
@@ -50,6 +55,7 @@ const TestimonialsSection = ({ quotes }: Props) => {
   return (
     <section
       className="section-gray py-20 relative"
+      ref={sectionRef}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

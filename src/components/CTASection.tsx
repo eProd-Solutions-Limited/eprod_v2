@@ -1,12 +1,19 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { gaEvents } from "@/lib/ga-events";
+import { useInView } from "@/hooks/useInView";
 import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const CTASection = () => {
   const [form, setForm] = useState({ company: "", email: "", challenge: "" });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
+
+  useEffect(() => {
+    if (sectionInView) gaEvents.sectionViewed('cta')
+  }, [sectionInView])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +42,7 @@ const CTASection = () => {
   };
 
   return (
-    <section id="cta" className="gradient-primary py-20 relative overflow-hidden">
+    <section id="cta" className="gradient-primary py-20 relative overflow-hidden" ref={sectionRef}>
       {/* White corner scoop — sits on top of gradient so no color mismatch with FAQ above */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"

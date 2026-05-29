@@ -40,9 +40,14 @@ const HowItWorksSection = () => {
   }, [])
 
   const { ref: stepsRef, inView: stepsInView } = useInView({ threshold: 0.2 })
+  const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
+
+  useEffect(() => {
+    if (sectionInView) gaEvents.sectionViewed('how_it_works')
+  }, [sectionInView])
 
   return (
-    <section className="bg-background py-20 relative">
+    <section className="bg-background py-20 relative" ref={sectionRef}>
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14">
