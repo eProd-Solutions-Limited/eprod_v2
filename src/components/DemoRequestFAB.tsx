@@ -58,7 +58,7 @@ export function DemoRequestFAB() {
       })
 
       if (res.ok) {
-        gaEvents.formSubmitted("demo_request_fab", form.company)
+        gaEvents.demoRequestSubmitted(form.company)
         setStatus("success")
         setForm(EMPTY_FORM)
       } else {
@@ -75,7 +75,7 @@ export function DemoRequestFAB() {
     <>
       {/* FAB */}
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => { gaEvents.demoRequestClicked('fab'); setOpen(true) }}
         aria-label="Request a Demo"
         className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-secondary px-5 py-3.5 text-sm font-bold text-secondary-foreground shadow-lg hover:brightness-105 active:scale-95 transition-all duration-150"
       >
