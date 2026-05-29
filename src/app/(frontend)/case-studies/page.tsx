@@ -42,7 +42,7 @@ export default async function CaseStudiesPage() {
       <LogoWall agribusinessLogos={agribusinessLogos} bankLogos={bankLogos} />
       <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />
       <ImpactGrid stories={stories} />
-      {/* No scoop around DifferentiatorBanner — mid-page gradient */}
+      {/* scoops embedded inside DifferentiatorBanner (gradient bg) */}
       <DifferentiatorBanner />
       <VoiceOfCustomer quotes={quotes} />
       <SectionScoop direction="left" fromBg={BG_GRAY} nextBg={BG_WHITE} />

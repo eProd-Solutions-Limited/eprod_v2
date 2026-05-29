@@ -10,7 +10,17 @@ const regulatorLogos = [
 
 export function DifferentiatorBanner() {
   return (
-    <section className="relative overflow-hidden gradient-primary py-20">
+    <section className="relative overflow-hidden gradient-primary py-32">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(0 0% 100%)', borderRadius: '0 0 60px 0' }}
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-16 z-1"
+        aria-hidden="true"
+        style={{ backgroundColor: 'hsl(210 20% 91%)', borderRadius: '0 60px 0 0' }}
+      />
       <CircleBackground variant="dark" />
 
       <div className="container mx-auto px-4 relative z-10">
