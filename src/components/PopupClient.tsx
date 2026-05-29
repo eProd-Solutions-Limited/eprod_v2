@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { RichTextRenderer } from './RichTextRenderer'
+import { gaEvents } from '@/lib/ga-events'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -310,9 +311,15 @@ function PopupModal({
 
   function handleButtonClick(btn: PopupButton) {
     if (btn.action === 'close') { onClose(); return }
-    if (btn.action === 'register') { setShowRegForm(true); return }
-    // 'link' handled by the anchor tag itself — just mark shown & close
-    if (btn.action === 'link') onClose()
+    if (btn.action === 'register') {
+      gaEvents.popupCtaClicked(popup.content.title, btn.label)
+      setShowRegForm(true)
+      return
+    }
+    if (btn.action === 'link') {
+      gaEvents.popupCtaClicked(popup.content.title, btn.label)
+      onClose()
+    }
   }
 
   const image = popup.content.image
@@ -439,6 +446,7 @@ export function PopupClient({ popups }: { popups: SerializedPopup[] }) {
     const timer = setTimeout(() => {
       markShown(popup)
       setActive(popup)
+      gaEvents.popupShown(popup.content.title, String(popup.id))
     }, delay)
 
     return () => clearTimeout(timer)
