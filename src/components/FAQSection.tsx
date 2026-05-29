@@ -44,7 +44,17 @@ const FAQSection = () => {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full"
+            onValueChange={(value) => {
+              if (!value) return
+              const idx = parseInt(value.replace('faq-', ''), 10)
+              const faq = faqs[idx]
+              if (faq) gaEvents.faqOpened(faq.question, 'home')
+            }}
+          >
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`faq-${index}`}>
                 <AccordionTrigger className="text-left text-foreground font-semibold">

@@ -48,7 +48,17 @@ const AboutFAQ = () => {
             Common questions about eProd's platform, compliance coverage, and scale.
           </p>
 
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full"
+            onValueChange={(value) => {
+              if (!value) return
+              const idx = parseInt(value.replace('about-faq-', ''), 10)
+              const faq = faqs[idx]
+              if (faq) gaEvents.faqOpened(faq.question, 'about')
+            }}
+          >
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`about-faq-${index}`}>
                 <AccordionTrigger className="text-left text-foreground font-semibold">

@@ -1,4 +1,12 @@
-import { Plus } from 'lucide-react'
+'use client'
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { gaEvents } from '@/lib/ga-events'
 import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const faqs = [
@@ -24,24 +32,28 @@ const SectorsFAQ = () => (
           </h2>
         </div>
 
-        <div className="divide-y divide-border rounded-2xl bg-card border border-border overflow-hidden">
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full"
+          onValueChange={(value) => {
+            if (!value) return
+            const idx = parseInt(value.replace('sectors-faq-', ''), 10)
+            const faq = faqs[idx]
+            if (faq) gaEvents.faqOpened(faq.q, 'sectors')
+          }}
+        >
           {faqs.map((faq, i) => (
-            <details key={i} className="group">
-              <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring">
-                <h3 className="text-base md:text-lg font-semibold text-foreground">{faq.q}</h3>
-                <span
-                  className="shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center group-open:rotate-45 transition-transform duration-300"
-                  aria-hidden="true"
-                >
-                  <Plus size={16} className="text-foreground" />
-                </span>
-              </summary>
-              <div className="px-6 pb-5 pt-1 text-muted-foreground leading-relaxed">
+            <AccordionItem key={i} value={`sectors-faq-${i}`}>
+              <AccordionTrigger className="text-left text-foreground font-semibold">
+                {faq.q}
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground leading-relaxed">
                 {faq.a}
-              </div>
-            </details>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </div>
   </section>
