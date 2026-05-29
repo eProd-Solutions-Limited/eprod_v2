@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import payloadConfig from '@/payload.config'
 import { cn } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
+import { ArticleReadTracker } from '@/components/articles/ArticleReadTracker'
 
 const getArticle = cache(async (slug: string) => {
   const payload = await getPayload({ config: payloadConfig })
@@ -63,6 +64,7 @@ export default async function ArticlePage({
           <BlockRenderer key={i} block={block} />
         ))}
       </div>
+      <ArticleReadTracker slug={slug} />
     </article>
   )
 }
