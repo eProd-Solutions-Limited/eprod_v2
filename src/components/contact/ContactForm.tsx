@@ -55,7 +55,7 @@ const ContactForm = () => {
       })
 
       if (res.ok) {
-        gaEvents.formSubmitted("contact_form", form.company)
+        gaEvents.contactFormSubmitted(form.company)
         setStatus("success")
         setForm({ company: "", email: "", phone: "", challenge: "", message: "" })
       } else {
