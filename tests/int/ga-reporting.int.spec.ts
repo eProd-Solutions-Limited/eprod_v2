@@ -1,6 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 vi.mock('server-only', () => ({}))
+vi.mock('next/cache', () => ({
+  unstable_cache: (fn: Function) => fn,
+}))
 
 const mockRunReport = vi.fn().mockResolvedValue([{
   rows: [
