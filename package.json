@@ -19,6 +19,7 @@
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/seed/case-studies.ts"
   },
   "dependencies": {
+    "@google-analytics/data": "^6.1.0",
     "@next/third-parties": "^16.2.6",
     "@payloadcms/db-postgres": "3.81.0",
     "@payloadcms/email-nodemailer": "3.81.0",
@@ -42,6 +43,7 @@
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "server-only": "^0.0.1",
     "shadcn": "^4.2.0",
     "sharp": "0.34.2",
     "tailwind-merge": "^3.5.0",
