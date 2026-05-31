@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { gaEvents } from '@/lib/ga-events'
 
 type CarouselImage = {
   url: string
@@ -48,7 +49,10 @@ export function CaseStudiesHeroCarousel({ images }: { images: CarouselImage[] })
           {images.map((_, i) => (
             <button
               key={i}
-              onClick={() => setCurrent(i)}
+              onClick={() => {
+                setCurrent(i)
+                gaEvents.caseStudyViewed(images[i].alt.toLowerCase().replace(/\s+/g, '-'))
+              }}
               aria-label={`Go to slide ${i + 1}`}
               className={`rounded-full transition-all duration-300 ${
                 i === current
