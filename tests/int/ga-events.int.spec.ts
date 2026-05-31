@@ -146,4 +146,12 @@ describe('gaEvents', () => {
       timestamp: expect.any(String),
     })
   })
+
+  it('sectionViewed fires section_viewed with section name', () => {
+    gaEvents.sectionViewed('hero')
+    expect(window.gtag).toHaveBeenCalledWith('event', 'section_viewed', {
+      section_name: 'hero',
+      timestamp: expect.any(String),
+    })
+  })
 })
