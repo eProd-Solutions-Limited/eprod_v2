@@ -1,3 +1,4 @@
+import 'server-only'
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
 
 function getClient() {

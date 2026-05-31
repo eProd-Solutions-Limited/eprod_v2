@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
+vi.mock('server-only', () => ({}))
+
 const mockRunReport = vi.fn().mockResolvedValue([{
   rows: [
     { dimensionValues: [{ value: '/case-studies' }], metricValues: [{ value: '384' }] },
