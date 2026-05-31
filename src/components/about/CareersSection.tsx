@@ -1,13 +1,12 @@
+﻿import { getPayloadClient } from '@/lib/payload-client'
 // src/components/about/CareersSection.tsx
 import { cache } from 'react'
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
 import { CircleBackground } from '@/components/ui/CircleBackground'
 
 const FALLBACK_EMAIL = 'hr@eprod-solutions.com'
 
 const getJobs = cache(async () => {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   return payload.find({
     collection: 'jobs',
     where: { isActive: { equals: true } },

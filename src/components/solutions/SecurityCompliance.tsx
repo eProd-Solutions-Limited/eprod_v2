@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Lock, Shield, FileSearch, BadgeCheck } from "lucide-react";
+import { Lock, Shield, FileSearch, BadgeCheck, Download } from "lucide-react";
 import eudrLogo from "@/assets/EUDR.png";
 import gdprLogo from "@/assets/gdpr-compliant.webp";
 import csdddLogo from "@/assets/CSDDD.png";
@@ -88,6 +88,18 @@ const SecurityCompliance = () => {
             <Image src={eudrLogo} alt="EUDR Compliant" height={72} className="object-contain opacity-90 hover:opacity-100 transition" />
             <Image src={gdprLogo} alt="GDPR Compliant" height={72} className="object-contain opacity-90 hover:opacity-100 transition" />
             <Image src={csdddLogo} alt="CSDDD Compliant" height={72} className="object-contain opacity-90 hover:opacity-100 transition" />
+          </div>
+
+          {/* EUDR Checklist Download */}
+          <div className="w-full flex justify-center mt-10">
+            <a
+              href="/downloads/EUDR_Implementation_Checklist.pdf"
+              download="EUDR_Implementation_Checklist_eProd.pdf"
+              className="inline-flex items-center gap-3 rounded-full gradient-primary px-8 py-4 text-sm font-bold text-primary-foreground hover:brightness-110 active:scale-95 transition-all duration-150 shadow-lg group"
+            >
+              <Download size={18} className="group-hover:animate-bounce" />
+              Download EUDR Implementation Checklist
+            </a>
           </div>
         </div>
       </div>

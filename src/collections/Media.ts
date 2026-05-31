@@ -9,7 +9,10 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      required: true,
+      required: false,
+      admin: {
+        description: 'Optional — event images are auto-named by the system.',
+      },
     },
   ],
   upload: true,

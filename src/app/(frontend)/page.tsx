@@ -1,5 +1,4 @@
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
+﻿import { getPayloadClient } from '@/lib/payload-client'
 import HeroSection from '@/components/HeroSection'
 import ProblemSection from '@/components/ProblemSection'
 import SolutionSection from '@/components/SolutionSection'
@@ -10,7 +9,7 @@ import TestimonialsSection from '@/components/TestimonialsSection'
 import DifferentiationSection from '@/components/DifferentiationSection'
 import ProductShowcaseSection from '@/components/ProductShowcaseSection'
 import VideoHighlightsSection from '@/components/VideoHighlightsSection'
-import TeamBannerSection from '@/components/TeamBannerSection'
+import TeamAndEventsSection from '@/components/TeamAndEventsSection'
 import FAQSection from '@/components/FAQSection'
 import CTASection from '@/components/CTASection'
 import { faqs } from '@/data/faqs'
@@ -22,7 +21,7 @@ const BG_GRAY = 'hsl(210 20% 91%)'
 export const dynamic = 'force-dynamic'
 
 export default async function IndexPage() {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   const [logoWall, teamResult, voiceOfCustomer] = await Promise.all([
     payload.findGlobal({ slug: 'logo-wall', depth: 1 }),
     payload.find({ collection: 'team', sort: 'order', limit: 20 }),
@@ -134,8 +133,7 @@ export default async function IndexPage() {
       {/* white → gradient-primary — scoop built into ProductShowcaseSection top */}
       <ProductShowcaseSection />
       <VideoHighlightsSection />
-      {/* white → photo — different visual idioms, no scoop */}
-      <TeamBannerSection />
+      <TeamAndEventsSection />
       {/* photo → white — scoop built into TeamBannerSection bottom */}
       <FAQSection />
       <CTASection />

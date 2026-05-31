@@ -1,3 +1,4 @@
+﻿import { getPayloadClient } from '@/lib/payload-client'
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { PopupClient, type SerializedPopup } from "@/components/PopupClient";
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 
 async function fetchActivePopups(): Promise<SerializedPopup[]> {
   try {
-    const payload = await getPayload({ config: payloadConfig });
+    const payload = await getPayloadClient();
     const { docs } = await payload.find({
       collection: 'popups',
       where: { isActive: { equals: true } },

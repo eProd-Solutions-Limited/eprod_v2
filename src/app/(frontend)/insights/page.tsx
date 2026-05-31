@@ -1,8 +1,7 @@
+﻿import { getPayloadClient } from '@/lib/payload-client'
 export const dynamic = 'force-dynamic'
 
 import { Suspense, cache } from 'react'
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
 import { InsightsHero } from '@/components/insights/InsightsHero'
 import { InsightsFilterBar } from '@/components/insights/InsightsFilterBar'
 import { InsightsMasonryGrid } from '@/components/insights/InsightsMasonryGrid'
@@ -15,13 +14,13 @@ import { SectionScoop } from '@/components/ui/SectionScoop'
 const PAGE_SIZE = 12
 
 const getCategories = cache(async () => {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   const result = await payload.find({ collection: 'categories', limit: 100 })
   return result.docs as { id: number; name: string; slug: string }[]
 })
 
 const getHeroArticles = cache(async () => {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   const result = await payload.find({
     collection: 'articles',
     sort: '-publishedAt',
@@ -63,7 +62,7 @@ export default async function InsightsPage({
   const currentPage = Math.max(1, parseInt(pageParam, 10) || 1)
   const safeQ = q.trim().slice(0, 200)
 
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   const categories = await getCategories()
 
   const matchedCategory = category ? categories.find((c) => c.slug === category) : null

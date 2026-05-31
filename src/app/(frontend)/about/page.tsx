@@ -1,8 +1,7 @@
+﻿import { getPayloadClient } from '@/lib/payload-client'
 export const dynamic = 'force-dynamic'
 
 import { cache } from 'react'
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
 import AboutHero from "@/components/about/AboutHero";
 import VisionMission from "@/components/about/VisionMission";
 import OurStory from "@/components/about/OurStory";
@@ -16,7 +15,7 @@ import AboutCTA from "@/components/about/AboutCTA";
 import { SectionScoop } from "@/components/ui/SectionScoop"
 
 const getData = cache(async () => {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
   const logoWall = await payload.findGlobal({ slug: 'logo-wall', depth: 1 })
   return { logoWall }
 })

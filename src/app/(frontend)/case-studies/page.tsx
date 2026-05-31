@@ -1,8 +1,7 @@
+﻿import { getPayloadClient } from '@/lib/payload-client'
 export const dynamic = 'force-dynamic'
 
 import { cache } from 'react'
-import { getPayload } from 'payload'
-import payloadConfig from '@/payload.config'
 import { CaseStudiesHero } from '@/components/case-studies/CaseStudiesHero'
 import { LogoWall } from '@/components/case-studies/LogoWall'
 import { ImpactGrid } from '@/components/case-studies/ImpactGrid'
@@ -13,7 +12,7 @@ import { SectionScoop } from '@/components/ui/SectionScoop'
 import type { CaseStudyCard } from '@/components/case-studies/ImpactGrid'
 
 const getData = cache(async () => {
-  const payload = await getPayload({ config: payloadConfig })
+  const payload = await getPayloadClient()
 
   const [storiesResult, logoWall, voiceOfCustomer] = await Promise.all([
     payload.find({ collection: 'case-studies', limit: 50, depth: 1 }),
