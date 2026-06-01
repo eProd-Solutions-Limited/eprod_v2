@@ -46,6 +46,17 @@ export async function POST(req: NextRequest) {
       html: `<div style="font-family:sans-serif;max-width:600px;padding:24px;">${rows}</div>`,
     })
 
+    await payload.create({
+      collection: 'popup-registrations',
+      data: {
+        popup: popupId,
+        email,
+        ...(name ? { name } : {}),
+        ...(phone ? { phone } : {}),
+        ...(organization ? { organization } : {}),
+      },
+    })
+
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Popup registration error:', error)

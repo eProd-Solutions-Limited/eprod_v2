@@ -79,6 +79,7 @@ export interface Config {
     'case-studies-hero': CaseStudiesHero;
     jobs: Job;
     events: Event;
+    'popup-registrations': PopupRegistration;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +99,7 @@ export interface Config {
     'case-studies-hero': CaseStudiesHeroSelect<false> | CaseStudiesHeroSelect<true>;
     jobs: JobsSelect<false> | JobsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    'popup-registrations': PopupRegistrationsSelect<false> | PopupRegistrationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -392,62 +394,21 @@ export interface Team {
   createdAt: string;
 }
 /**
+ * Configure where enquiry form submissions are delivered.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cta-config".
  */
 export interface CtaConfig {
   id: number;
+  /**
+   * Internal label for this config (e.g. "Main Enquiries")
+   */
   title: string;
-  email: {
-    /**
-     * Recipient email address
-     */
-    to: string;
-    /**
-     * Sender email address
-     */
-    from: string;
-    /**
-     * Email subject line
-     */
-    subject: string;
-    /**
-     * Use HTML content type
-     */
-    htmlContent?: boolean | null;
-    /**
-     * Email body. Use {company}, {email}, {challenge} for dynamic fields
-     */
-    body: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    };
-    /**
-     * Additional email headers
-     */
-    headers?:
-      | {
-          key: string;
-          value: string;
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * File attachments
-     */
-    attachments?: (number | Media)[] | null;
-  };
+  /**
+   * Email address that receives enquiry notifications (e.g. enquiries@eprod.com)
+   */
+  to: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -714,6 +675,25 @@ export interface Event {
   createdAt: string;
 }
 /**
+ * All registrations submitted via popup forms on the site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popup-registrations".
+ */
+export interface PopupRegistration {
+  id: number;
+  /**
+   * The popup this registration came from.
+   */
+  popup: number | Popup;
+  email: string;
+  name?: string | null;
+  phone?: string | null;
+  organization?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -784,6 +764,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'popup-registrations';
+        value: number | PopupRegistration;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -994,23 +978,7 @@ export interface TeamSelect<T extends boolean = true> {
  */
 export interface CtaConfigSelect<T extends boolean = true> {
   title?: T;
-  email?:
-    | T
-    | {
-        to?: T;
-        from?: T;
-        subject?: T;
-        htmlContent?: T;
-        body?: T;
-        headers?:
-          | T
-          | {
-              key?: T;
-              value?: T;
-              id?: T;
-            };
-        attachments?: T;
-      };
+  to?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1155,6 +1123,19 @@ export interface EventsSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popup-registrations_select".
+ */
+export interface PopupRegistrationsSelect<T extends boolean = true> {
+  popup?: T;
+  email?: T;
+  name?: T;
+  phone?: T;
+  organization?: T;
   updatedAt?: T;
   createdAt?: T;
 }

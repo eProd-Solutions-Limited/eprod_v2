@@ -7,6 +7,9 @@ import * as migration_20260514_add_logo_links from './20260514_add_logo_links';
 import * as migration_20260515_063736 from './20260515_063736';
 import * as migration_20260515_case_studies_result_richtext from './20260515_case_studies_result_richtext';
 import * as migration_20260520_072301 from './20260520_072301';
+import * as migration_20260520_logo_wall_active from './20260520_logo_wall_active';
+import * as migration_20260601_071007 from './20260601_071007';
+import * as migration_20260601_074513 from './20260601_074513';
 
 export const migrations = [
   {
@@ -52,6 +55,21 @@ export const migrations = [
   {
     up: migration_20260520_072301.up,
     down: migration_20260520_072301.down,
-    name: '20260520_072301'
+    name: '20260520_072301',
+  },
+  {
+    up: migration_20260520_logo_wall_active.up,
+    down: migration_20260520_logo_wall_active.down,
+    name: '20260520_logo_wall_active',
+  },
+  {
+    up: migration_20260601_071007.up,
+    down: migration_20260601_071007.down,
+    name: '20260601_071007',
+  },
+  {
+    up: migration_20260601_074513.up,
+    down: migration_20260601_074513.down,
+    name: '20260601_074513'
   },
 ];
