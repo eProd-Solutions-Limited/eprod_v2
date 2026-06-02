@@ -23,11 +23,11 @@ const BankPartnersAbout = ({ bankLogos }: BankPartnersAboutProps) => {
           Our AgFinTech model is not theoretical; it is operational and proven. We have active, integrated partnerships with some of East Africa's most respected commercial banks. They trust our data to de-risk their agricultural lending portfolios.
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-6 max-w-2xl mx-auto">
+        <div className="flex flex-row flex-nowrap items-center justify-center gap-8 max-w-4xl mx-auto">
           {bankLogos.map((logo) => (
             <div
               key={logo.id ?? logo.name}
-              className="px-8 py-4 rounded-xl bg-card border border-border hover:shadow-md transition flex items-center justify-center min-w-30 h-20"
+              className="flex items-center justify-center"
             >
               <LogoCell logo={logo} textClassName="text-lg font-bold text-primary" />
             </div>
