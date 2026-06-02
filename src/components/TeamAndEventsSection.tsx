@@ -40,25 +40,25 @@ export default async function TeamAndEventsSection() {
     .slice(0, 3)
 
   return (
-    <section className="grid md:grid-cols-2 min-h-[520px]">
+    <section className="grid md:grid-cols-2 md:min-h-130">
 
       {/* ── Left: Team Banner ── */}
-      <div className="relative overflow-hidden min-h-[520px]">
+      <div className="relative overflow-hidden min-h-75 md:min-h-130">
         <Image
           src={teamImg}
           alt="The eProd team"
           fill
           className="object-cover object-center"
-          sizes="50vw"
+          sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
         <div className="absolute inset-0 bg-black/45" />
-        <div className="relative z-10 flex items-end h-full p-8 md:p-10">
-          <div className="bg-white rounded-2xl shadow-2xl p-7 max-w-xs w-full">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+        <div className="relative z-10 flex items-end h-full p-5 md:p-10">
+          <div className="bg-white rounded-2xl shadow-2xl p-5 md:p-7 w-full md:max-w-xs">
+            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
               We are <span className="gradient-primary-text">eProd!</span>
             </h2>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+            <p className="text-muted-foreground text-sm leading-relaxed mb-4">
               Our team is always looking for passionate thinkers, doers, and innovators who share our
               mission of transforming agricultural supply chains across Africa and beyond.
             </p>
@@ -73,7 +73,7 @@ export default async function TeamAndEventsSection() {
       </div>
 
       {/* ── Right: Events ── */}
-      <div className="bg-background flex flex-col justify-center px-8 md:px-10 py-10">
+      <div className="bg-background flex flex-col justify-center px-5 md:px-10 py-8 md:py-10">
         <div className="flex items-center justify-between mb-6">
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Events</p>
