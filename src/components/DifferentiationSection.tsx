@@ -50,7 +50,7 @@ const DifferentiationSection = () => {
   }, [sectionInView])
 
   return (
-    <section className="bg-background py-20 relative" ref={sectionRef}>
+    <section className="bg-background py-20 relative overflow-hidden" ref={sectionRef}>
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <div ref={headingRef} className="relative mb-14">
