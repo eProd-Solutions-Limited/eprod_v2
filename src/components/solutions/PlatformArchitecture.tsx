@@ -74,7 +74,7 @@ const PlatformArchitecture = () => {
   const body = useInView();
 
   return (
-    <section className="bg-background py-20 relative overflow-hidden">
+    <section id="platform-architecture" className="bg-background py-20 relative overflow-hidden">
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <div

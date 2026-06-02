@@ -1,5 +1,20 @@
-﻿import { getPayloadClient } from '@/lib/payload-client'
+﻿import type { Metadata } from 'next'
+import { getPayloadClient } from '@/lib/payload-client'
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Case Studies',
+  description:
+    'See how eProd has helped cooperatives and agri-enterprises across Africa increase yields, unlock financing, and scale operations. Real impact, real numbers.',
+  openGraph: {
+    title: 'eProd Case Studies — Real Impact Across Africa\'s Agribusiness',
+    description:
+      'See how eProd has helped cooperatives and agri-enterprises across Africa increase yields, unlock financing, and scale operations. Real impact, real numbers.',
+    type: 'website',
+    url: '/case-studies',
+  },
+  alternates: { canonical: '/case-studies' },
+}
 
 import { cache } from 'react'
 import { CaseStudiesHero } from '@/components/case-studies/CaseStudiesHero'

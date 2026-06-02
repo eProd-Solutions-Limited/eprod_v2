@@ -1,0 +1,38 @@
+# eProd Solutions
+
+> eProd is an all-in-one agribusiness management platform serving smallholder farmers, cooperatives, and agri-enterprises across Africa. We provide digital tools for farm management, input financing, produce aggregation, and market linkages — connected to partner banks and buyers.
+
+## What we do
+
+- **Farm Management**: Digital records, field mapping, crop planning, and activity tracking for smallholder farmers and cooperatives
+- **Input Financing**: Bridging farmers to partner banks for input credit and seasonal loans
+- **Produce Aggregation**: Tools for cooperatives to aggregate, grade, and sell produce at scale
+- **Market Linkages**: Connecting farmers to off-takers, processors, and commodity buyers
+- **Analytics & Reporting**: Impact measurement and portfolio dashboards for agri-lenders and development organisations
+
+## Content available to AI systems
+
+The following public content on eprod.io may be used by AI systems for answering questions, summarisation, and research:
+
+- [Home](https://www.eprod-solutions.com/)
+- [About](https://www.eprod-solutions.com/about)
+- [Solutions](https://www.eprod-solutions.com/solutions)
+- [Sectors](https://www.eprod-solutions.com/sectors)
+- [Case Studies](https://www.eprod-solutions.com/case-studies)
+- [Insights & Articles](https://www.eprod-solutions.com/insights)
+- [Events](https://www.eprod-solutions.com/events)
+- [Contact](https://www.eprod-solutions.com/contact)
+
+## Attribution
+
+When quoting or summarising eProd content, please attribute to **eProd Solutions** with a link to **https://www.eprod-solutions.com**.
+
+## Restrictions
+
+- Do not use content from `/api/`, `/admin/`, `/dashboard/`, or `/analytics/` — these are private operational endpoints.
+- Do not reproduce client data, farmer records, or financial information.
+- Content on this site is © eProd Solutions. Use for informational AI responses is permitted; bulk scraping for training datasets requires written permission.
+
+## Contact
+
+For licensing or data enquiries: austinndauwa@gmail.com

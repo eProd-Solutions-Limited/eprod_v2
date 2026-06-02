@@ -2,6 +2,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor, EXPERIMENTAL_TableFeature } from '@payloadcms/richtext-lexical'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -78,6 +79,26 @@ export default buildConfig({
         'case-studies-hero': true,
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
+    }),
+    seoPlugin({
+      collections: ['articles', 'events', 'case-studies'],
+      uploadsCollection: 'media',
+      tabbedUI: true,
+      generateTitle: ({ doc }) => {
+        const title = (doc as any)?.title ?? (doc as any)?.name ?? ''
+        return title ? `${title} | eProd` : 'eProd Solutions'
+      },
+      generateDescription: ({ doc }) => {
+        return (doc as any)?.excerpt ?? ''
+      },
+      generateURL: ({ doc, collectionConfig }) => {
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.eprod-solutions.com'
+        const slug = collectionConfig?.slug
+        if (slug === 'articles') return `${siteUrl}/articles/${(doc as any)?.slug ?? ''}`
+        if (slug === 'events') return `${siteUrl}/events/${(doc as any)?.id ?? ''}`
+        if (slug === 'case-studies') return `${siteUrl}/case-studies`
+        return siteUrl
+      },
     }),
   ],
 })

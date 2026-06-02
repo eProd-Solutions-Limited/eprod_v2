@@ -3,10 +3,44 @@ export const dynamic = 'force-dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload-client'
 import { getEventImageUrls, getImageAlt, formatEventDate, formatEventDayName, getEventStatus, EventStatus } from '@/lib/event-utils'
 import { EventRichText } from '@/components/EventRichText'
 import { ArrowLeft, Calendar, MapPin } from 'lucide-react'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}): Promise<Metadata> {
+  const { id } = await params
+  let event: any
+  try {
+    const payload = await getPayloadClient()
+    event = await payload.findByID({ collection: 'events', id, depth: 2 })
+  } catch {
+    return {}
+  }
+  if (!event) return {}
+
+  const dateLabel = formatEventDate(event.startDate, event.endDate)
+  const description = `${event.name} — ${event.venue}${dateLabel ? `, ${dateLabel}` : ''}.`
+  const heroImage = getEventImageUrls(event)[0] ?? null
+
+  return {
+    title: event.name,
+    description,
+    openGraph: {
+      title: event.name,
+      description,
+      type: 'website',
+      url: `/events/${id}`,
+      images: heroImage ? [{ url: heroImage, alt: event.name }] : undefined,
+    },
+    alternates: { canonical: `/events/${id}` },
+  }
+}
 
 const statusConfig: Record<EventStatus, { dot: string; label: string; pulse: boolean }> = {
   ongoing: { dot: 'bg-red-500', label: 'Ongoing', pulse: true },
@@ -42,8 +76,38 @@ export default async function EventDetailPage({
   const heroImage  = imageUrls[0]?.url ?? null
   const restImages = imageUrls.slice(1)
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.eprod-solutions.com'
+
+  const eventSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: event.name,
+    description: `${event.name} — ${event.venue}${dateLabel ? `, ${dateLabel}` : ''}.`,
+    startDate: event.startDate,
+    ...(event.endDate ? { endDate: event.endDate } : {}),
+    eventStatus: status === 'past'
+      ? 'https://schema.org/EventScheduled'
+      : 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: event.venue,
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'eProd Solutions',
+      url: siteUrl,
+    },
+    url: `${siteUrl}/events/${id}`,
+    ...(heroImage ? { image: heroImage } : {}),
+  }
+
   return (
     <main className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+      />
 
       {/* ── Hero ── */}
       <div className="relative min-h-[480px] flex flex-col justify-end overflow-hidden">

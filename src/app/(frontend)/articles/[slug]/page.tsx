@@ -1,5 +1,6 @@
 import { cache } from 'react'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload-client'
 import { cn } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
@@ -13,6 +14,38 @@ const getArticle = cache(async (slug: string) => {
     depth: 1,
   })
 })
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const { docs } = await getArticle(slug)
+  if (!docs?.length) return {}
+
+  const article = docs[0]
+  const coverImage =
+    typeof article.coverImage === 'object' && article.coverImage !== null
+      ? article.coverImage
+      : null
+
+  return {
+    title: article.title,
+    description: article.excerpt ?? undefined,
+    openGraph: {
+      title: article.title,
+      description: article.excerpt ?? undefined,
+      type: 'article',
+      url: `/articles/${slug}`,
+      publishedTime: article.publishedAt ?? undefined,
+      images: coverImage?.url
+        ? [{ url: coverImage.url, width: coverImage.width ?? 1200, height: coverImage.height ?? 630, alt: article.title }]
+        : undefined,
+    },
+    alternates: { canonical: `/articles/${slug}` },
+  }
+}
 
 export default async function ArticlePage({
   params,
@@ -37,8 +70,47 @@ export default async function ArticlePage({
     ? article.coverImage
     : null
 
+  const authorName =
+    typeof article.author === 'object' && article.author !== null
+      ? (article.author as any).email ?? 'eProd Solutions'
+      : 'eProd Solutions'
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.eprod-solutions.com'
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    ...(article.excerpt ? { description: article.excerpt } : {}),
+    ...(article.publishedAt ? { datePublished: article.publishedAt } : {}),
+    ...(article.updatedAt ? { dateModified: article.updatedAt } : {}),
+    ...(coverImage?.url ? { image: coverImage.url } : {}),
+    url: `${siteUrl}/articles/${slug}`,
+    author: {
+      '@type': 'Person',
+      name: authorName,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'eProd Solutions',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/og-image.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/articles/${slug}`,
+    },
+  }
+
   return (
     <article className="max-w-3xl mx-auto">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
       <time className="text-gray-400">
         {article.publishedAt}

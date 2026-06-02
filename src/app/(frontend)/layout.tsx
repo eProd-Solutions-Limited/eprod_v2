@@ -24,8 +24,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "eProd - Empowering Your Agribusiness",
-  description: "All in one solution for your business",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.eprod-solutions.com'),
+  title: {
+    default: 'eProd — Empowering Your Agribusiness',
+    template: '%s | eProd',
+  },
+  description:
+    'All-in-one agribusiness management platform for smallholder farmers, cooperatives, and agri-enterprises across Africa. Farm management, input financing, produce aggregation, and market linkages.',
+  openGraph: {
+    type: 'website',
+    siteName: 'eProd Solutions',
+    locale: 'en_US',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'eProd Solutions — Empowering Your Agribusiness' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
 };
 
 async function fetchActivePopups(): Promise<SerializedPopup[]> {

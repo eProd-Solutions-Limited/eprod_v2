@@ -9,17 +9,16 @@ const Footer = () => {
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-primary-foreground/60">Product</h4>
             <ul className="space-y-2 text-sm">
               <li><a href="/solutions" className="text-primary-foreground/80 hover:text-primary-foreground transition">Solutions</a></li>
-              <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Features</a></li>
+              <li><a href="/solutions#platform-architecture" className="text-primary-foreground/80 hover:text-primary-foreground transition">Features</a></li>
               <li><a href="/sectors" className="text-primary-foreground/80 hover:text-primary-foreground transition">Sectors</a></li>
-              <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Security</a></li>
             </ul>
           </div>
           <div>
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-primary-foreground/60">Company</h4>
             <ul className="space-y-2 text-sm">
               <li><a href="/about" className="text-primary-foreground/80 hover:text-primary-foreground transition">About Us</a></li>
-              <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Team</a></li>
-              <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Careers</a></li>
+              <li><a href="/about#team" className="text-primary-foreground/80 hover:text-primary-foreground transition">Team</a></li>
+              <li><a href="/about#careers" className="text-primary-foreground/80 hover:text-primary-foreground transition">Careers</a></li>
               <li><a href="/contact" className="text-primary-foreground/80 hover:text-primary-foreground transition">Contact</a></li>
             </ul>
           </div>
@@ -28,8 +27,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li><a href="/insights" className="text-primary-foreground/80 hover:text-primary-foreground transition">Insights</a></li>
               <li><a href="/case-studies" className="text-primary-foreground/80 hover:text-primary-foreground transition">Case Studies</a></li>
-              <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Documentation</a></li>
-              <li><a href="#" className="text-primary-foreground/80 hover:text-primary-foreground transition">Webinars</a></li>
+              <li><a href="/events" className="text-primary-foreground/80 hover:text-primary-foreground transition">Events</a></li>
             </ul>
           </div>
           <div>
@@ -52,19 +50,6 @@ const Footer = () => {
                 <Youtube size={16} />
               </a>
             </div>
-          </div>
-        </div>
-
-        {/* Trust badges */}
-        <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
-          <div className="flex items-center gap-2 text-xs text-primary-foreground/60">
-            <Lock size={14} /> SSL Secure
-          </div>
-          <div className="flex items-center gap-2 text-xs text-primary-foreground/60">
-            <Shield size={14} /> ISO 27001 Certified
-          </div>
-          <div className="flex items-center gap-2 text-xs text-primary-foreground/60">
-            <FileCheck size={14} /> Data Protection Compliant
           </div>
         </div>
 

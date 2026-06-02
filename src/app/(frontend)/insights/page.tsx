@@ -1,5 +1,20 @@
-﻿import { getPayloadClient } from '@/lib/payload-client'
+﻿import type { Metadata } from 'next'
+import { getPayloadClient } from '@/lib/payload-client'
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Insights',
+  description:
+    'Articles, reports, and analysis on agribusiness, cooperative management, agri-fintech, and smallholder farming across Africa from the eProd team.',
+  openGraph: {
+    title: 'eProd Insights — Agribusiness Knowledge for Africa',
+    description:
+      'Articles, reports, and analysis on agribusiness, cooperative management, agri-fintech, and smallholder farming across Africa from the eProd team.',
+    type: 'website',
+    url: '/insights',
+  },
+  alternates: { canonical: '/insights' },
+}
 
 import { Suspense, cache } from 'react'
 import { InsightsHero } from '@/components/insights/InsightsHero'

@@ -22,7 +22,7 @@ export default async function LeadershipTeam() {
     .sort((a: any, b: any) => a.name.localeCompare(b.name))
 
   return (
-    <section className="bg-background py-20 relative overflow-hidden">
+    <section id="team" className="bg-background py-20 relative overflow-hidden">
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         {(leaders.length > 0 || rest.length > 0) && (

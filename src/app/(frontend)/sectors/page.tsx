@@ -5,16 +5,17 @@ import ValueChainBlock from '@/components/sectors/ValueChainBlock'
 import SectorsFAQ from '@/components/sectors/SectorsFAQ'
 
 export const metadata: Metadata = {
-  title: 'Sectors We Serve | eProd — Agricultural Cooperative Management',
+  title: 'Sectors We Serve',
   description:
     'Tailored solutions for coffee, cocoa, horticulture, dairy, seeds, grains, spices, nuts, apiculture, pisciculture, poultry, and rubber & gum agribusinesses. Traceability, EUDR compliance, and automated payments.',
   openGraph: {
-    title: 'Sectors We Serve — Tailored Solutions for Every Value Chain | eProd',
+    title: 'Sectors We Serve — Tailored Solutions for Every Value Chain',
     description:
       'Tailored solutions for coffee, cocoa, horticulture, dairy, seeds, grains, spices, nuts, apiculture, pisciculture, poultry, and rubber & gum agribusinesses. Traceability, EUDR compliance, and automated payments.',
     type: 'website',
-    siteName: 'eProd',
+    url: '/sectors',
   },
+  alternates: { canonical: '/sectors' },
 }
 
 const faqSchema = {

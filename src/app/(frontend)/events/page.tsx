@@ -1,5 +1,20 @@
-﻿import { getPayloadClient } from '@/lib/payload-client'
+﻿import type { Metadata } from 'next'
+import { getPayloadClient } from '@/lib/payload-client'
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Events',
+  description:
+    'Conferences, expos, field visits, and training events where eProd connects agribusiness leaders, cooperatives, and partners across Africa.',
+  openGraph: {
+    title: 'eProd Events — Connecting Africa\'s Agribusiness Community',
+    description:
+      'Conferences, expos, field visits, and training events where eProd connects agribusiness leaders, cooperatives, and partners across Africa.',
+    type: 'website',
+    url: '/events',
+  },
+  alternates: { canonical: '/events' },
+}
 
 import { getEventStatus, formatEventDate, getEventImageUrls, getImageAlt, formatEventDayName } from '@/lib/event-utils'
 import EventsPageClient from './EventsPageClient'

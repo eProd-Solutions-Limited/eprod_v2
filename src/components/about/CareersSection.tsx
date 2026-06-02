@@ -54,7 +54,7 @@ export default async function CareersSection() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/\//g, '\\/') }}
         />
       ))}
-      <section className="bg-background py-20 relative overflow-hidden">
+      <section id="careers" className="bg-background py-20 relative overflow-hidden">
         <CircleBackground />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">

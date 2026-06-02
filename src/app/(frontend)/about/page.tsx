@@ -1,5 +1,20 @@
-﻿import { getPayloadClient } from '@/lib/payload-client'
+﻿import type { Metadata } from 'next'
+import { getPayloadClient } from '@/lib/payload-client'
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'About Us',
+  description:
+    'Learn how eProd is transforming agribusiness across Africa — our story, mission, leadership team, and the agri-fintech vision powering smallholder farmers and cooperatives.',
+  openGraph: {
+    title: 'About eProd — Agri-Fintech Built for Africa',
+    description:
+      'Learn how eProd is transforming agribusiness across Africa — our story, mission, leadership team, and the agri-fintech vision powering smallholder farmers and cooperatives.',
+    type: 'website',
+    url: '/about',
+  },
+  alternates: { canonical: '/about' },
+}
 
 import { cache } from 'react'
 import AboutHero from "@/components/about/AboutHero";
