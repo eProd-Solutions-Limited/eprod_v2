@@ -1,67 +1,121 @@
-# Payload Blank Template
+# eProd Solutions — Marketing Website
 
-This template comes configured with the bare minimum to get started on anything you need.
+The company website for [eProd Solutions](https://www.eprod-solutions.com) — an agri-tech company digitizing agricultural supply chains across Africa. Built with Next.js and Payload CMS.
 
-## Quick start
+---
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+## Tech Stack
 
-## Quick Start - local setup
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
+| CMS | [Payload CMS 3.x](https://payloadcms.com/) (embedded in Next.js) |
+| Database | [PostgreSQL](https://www.postgresql.org/) via [Neon](https://neon.tech/) |
+| Media storage | [Vercel Blob Storage](https://vercel.com/docs/storage/vercel-blob) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) |
+| Analytics | [Google Analytics 4](https://analytics.google.com/) (tracking + internal reporting) |
+| Testing | [Vitest](https://vitest.dev/) (integration) + [Playwright](https://playwright.dev/) (E2E) |
 
-To spin up this template locally, follow these steps:
+---
 
-### Clone
+## Prerequisites
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+- **Node.js** `^18.20.2 || >=20.9.0`
+- **pnpm** `^9 || ^10` — install with `npm install -g pnpm`
+- **PostgreSQL connection string** — [Neon](https://neon.tech/) (free tier works)
 
-### Development
+---
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+## Local Setup
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+```bash
+# 1. Clone the repo
+git clone <repo-url>
+cd eProd_v2
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+# 2. Copy and fill in environment variables
+cp .env.example .env
+# Edit .env — at minimum set DATABASE_URL and PAYLOAD_SECRET
 
-#### Docker (Optional)
+# 3. Install dependencies
+pnpm install
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+# 4. Start the dev server
+pnpm dev
 
-To do so, follow these steps:
+# 5. Open the app
+open http://localhost:3000
+# Admin panel: http://localhost:3000/admin
+```
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+On first run, the admin panel will prompt you to create your first admin user.
 
-## How it works
+---
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+## Environment Variables
 
-### Collections
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | Yes | PostgreSQL connection string (e.g. from Neon) |
+| `PAYLOAD_SECRET` | Yes | Random secret for Payload auth — use `openssl rand -hex 32` |
+| `NEXT_PUBLIC_SITE_URL` | No | Production domain, no trailing slash. Used by sitemap and robots.txt |
+| `BLOB_READ_WRITE_TOKEN` | No | Vercel Blob Storage token. Without it, media uploads are disabled |
+| `SMTP_HOST` | No | SMTP server host for sending emails (contact form, CTA emails) |
+| `SMTP_PORT` | No | SMTP port (default: `587`) |
+| `SMTP_USER` | No | SMTP auth username |
+| `SMTP_PASS` | No | SMTP auth password |
+| `SMTP_FROM` | No | From address (default: `noreply@eprod.io`) |
+| `NEXT_PUBLIC_GA_ID` | No | GA4 Measurement ID (`G-XXXXXXXXXX`) for frontend event tracking |
+| `GOOGLE_GA_PROPERTY_ID` | No | GA4 Property ID (numeric) for the `/analytics` reporting dashboard |
+| `GOOGLE_SA_CREDENTIALS` | No | Stringified service account JSON for the GA4 Reporting API |
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+See `.env.example` for the full template.
 
-- #### Users (Authentication)
+---
 
-  Users are auth-enabled collections that have access to the admin panel.
+## Scripts
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+| Script | Description |
+|---|---|
+| `pnpm dev` | Start the development server |
+| `pnpm devsafe` | Clear `.next` cache then start dev server (use when hot reload breaks) |
+| `pnpm build` | Run pending DB migrations, then build for production |
+| `pnpm start` | Start the production server (run `pnpm build` first) |
+| `pnpm test` | Run all tests (integration + E2E) |
+| `pnpm test:int` | Run Vitest integration tests only |
+| `pnpm test:e2e` | Run Playwright E2E tests only |
+| `pnpm seed` | Seed case studies data into the database |
+| `pnpm generate:types` | Regenerate `src/payload-types.ts` after CMS schema changes |
+| `pnpm lint` | Run ESLint |
 
-- #### Media
+---
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+## Project Structure
 
-### Docker
+```
+src/
+  app/
+    (frontend)/       # Public-facing Next.js pages
+    (payload)/        # Payload admin panel and API routes
+    api/              # Custom API routes (enquiries, popup registrations, email sending)
+  collections/        # Payload CMS collection definitions
+  globals/            # Payload CMS global definitions (logo wall, testimonials)
+  components/         # React components
+  lib/                # Shared utilities, Payload client, GA helpers
+  migrations/         # Payload database migrations
+tests/
+  e2e/                # Playwright end-to-end tests
+  int/                # Vitest integration tests
+docs/
+  cms.md              # CMS collections and globals reference
+  deployment.md       # Deployment guide (Vercel, Docker, self-hosted)
+  analytics.md        # GA4 tracking and reporting API setup
+```
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+---
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+## Further Reading
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+- [CMS Reference](docs/cms.md) — Payload collections and globals, what each one does and which page it feeds
+- [Deployment Guide](docs/deployment.md) — Vercel (primary), Docker (local), and self-hosted setup
+- [Analytics Setup](docs/analytics.md) — GA4 event tracking and the internal reporting dashboard
