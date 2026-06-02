@@ -40,7 +40,7 @@ export default async function TeamAndEventsSection() {
     .slice(0, 3)
 
   return (
-    <section className="grid md:grid-cols-2 md:min-h-130">
+    <section className="grid md:grid-cols-2 md:min-h-130 w-full overflow-hidden">
 
       {/* ── Left: Team Banner ── */}
       <div className="relative overflow-hidden min-h-75 md:min-h-130">
@@ -84,7 +84,7 @@ export default async function TeamAndEventsSection() {
           </div>
           <Link
             href="/events"
-            className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline flex-shrink-0 ml-4"
+            className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline shrink-0 ml-4"
           >
             All events <ArrowRight size={13} />
           </Link>
@@ -106,7 +106,7 @@ export default async function TeamAndEventsSection() {
                 >
                   {/* Event image */}
                   {event.firstImageUrl && (
-                    <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
+                    <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-muted">
                       <Image
                         src={event.firstImageUrl}
                         alt={event.name}
@@ -116,29 +116,29 @@ export default async function TeamAndEventsSection() {
                       />
                     </div>
                   )}
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1 min-w-0 overflow-hidden">
                     <div className="flex items-center gap-2 mb-1">
                       {/* Status dot */}
-                      <span className="relative flex h-2 w-2 flex-shrink-0">
+                      <span className="relative flex h-2 w-2 shrink-0">
                         {cfg.pulse && (
                           <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${cfg.dot} opacity-75`} />
                         )}
                         <span className={`relative inline-flex rounded-full h-2 w-2 ${cfg.dot}`} />
                       </span>
-                      <span className={`text-xs font-bold uppercase tracking-wide ${
+                      <span className={`text-xs font-bold uppercase tracking-wide shrink-0 ${
                         event.status === 'ongoing' ? 'text-red-500' :
                         event.status === 'upcoming' ? 'text-green-600' : 'text-muted-foreground'
                       }`}>
                         {cfg.label}
                       </span>
                     </div>
-                    <p className="font-semibold text-foreground text-sm leading-snug truncate">{event.name}</p>
-                    <div className="flex flex-wrap gap-x-3 mt-1">
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Calendar size={10} />{event.dateLabel}
+                    <p className="font-semibold text-foreground text-sm leading-snug line-clamp-2 wrap-break-word">{event.name}</p>
+                    <div className="flex flex-col gap-0.5 mt-1">
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground min-w-0">
+                        <Calendar size={10} className="shrink-0" /><span className="truncate">{event.dateLabel}</span>
                       </span>
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <MapPin size={10} />{event.venue}
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground min-w-0">
+                        <MapPin size={10} className="shrink-0" /><span className="truncate">{event.venue}</span>
                       </span>
                     </div>
                   </div>
