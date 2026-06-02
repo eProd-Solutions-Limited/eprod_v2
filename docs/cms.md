@@ -29,15 +29,15 @@ Blog posts. The `content` field uses `type: 'blocks'` — authors compose articl
 
 ### Case Studies (`case-studies`)
 
-Client success stories. SEO plugin enabled. Supports an optional video URL and a CTA link for each case study.
+Client success stories. Supports an optional video URL and a CTA link for each case study.
 
-**Key fields:** `title`, `client`, `industry`, `challenge`, `solution`, `results` (Lexical rich text), `heroImage` (relation to Media), `videoUrl`, `ctaLink`, SEO tab.
+**Key fields:** `title`, `coverImage` (upload, relation to Media), `client`, `tag` (select: Financial Inclusion / EUDR Traceability / Operational Efficiency), `headline`, `situation` (textarea — challenge the client faced), `action` (textarea — solution eProd implemented), `result` (richText — measurable impact, supports bullet points), `ctaLabel`, `ctaLink`, `hasVideo` (checkbox), `videoUrl` (shown only when `hasVideo` is checked).
 
 **Frontend:** `/case-studies` — all case studies are listed on this single page.
 
 ### Case Studies Hero (`case-studies-hero`)
 
-Hero banner images for the case studies page. Separate collection from Media to allow Vercel Blob to handle these images independently.
+A simple upload collection for hero images used on the case studies page. Each record is an image file with a single required `alt` text field — there are no additional metadata fields.
 
 **Frontend:** Hero section at the top of `/case-studies`.
 
@@ -65,9 +65,9 @@ Contact form submissions. Records are created indirectly via `POST /api/send-cta
 
 ### Events (`events`)
 
-Company events, conferences, and webinars. Uses Lexical rich text for event description. SEO plugin enabled.
+Company events, conferences, and webinars. Uses Lexical rich text for event description.
 
-**Key fields:** `title`, `date`, `location`, `description` (Lexical), `image` (relation to Media), SEO tab.
+**Key fields:** `name` (event name), `venue` (location/venue — required), `startDate` (required), `endDate` (optional — leave blank for single-day events), `description` (richText), `images` (upload, hasMany — all event photos; auto-labelled "[Event Name] 1", "[Event Name] 2", etc.), `imageLabels` (array — optional custom labels per photo, each entry has `enabled` checkbox, `photoNumber`, and `label`).
 
 **Frontend:** `/events` (listing) and `/events/[id]` (detail page).
 
