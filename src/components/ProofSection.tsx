@@ -10,11 +10,8 @@ import { useInView } from '@/hooks/useInView'
 import { CircleBackground } from '@/components/ui/CircleBackground'
 import { SectionScoop } from '@/components/ui/SectionScoop'
 
-import eudrLogo from '@/assets/EUDR.png'
-import organicLogo from '@/assets/eu-organic-logo-600x400_0.png'
-import fairtradeLogoSrc from '@/assets/Fairtrade-Logo.jpg'
 import financeImage from '@/assets/Finance-2.png'
-import supplyChainImage from '@/assets/From farm to market Fully digitalized.png'
+import supplyChainImage from '@/assets/Farm to market.png'
 import traceabilityImage from '@/assets/Traceability & Compliance 2.png'
 
 const impactMetrics = [
@@ -25,11 +22,7 @@ const impactMetrics = [
   { value: 'Millions', label: 'in Loans De-risked Annually' },
 ]
 
-const complianceLogos = [
-  { src: eudrLogo, alt: 'EUDR Compliant' },
-  { src: organicLogo, alt: 'EU Organic' },
-  { src: fairtradeLogoSrc, alt: 'Fairtrade Certified' },
-]
+
 
 const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntry[] }) => {
   useEffect(() => {
