@@ -93,7 +93,7 @@ const SecurityCompliance = () => {
           {/* EUDR Checklist Download */}
           <div className="w-full flex justify-center mt-10">
             <a
-              href="/downloads/EUDR_Implementation_Checklist.pdf"
+              href="/assets/EUDR_Implementation_Checklist.pdf"
               download="EUDR_Implementation_Checklist_eProd.pdf"
               className="inline-flex items-center gap-3 rounded-full gradient-primary px-8 py-4 text-sm font-bold text-primary-foreground hover:brightness-110 active:scale-95 transition-all duration-150 shadow-lg group"
             >
