@@ -11,6 +11,7 @@ import * as migration_20260520_logo_wall_active from './20260520_logo_wall_activ
 import * as migration_20260601_071007 from './20260601_071007';
 import * as migration_20260601_074513 from './20260601_074513';
 import * as migration_20260602_074925 from './20260602_074925';
+import * as migration_20260602_enquiry_settings_global from './20260602_enquiry_settings_global';
 
 export const migrations = [
   {
@@ -77,5 +78,10 @@ export const migrations = [
     up: migration_20260602_074925.up,
     down: migration_20260602_074925.down,
     name: '20260602_074925'
+  },
+  {
+    up: migration_20260602_enquiry_settings_global.up,
+    down: migration_20260602_enquiry_settings_global.down,
+    name: '20260602_enquiry_settings_global',
   },
 ];

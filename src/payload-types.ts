@@ -72,7 +72,6 @@ export interface Config {
     articles: Article;
     'case-studies': CaseStudy;
     team: Team;
-    'cta-config': CtaConfig;
     popups: Popup;
     categories: Category;
     enquiries: Enquiry;
@@ -92,7 +91,6 @@ export interface Config {
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
-    'cta-config': CtaConfigSelect<false> | CtaConfigSelect<true>;
     popups: PopupsSelect<false> | PopupsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     enquiries: EnquiriesSelect<false> | EnquiriesSelect<true>;
@@ -112,10 +110,12 @@ export interface Config {
   globals: {
     'logo-wall': LogoWall;
     'voice-of-customer': VoiceOfCustomer;
+    'enquiry-settings': EnquirySetting;
   };
   globalsSelect: {
     'logo-wall': LogoWallSelect<false> | LogoWallSelect<true>;
     'voice-of-customer': VoiceOfCustomerSelect<false> | VoiceOfCustomerSelect<true>;
+    'enquiry-settings': EnquirySettingsSelect<false> | EnquirySettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -406,25 +406,6 @@ export interface Team {
    * Display order
    */
   order: number;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Configure where enquiry form submissions are delivered.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cta-config".
- */
-export interface CtaConfig {
-  id: number;
-  /**
-   * Internal label for this config (e.g. "Main Enquiries")
-   */
-  title: string;
-  /**
-   * Email address that receives enquiry notifications (e.g. enquiries@eprod.com)
-   */
-  to: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -762,10 +743,6 @@ export interface PayloadLockedDocument {
         value: number | Team;
       } | null)
     | ({
-        relationTo: 'cta-config';
-        value: number | CtaConfig;
-      } | null)
-    | ({
         relationTo: 'popups';
         value: number | Popup;
       } | null)
@@ -1007,16 +984,6 @@ export interface TeamSelect<T extends boolean = true> {
   linkedin?: T;
   isLeadership?: T;
   order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cta-config_select".
- */
-export interface CtaConfigSelect<T extends boolean = true> {
-  title?: T;
-  to?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1285,6 +1252,41 @@ export interface VoiceOfCustomer {
   createdAt?: string | null;
 }
 /**
+ * Configure recipients and email template for enquiry form submissions.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enquiry-settings".
+ */
+export interface EnquirySetting {
+  id: number;
+  /**
+   * Primary recipient address (e.g. info@eprod-solutions.com)
+   */
+  to: string;
+  /**
+   * Extra addresses that receive every enquiry notification.
+   */
+  cc?:
+    | {
+        /**
+         * Email address
+         */
+        email: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Email subject line. Supports placeholders: {{company}}, {{email}}, {{challenge}}, {{phone}}, {{message}}, {{sourceSection}}
+   */
+  subject: string;
+  /**
+   * Intro message shown above the enquiry data table. Supports the same placeholders as the subject. Leave blank to send only the data table.
+   */
+  body?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "logo-wall_select".
  */
@@ -1325,6 +1327,24 @@ export interface VoiceOfCustomerSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "enquiry-settings_select".
+ */
+export interface EnquirySettingsSelect<T extends boolean = true> {
+  to?: T;
+  cc?:
+    | T
+    | {
+        email?: T;
+        id?: T;
+      };
+  subject?: T;
+  body?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

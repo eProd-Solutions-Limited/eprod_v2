@@ -13,7 +13,7 @@ import { Media } from './collections/Media'
 import { Articles } from './collections/Articles'
 import { CaseStudies } from './collections/CaseStudies'
 import { Team } from './collections/Team'
-import { CTAConfig } from './collections/CTAConfig'
+import { EnquirySettings } from './globals/EnquirySettings'
 import { Popups } from './collections/Popups'
 import { Categories } from './collections/Categories'
 import { Enquiries } from './collections/Enquiries'
@@ -34,8 +34,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Articles, CaseStudies, Team, CTAConfig, Popups, Categories, Enquiries, CaseStudiesHeroCollection, Jobs, Events, PopupRegistrations],
-  globals: [LogoWall, VoiceOfCustomer],
+  collections: [Users, Media, Articles, CaseStudies, Team, Popups, Categories, Enquiries, CaseStudiesHeroCollection, Jobs, Events, PopupRegistrations],
+  globals: [LogoWall, VoiceOfCustomer, EnquirySettings],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
   }),
