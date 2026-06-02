@@ -23,7 +23,7 @@ export function CaseStudiesCTA() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/#contact"
+                href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-7 py-3.5 text-base font-semibold text-secondary-foreground hover:brightness-110 transition shadow-lg"
               >
                 Request a Custom ROI Assessment
