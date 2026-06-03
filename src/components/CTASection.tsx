@@ -124,11 +124,7 @@ const CTASection = () => {
             </div>
           )}
 
-          <div className="flex items-center justify-center gap-4 mt-6 text-sm">
-            <a href="#" className="text-primary hover:underline font-medium">Schedule a Call</a>
-            <span className="text-border">|</span>
-            <a href="#" className="text-primary hover:underline font-medium">Download Case Study</a>
-          </div>
+          
         </div>
 
         <p className="text-center text-primary-foreground/60 text-sm mt-8">
