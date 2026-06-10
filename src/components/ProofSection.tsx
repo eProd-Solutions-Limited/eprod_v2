@@ -1,17 +1,16 @@
 'use client'
 
-import { useEffect } from 'react'
-import Image from 'next/image'
-import { QRCodeSVG } from 'qrcode.react'
-import { LogoCell } from '@/components/LogoCell'
 import type { LogoEntry } from '@/components/LogoCell'
-import { gaEvents } from '@/lib/ga-events'
-import { useInView } from '@/hooks/useInView'
+import { LogoCell } from '@/components/LogoCell'
 import { CircleBackground } from '@/components/ui/CircleBackground'
 import { SectionScoop } from '@/components/ui/SectionScoop'
+import { useInView } from '@/hooks/useInView'
+import { gaEvents } from '@/lib/ga-events'
+import Image from 'next/image'
+import { useEffect } from 'react'
 
-import financeImage from '@/assets/Finance-2.png'
-import supplyChainImage from '@/assets/Farm to market.png'
+import supplyChainImage from '@/assets/farm_to_market_digitalized_shaded.png'
+import financeImage from '@/assets/Farmer- Client exchange.png'
 import traceabilityImage from '@/assets/Traceability & Compliance 2.png'
 
 const impactMetrics = [
@@ -21,8 +20,6 @@ const impactMetrics = [
   { value: '15+', label: 'Years of Experience' },
   { value: 'Millions', label: 'in Loans De-risked Annually' },
 ]
-
-
 
 const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntry[] }) => {
   useEffect(() => {
@@ -54,8 +51,8 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
               aria-hidden="true"
             />
             <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14">
-              Trusted by <span className="gradient-primary-text">250+ Agribusinesses</span> to manage
-              1M+ farmers Across 20 Countries
+              Trusted by <span className="gradient-primary-text">250+ Agribusinesses</span> to
+              manage 1M+ farmers Across 20 Countries
             </h2>
           </div>
 
@@ -99,7 +96,19 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
                     key={`${logo.id ?? logo.name}-${i}`}
                     className="flex items-center justify-center mx-10 opacity-60 hover:opacity-100 transition-opacity duration-300"
                   >
-                    <LogoCell logo={{ ...logo, image: logo.image ? { ...logo.image, width: (logo.image.width ?? 120) * 1.5, height: (logo.image.height ?? 60) * 1.5 } : undefined }} textClassName="text-base font-bold text-muted-foreground" />
+                    <LogoCell
+                      logo={{
+                        ...logo,
+                        image: logo.image
+                          ? {
+                              ...logo.image,
+                              width: (logo.image.width ?? 120) * 1.5,
+                              height: (logo.image.height ?? 60) * 1.5,
+                            }
+                          : undefined,
+                      }}
+                      textClassName="text-base font-bold text-muted-foreground"
+                    />
                   </div>
                 ))}
               </div>
@@ -114,7 +123,6 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
       <section className="bg-background py-20 relative">
         <CircleBackground />
         <div className="container mx-auto px-4 relative z-10">
-
           {/* Section header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -122,13 +130,13 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
               <span className="gradient-primary-text">Africa&apos;s Agri-Value Chain</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto text-base">
-              End-to-end traceability, built for global standards. De-risk lending, unlock capital for smallholders. From farm to market — fully digitalized.
+              End-to-end traceability, built for global standards. De-risk lending, unlock capital
+              for smallholders. From farm to market — fully digitalized.
             </p>
           </div>
 
           {/* 3-column grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
-
             {/* ── Column 1: Traceability & Compliance ── */}
             <div className="flex flex-col">
               <p className="text-xs font-bold uppercase tracking-widest text-primary mb-4">
@@ -214,8 +222,8 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
                 From farm to market — fully digitalized.
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                Digitize aggregation, quality control, payments, logistics, and production
-                planning — online and offline.
+                Digitize aggregation, quality control, payments, logistics, and production planning
+                — online and offline.
               </p>
               <ul className="space-y-2.5 mb-6">
                 {[
@@ -242,7 +250,6 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
