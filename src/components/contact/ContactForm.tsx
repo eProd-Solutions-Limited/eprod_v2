@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MapPin, Phone, Mail, LinkedinIcon, XIcon, FacebookIcon, YoutubeIcon } from "lucide-react"
+import { MapPin, Phone, Mail, LinkedinIcon, FacebookIcon, YoutubeIcon } from "lucide-react"
 import { gaEvents } from "@/lib/ga-events"
 import { CircleBackground } from '@/components/ui/CircleBackground'
 
@@ -31,6 +31,57 @@ type FormState = {
   message: string
 }
 
+type FormErrors = Partial<Record<keyof FormState, string>>
+
+const ALLOWED_CHALLENGES = ["compliance", "efficiency", "scaling", "other"]
+const DANGEROUS_PATTERN = /<[^>]*>|javascript\s*:|on\w+\s*=/i
+
+function validateForm(form: FormState): FormErrors {
+  const errors: FormErrors = {}
+  const company = form.company.trim()
+  const email = form.email.trim()
+  const phone = form.phone.trim()
+  const message = form.message.trim()
+
+  if (!company) {
+    errors.company = "Company name is required."
+  } else if (company.length > 100) {
+    errors.company = "Company name must be 100 characters or fewer."
+  } else if (DANGEROUS_PATTERN.test(company)) {
+    errors.company = "Company name contains invalid characters."
+  }
+
+  if (!email) {
+    errors.email = "Work email is required."
+  } else if (email.length > 254) {
+    errors.email = "Email address is too long."
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Please enter a valid email address."
+  } else if (DANGEROUS_PATTERN.test(email)) {
+    errors.email = "Email contains invalid characters."
+  }
+
+  if (!phone) {
+    errors.phone = "Phone number is required."
+  } else if (!/^[+\d][\d\s\-(). ]{5,19}$/.test(phone)) {
+    errors.phone = "Please enter a valid phone number."
+  }
+
+  if (!form.challenge || !ALLOWED_CHALLENGES.includes(form.challenge)) {
+    errors.challenge = "Please select a challenge."
+  }
+
+  if (!message) {
+    errors.message = "Message is required."
+  } else if (message.length > 1000) {
+    errors.message = "Message must be 1000 characters or fewer."
+  } else if (DANGEROUS_PATTERN.test(message)) {
+    errors.message = "Message contains invalid characters."
+  }
+
+  return errors
+}
+
 const ContactForm = () => {
   const [form, setForm] = useState<FormState>({
     company: "",
@@ -39,11 +90,27 @@ const ContactForm = () => {
     challenge: "",
     message: "",
   })
+  const [errors, setErrors] = useState<FormErrors>({})
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
 
+  const clearError = (field: keyof FormState) =>
+    setErrors((prev) => ({ ...prev, [field]: undefined }))
+
+  const inputBase =
+    "w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
+
+  const fieldCls = (hasError?: string) =>
+    `${inputBase} ${hasError ? "border-destructive" : "border-border"}`
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const validationErrors = validateForm(form)
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+    setErrors({})
     setLoading(true)
     setStatus("idle")
 
@@ -51,7 +118,14 @@ const ContactForm = () => {
       const res = await fetch("/api/send-cta-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, sourceSection: "contact_page" }),
+        body: JSON.stringify({
+          company: form.company.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          challenge: form.challenge,
+          message: form.message.trim(),
+          sourceSection: "contact_page",
+        }),
       })
 
       if (res.ok) {
@@ -67,9 +141,6 @@ const ContactForm = () => {
       setLoading(false)
     }
   }
-
-  const inputClass =
-    "w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
 
   return (
     <section className="relative overflow-hidden py-16 bg-background">
@@ -180,13 +251,14 @@ const ContactForm = () => {
                 </label>
                 <input
                   type="text"
-                  required
                   disabled={loading}
                   placeholder="e.g. Acme AgriCorp"
                   value={form.company}
-                  onChange={(e) => setForm({ ...form, company: e.target.value })}
-                  className={inputClass}
+                  onChange={(e) => { setForm({ ...form, company: e.target.value }); clearError("company") }}
+                  className={fieldCls(errors.company)}
+                  maxLength={100}
                 />
+                {errors.company && <p className="mt-1 text-xs text-destructive">{errors.company}</p>}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -196,13 +268,14 @@ const ContactForm = () => {
                   </label>
                   <input
                     type="email"
-                    required
                     disabled={loading}
                     placeholder="name@company.com"
                     value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className={inputClass}
+                    onChange={(e) => { setForm({ ...form, email: e.target.value }); clearError("email") }}
+                    className={fieldCls(errors.email)}
+                    maxLength={254}
                   />
+                  {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">
@@ -210,13 +283,14 @@ const ContactForm = () => {
                   </label>
                   <input
                     type="tel"
-                    required
                     disabled={loading}
                     placeholder="+254 700 000 000"
                     value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className={inputClass}
+                    onChange={(e) => { setForm({ ...form, phone: e.target.value }); clearError("phone") }}
+                    className={fieldCls(errors.phone)}
+                    maxLength={20}
                   />
+                  {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
                 </div>
               </div>
 
@@ -225,11 +299,10 @@ const ContactForm = () => {
                   Primary Challenge <span className="text-destructive">*</span>
                 </label>
                 <select
-                  required
                   disabled={loading}
                   value={form.challenge}
-                  onChange={(e) => setForm({ ...form, challenge: e.target.value })}
-                  className={inputClass}
+                  onChange={(e) => { setForm({ ...form, challenge: e.target.value }); clearError("challenge") }}
+                  className={fieldCls(errors.challenge)}
                 >
                   <option value="">Select an option</option>
                   <option value="compliance">Compliance</option>
@@ -237,6 +310,7 @@ const ContactForm = () => {
                   <option value="scaling">Scaling</option>
                   <option value="other">Other</option>
                 </select>
+                {errors.challenge && <p className="mt-1 text-xs text-destructive">{errors.challenge}</p>}
               </div>
 
               <div>
@@ -244,14 +318,15 @@ const ContactForm = () => {
                   Message <span className="text-destructive">*</span>
                 </label>
                 <textarea
-                  required
                   disabled={loading}
                   rows={4}
                   placeholder="Tell us more about your supply chain needs..."
                   value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className={`${inputClass} resize-none`}
+                  onChange={(e) => { setForm({ ...form, message: e.target.value }); clearError("message") }}
+                  className={`${fieldCls(errors.message)} resize-none`}
+                  maxLength={1000}
                 />
+                {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
               </div>
 
               <button
