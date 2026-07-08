@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 interface QuoteEntry {
   id?: string | number
@@ -19,6 +20,7 @@ interface VoiceOfCustomerProps {
 const CARDS_PER_PAGE = 3
 
 export function VoiceOfCustomer({ quotes }: VoiceOfCustomerProps) {
+  const { t } = useI18n()
   const totalPages = Math.ceil(quotes.length / CARDS_PER_PAGE)
   const [page, setPage] = useState(0)
 
@@ -30,10 +32,10 @@ export function VoiceOfCustomer({ quotes }: VoiceOfCustomerProps) {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-14">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
-            The Voice of the Customer
+            {t.caseStudies.voice.eyebrow}
           </p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight">
-            In Their <span className="gradient-primary-text">Own Words</span>
+            {t.caseStudies.voice.headingLead} <span className="gradient-primary-text">{t.caseStudies.voice.headingHighlight}</span>
           </h2>
         </div>
 

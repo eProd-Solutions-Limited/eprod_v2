@@ -8,27 +8,20 @@ import {
 } from '@/components/ui/accordion'
 import { gaEvents } from '@/lib/ga-events'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const faqs = [
-  {
-    q: 'Does eProd support multi-value chain operations?',
-    a: 'Yes. Manage multiple commodities within one unified system.',
-  },
-  {
-    q: 'Can eProd handle certification audits?',
-    a: 'Yes. The platform stores all required data for Organic, Fairtrade and EUDR audits.',
-  },
-]
-
-const SectorsFAQ = () => (
+const SectorsFAQ = () => {
+  const { t } = useI18n()
+  const faqs = t.sectors.faq.items
+  return (
   <section className="section-gray py-20 relative overflow-hidden" aria-labelledby="faq-heading">
     <CircleBackground />
     <div className="container mx-auto px-4 relative z-10">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">FAQ</p>
+          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{t.sectors.faq.eyebrow}</p>
           <h2 id="faq-heading" className="text-3xl md:text-4xl font-bold text-foreground">
-            Frequently Asked Questions
+            {t.sectors.faq.heading}
           </h2>
         </div>
 
@@ -57,6 +50,7 @@ const SectorsFAQ = () => (
       </div>
     </div>
   </section>
-)
+  )
+}
 
 export default SectorsFAQ

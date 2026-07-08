@@ -8,21 +8,22 @@ const WhatsAppIcon = ({ size = 14, className = "" }) => (
 );
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-
-
-const navLinks=  [
-        { href: "/", label: "Home" },
-        { href: "/about", label: "About" },
-        { href: "/solutions", label: "Solutions" },
-        { href: "/sectors", label: "Sectors" },
-        { href: "/case-studies", label: "Case studies" },
-        { href: "/insights", label: "Insights" },
-        { href: "/contact", label: "Contact"},
-    ];
+import { useI18n } from "@/lib/i18n/LanguageProvider";
 
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { t } = useI18n();
+
+  const navLinks = [
+    { href: "/", label: t.nav.home },
+    { href: "/about", label: t.nav.about },
+    { href: "/solutions", label: t.nav.solutions },
+    { href: "/sectors", label: t.nav.sectors },
+    { href: "/case-studies", label: t.nav.caseStudies },
+    { href: "/insights", label: t.nav.insights },
+    { href: "/contact", label: t.nav.contact },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
@@ -63,7 +64,7 @@ const Navbar = () => {
             href="#cta"
             className="hidden md:inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground hover:brightness-110 transition"
           >
-            Request a Demo
+            {t.nav.requestDemo}
           </a>
 
           <button className="md:hidden text-primary-foreground" onClick={() => setOpen(!open)}>
@@ -90,7 +91,7 @@ const Navbar = () => {
               href="#cta"
               className="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground mt-2"
             >
-              Request a Demo
+              {t.nav.requestDemo}
             </a>
           </div>
         )}

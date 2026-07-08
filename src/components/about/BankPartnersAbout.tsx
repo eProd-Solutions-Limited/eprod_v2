@@ -1,13 +1,17 @@
+'use client'
+
 import { Landmark } from "lucide-react";
 import { CircleBackground } from '@/components/ui/CircleBackground'
 import { LogoCell } from "@/components/LogoCell";
 import type { LogoEntry } from "@/components/LogoCell";
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 interface BankPartnersAboutProps {
   bankLogos: LogoEntry[];
 }
 
 const BankPartnersAbout = ({ bankLogos }: BankPartnersAboutProps) => {
+  const { t } = useI18n()
   return (
     <section className="section-gray py-20 relative overflow-hidden">
       <CircleBackground />
@@ -16,11 +20,11 @@ const BankPartnersAbout = ({ bankLogos }: BankPartnersAboutProps) => {
           <Landmark size={28} className="text-primary-foreground" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          Trusted by Africa's{" "}
-          <span className="gradient-primary-text">Leading Financial Institutions</span>
+          {t.about.bankPartners.headingLead}{" "}
+          <span className="gradient-primary-text">{t.about.bankPartners.headingHighlight}</span>
         </h2>
         <p className="text-muted-foreground text-base max-w-2xl mx-auto mb-12">
-          Our AgFinTech model is not theoretical; it is operational and proven. We have active, integrated partnerships with some of East Africa's most respected commercial banks. They trust our data to de-risk their agricultural lending portfolios.
+          {t.about.bankPartners.subtitle}
         </p>
 
         <div className="flex flex-row flex-nowrap items-center justify-center gap-8 max-w-4xl mx-auto">

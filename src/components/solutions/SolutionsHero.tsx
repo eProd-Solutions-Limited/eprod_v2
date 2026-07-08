@@ -1,9 +1,13 @@
+'use client';
+
 import Image from "next/image";
 import { ArrowRight, Layers } from "lucide-react";
 import desktopMobile from "@/assets/Desktop and Mobile.png";
 import { CircleBackground } from '@/components/ui/CircleBackground';
+import { useI18n } from '@/lib/i18n/LanguageProvider';
 
 const SolutionsHero = () => {
+  const { t } = useI18n();
   return (
     <section className="relative overflow-hidden py-24 md:py-32">
       {/* Background image */}
@@ -32,22 +36,21 @@ const SolutionsHero = () => {
             style={{ animationDelay: "0ms" }}
           >
             <Layers size={16} className="text-secondary" />
-            <span className="text-sm font-medium text-primary-foreground">The eProd Platform</span>
+            <span className="text-sm font-medium text-primary-foreground">{t.solutions.hero.badge}</span>
           </div>
 
           <h1
             className="text-4xl md:text-6xl font-black text-primary-foreground leading-tight mb-6 animate-fade-in-up"
             style={{ animationDelay: "100ms" }}
           >
-            The Enterprise-Grade <span className="text-secondary">AgFinTech Engine</span> for Africa.
+            {t.solutions.hero.titleLead} <span className="text-secondary">{t.solutions.hero.titleHighlight}</span> {t.solutions.hero.titleTrail}
           </h1>
 
           <p
             className="text-lg md:text-xl text-primary-foreground/90 leading-relaxed mb-8 animate-fade-in-up"
             style={{ animationDelay: "200ms" }}
           >
-            eProd is the robust, secure, and scalable platform that powers the most ambitious agribusinesses in Africa.
-            We provide the end-to-end infrastructure to digitize your supply chain, de-risk your operations, and unlock financial services.
+            {t.solutions.hero.subtitle}
           </p>
 
           <div
@@ -58,14 +61,14 @@ const SolutionsHero = () => {
               href="#cta"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-7 py-3.5 text-base font-semibold text-secondary-foreground hover:brightness-110 transition shadow-lg"
             >
-              Request a Technical Deep Dive
+              {t.solutions.hero.ctaPrimary}
               <ArrowRight size={18} />
             </a>
             <a
               href="#integrations"
               className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary-foreground/30 bg-primary-foreground/5 backdrop-blur px-7 py-3.5 text-base font-semibold text-primary-foreground hover:bg-primary-foreground/10 transition"
             >
-              View Integration Marketplace
+              {t.solutions.hero.ctaSecondary}
             </a>
           </div>
         </div>

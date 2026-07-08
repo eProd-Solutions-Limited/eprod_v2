@@ -1,47 +1,33 @@
+'use client'
+
 import { CheckCircle, XCircle } from "lucide-react";
 import { CircleBackground } from '@/components/ui/CircleBackground'
-
-const comparisons = [
-  {
-    eprod: "Data as a Financial Asset: We turn compliance data into a bankable credit score.",
-    traditional: "Data as an Operational Record: Data is used for reporting and traceability only.",
-  },
-  {
-    eprod: "Unlocking Capital: Our platform de-risks lending, enabling banks to finance aggregators.",
-    traditional: "Managing Operations: The focus is on efficiency and cost savings.",
-  },
-  {
-    eprod: "Ecosystem Integration: We connect farmers, aggregators, and banks in a single, seamless loop.",
-    traditional: "Siloed Systems: Finance and operations remain separate and disconnected.",
-  },
-  {
-    eprod: "Strategic Partnership: We are a partner in our clients' financial growth and strategic positioning.",
-    traditional: "Vendor Relationship: We are a supplier of operational software.",
-  },
-];
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const AgFintechIdentity = () => {
+  const { t } = useI18n()
+  const comparisons = t.about.agfintech.rows
   return (
     <section className="section-gray py-20 relative overflow-hidden">
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-14 max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            We Are an AgFinTech Platform,{" "}
-            <span className="gradient-primary-text">Not Just a SaaS Company</span>
+            {t.about.agfintech.headingLead}{" "}
+            <span className="gradient-primary-text">{t.about.agfintech.headingHighlight}</span>
           </h2>
           <p className="text-muted-foreground text-base">
-            While others provide software, we provide a new business model. This is the fundamental distinction that defines our value and our partnership with clients.
+            {t.about.agfintech.subtitle}
           </p>
         </div>
 
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div className="gradient-primary rounded-t-xl md:rounded-tl-xl md:rounded-tr-none px-6 py-3">
-              <p className="text-sm font-bold text-primary-foreground uppercase tracking-wider">Our Model: The Financial Bridge</p>
+              <p className="text-sm font-bold text-primary-foreground uppercase tracking-wider">{t.about.agfintech.ourModelLabel}</p>
             </div>
             <div className="bg-muted rounded-tr-xl px-6 py-3 hidden md:block">
-              <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Traditional Model: The Operational Tool</p>
+              <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider">{t.about.agfintech.traditionalLabel}</p>
             </div>
           </div>
 
@@ -62,8 +48,8 @@ const AgFintechIdentity = () => {
 
           <div className="mt-8 text-center">
             <p className="text-base font-semibold text-foreground">
-              This distinction is our core competitive advantage. It is why we are the chosen partner for businesses looking not just to operate, but to{" "}
-              <span className="gradient-primary-text font-bold">scale</span>.
+              {t.about.agfintech.footerLead}{" "}
+              <span className="gradient-primary-text font-bold">{t.about.agfintech.footerHighlight}</span>.
             </p>
           </div>
         </div>

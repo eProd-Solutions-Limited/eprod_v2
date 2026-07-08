@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { InsightArticle } from './InsightsMasonryGrid'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 function estimateReadTime(excerpt?: string | null): number {
   if (!excerpt) return 3
   return Math.max(1, Math.ceil(excerpt.split(/\s+/).length / 200))
 }
 
-function formatDate(iso?: string | null): string {
+function formatDate(iso: string | null | undefined, locale: string): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  return new Date(iso).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 interface InsightsHeroProps {
@@ -20,6 +21,8 @@ interface InsightsHeroProps {
 }
 
 export function InsightsHero({ articles }: InsightsHeroProps) {
+  const { t, lang } = useI18n()
+  const locale = lang === 'fr' ? 'fr-FR' : 'en-GB'
   const [current, setCurrent] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -96,14 +99,14 @@ export function InsightsHero({ articles }: InsightsHeroProps) {
         )}
         <div className="flex flex-wrap items-center gap-4">
           <span className="text-xs text-white/60">
-            {formatDate(article.publishedAt)}
-            {article.excerpt && ` · ${estimateReadTime(article.excerpt)} min read`}
+            {formatDate(article.publishedAt, locale)}
+            {article.excerpt && ` · ${estimateReadTime(article.excerpt)} ${t.insights.hero.minRead}`}
           </span>
           <Link
             href={`/articles/${article.slug}`}
             className="rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground transition hover:brightness-110"
           >
-            Read More <span aria-hidden="true">→</span>
+            {t.insights.hero.readMore} <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

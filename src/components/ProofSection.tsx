@@ -6,6 +6,7 @@ import { CircleBackground } from '@/components/ui/CircleBackground'
 import { SectionScoop } from '@/components/ui/SectionScoop'
 import { useInView } from '@/hooks/useInView'
 import { gaEvents } from '@/lib/ga-events'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 import Image from 'next/image'
 import { useEffect } from 'react'
 
@@ -13,15 +14,14 @@ import supplyChainImage from '@/assets/farm_to_market_digitalized_shaded.png'
 import financeImage from '@/assets/Farmer- Client exchange.png'
 import traceabilityImage from '@/assets/Traceability & Compliance 2.png'
 
-const impactMetrics = [
-  { value: '1M+', label: 'Farmers digitalized' },
-  { value: '250+', label: 'Agribusiness Clients' },
-  { value: '20+', label: 'Countries' },
-  { value: '15+', label: 'Years of Experience' },
-  { value: 'Millions', label: 'in Loans De-risked Annually' },
-]
+const columnImages = [traceabilityImage, financeImage, supplyChainImage]
+const columnAccents = ['bg-primary', 'bg-secondary', 'bg-primary'] as const
+const columnEyebrowColors = ['text-primary', 'text-secondary', 'text-primary'] as const
 
 const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntry[] }) => {
+  const { t } = useI18n()
+  const impactMetrics = t.proof.metrics
+
   useEffect(() => {
     gaEvents.viewPage('home_proof', 'proof')
   }, [])
@@ -51,8 +51,9 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
               aria-hidden="true"
             />
             <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14">
-              Trusted by <span className="gradient-primary-text">250+ Agribusinesses</span> to
-              manage 1M+ farmers Across 20 Countries
+              {t.proof.headingLead}{' '}
+              <span className="gradient-primary-text">{t.proof.headingHighlight}</span>{' '}
+              {t.proof.headingTrail}
             </h2>
           </div>
 
@@ -72,7 +73,7 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
           </div>
 
           <p className="text-center text-sm text-muted-foreground mb-6">
-            Trusted by leading agribusinesses in East Africa, West Africa, and beyond.
+            {t.proof.trustedLine}
           </p>
           {agribusinessLogos.length > 0 && (
             <div
@@ -126,130 +127,50 @@ const ProofSection = ({ agribusinessLogos = [] }: { agribusinessLogos?: LogoEntr
           {/* Section header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Built to Solve{' '}
-              <span className="gradient-primary-text">Africa&apos;s Agri-Value Chain</span>
+              {t.proof.valuePropHeadingLead}{' '}
+              <span className="gradient-primary-text">{t.proof.valuePropHeadingHighlight}</span>
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto text-base">
-              End-to-end traceability, built for global standards. De-risk lending, unlock capital
-              for smallholders. From farm to market — fully digitalized.
+              {t.proof.valuePropSubtitle}
             </p>
           </div>
 
           {/* 3-column grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
-            {/* ── Column 1: Traceability & Compliance ── */}
-            <div className="flex flex-col">
-              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-4">
-                Traceability &amp; Compliance
-              </p>
-              <h3 className="text-xl font-extrabold text-foreground leading-snug mb-3">
-                End-to-end traceability, built for global standards
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                GPS mapping, automated compliance workflows, and digital chain-of-custody for EUDR,
-                Organic, and Fairtrade certification.
-              </p>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  'GPS-mapped farm boundaries',
-                  'Automated compliance reporting',
-                  'Digital chain-of-custody',
-                  'Audit-ready documentation',
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="border-t border-border pt-6 mt-auto">
-                <div className="relative aspect-[3/2] rounded-xl overflow-hidden border border-border">
-                  <Image
-                    src={traceabilityImage}
-                    alt="Traceability & Compliance"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+            {t.proof.columns.map((col, i) => (
+              <div key={col.title} className="flex flex-col">
+                <p
+                  className={`text-xs font-bold uppercase tracking-widest ${columnEyebrowColors[i]} mb-4`}
+                >
+                  {col.eyebrow}
+                </p>
+                <h3 className="text-xl font-extrabold text-foreground leading-snug mb-3">
+                  {col.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5">{col.text}</p>
+                <ul className="space-y-2.5 mb-6">
+                  {col.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2.5 text-sm text-foreground">
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${columnAccents[i]} flex-shrink-0`}
+                      />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="border-t border-border pt-6 mt-auto">
+                  <div className="relative aspect-[3/2] rounded-xl overflow-hidden border border-border">
+                    <Image
+                      src={columnImages[i]}
+                      alt={col.eyebrow}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* ── Column 2: Financial Inclusion Engine ── */}
-            <div className="flex flex-col">
-              <p className="text-xs font-bold uppercase tracking-widest text-secondary mb-4">
-                Financial Inclusion Engine
-              </p>
-              <h3 className="text-xl font-extrabold text-foreground leading-snug mb-3">
-                De-risk lending. Unlock capital for smallholders.
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                Farmer profiling, input credit management, repayment tracking, and integrations with
-                banks and mobile money.
-              </p>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  'Farmer credit scoring & profiling',
-                  'Input loan disbursement via USSD',
-                  'Repayment tracking & alerts',
-                  'Bank & mobile money integrations',
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="border-t border-border pt-6 mt-auto">
-                <div className="relative aspect-[3/2] rounded-xl overflow-hidden border border-border">
-                  <Image
-                    src={financeImage}
-                    alt="Financial Inclusion Engine"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* ── Column 3: Supply Chain Digitization ── */}
-            <div className="flex flex-col">
-              <p className="text-xs font-bold uppercase tracking-widest text-primary mb-4">
-                Supply Chain Digitization
-              </p>
-              <h3 className="text-xl font-extrabold text-foreground leading-snug mb-3">
-                From farm to market — fully digitalized.
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                Digitize aggregation, quality control, payments, logistics, and production planning
-                — online and offline.
-              </p>
-              <ul className="space-y-2.5 mb-6">
-                {[
-                  'Aggregation & weighing',
-                  'Quality grading & control',
-                  'Payment disbursement',
-                  'Logistics & production planning',
-                ].map((f) => (
-                  <li key={f} className="flex items-center gap-2.5 text-sm text-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="border-t border-border pt-6 mt-auto">
-                <div className="relative aspect-[3/2] rounded-xl overflow-hidden border border-border">
-                  <Image
-                    src={supplyChainImage}
-                    alt="Supply Chain Digitization"
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

@@ -1,12 +1,12 @@
+'use client'
+
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const chains = [
-  'Coffee', 'Cocoa', 'Tea', 'Horticulture', 'Dairy',
-  'Seeds', 'Grains', 'Pulses', 'Spices', 'Nuts',
-  'Apiculture', 'Oil & Tree Crops', 'Pisciculture', 'Poultry',
-]
-
-const ValueChainBlock = () => (
+const ValueChainBlock = () => {
+  const { t } = useI18n()
+  const chains = t.sectors.valueChain.chains
+  return (
   <section
     className="gradient-primary py-40 relative overflow-hidden"
     aria-label="Value chains supported by eProd"
@@ -23,13 +23,12 @@ const ValueChainBlock = () => (
       style={{ backgroundColor: 'hsl(210 20% 91%)', borderRadius: '60px 0 0 0' }}
     />
     <div className="container mx-auto px-4 text-center relative z-10">
-      <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-4">Platform Reach</p>
+      <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-4">{t.sectors.valueChain.eyebrow}</p>
       <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-3">
-        Value Chains Supported
+        {t.sectors.valueChain.heading}
       </h2>
       <p className="text-primary-foreground/80 mb-8 text-lg max-w-2xl mx-auto leading-relaxed">
-        Coffee, Cocoa, Tea, Horticulture, Dairy, Seeds, Grains, Pulses, Spices, Nuts,
-        Apiculture, Oil &amp; Tree Crops, Pisciculture, Poultry, and more.
+        {t.sectors.valueChain.subtitle}
       </p>
       <div
         className="flex flex-wrap justify-center gap-3"
@@ -48,6 +47,7 @@ const ValueChainBlock = () => (
       </div>
     </div>
   </section>
-)
+  )
+}
 
 export default ValueChainBlock

@@ -1,6 +1,9 @@
+'use client'
+
 import { Database, ShieldCheck, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const regulatorLogos = [
   { src: '/logos/fairtrade.jpeg', alt: 'Fairtrade', width: 140, height: 70 },
@@ -9,6 +12,7 @@ const regulatorLogos = [
 ]
 
 export function DifferentiatorBanner() {
+  const { t } = useI18n()
   return (
     <section className="relative overflow-hidden gradient-primary py-32">
       <div
@@ -26,18 +30,15 @@ export function DifferentiatorBanner() {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
-            The eProd Difference
+            {t.caseStudies.differentiator.eyebrow}
           </p>
           <h2 className="text-3xl md:text-5xl font-black text-primary-foreground leading-tight mb-5">
-            We Don't Just Manage Supply Chains.
+            {t.caseStudies.differentiator.headingLine1}
             <br />
-            <span className="text-secondary">We Make Them Bankable.</span>
+            <span className="text-secondary">{t.caseStudies.differentiator.headingLine2}</span>
           </h2>
           <p className="text-lg text-primary-foreground/90 leading-relaxed">
-            Unlike generic agricultural software, eProd is built as an enterprise-grade AgFinTech
-            engine. Our platform is uniquely designed to transform operational data into the
-            rigorous, verifiable intelligence required by financial institutions and global
-            regulators.
+            {t.caseStudies.differentiator.subtitle}
           </p>
         </div>
 
@@ -54,10 +55,10 @@ export function DifferentiatorBanner() {
               />
             </div>
             <h3 className="text-lg font-bold text-primary-foreground mb-2">
-              Verifiable Data Layer
+              {t.caseStudies.differentiator.card1Title}
             </h3>
             <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
-              Every transaction timestamped, geo-tagged, and audit-ready — the foundation of trust.
+              {t.caseStudies.differentiator.card1Text}
             </p>
           </div>
 
@@ -75,9 +76,9 @@ export function DifferentiatorBanner() {
                 />
               ))}
             </div>
-            <h3 className="text-lg font-bold text-primary-foreground mb-2">Regulator-Ready</h3>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">{t.caseStudies.differentiator.card2Title}</h3>
             <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
-              Built for EUDR, CSDDD, and GlobalGAP out of the box. Compliance isn't an add-on.
+              {t.caseStudies.differentiator.card2Text}
             </p>
           </div>
 
@@ -92,10 +93,9 @@ export function DifferentiatorBanner() {
                 className="w-full object-cover"
               />
             </div>
-            <h3 className="text-lg font-bold text-primary-foreground mb-2">Capital Unlocked</h3>
+            <h3 className="text-lg font-bold text-primary-foreground mb-2">{t.caseStudies.differentiator.card3Title}</h3>
             <p className="text-sm text-primary-foreground/80 leading-relaxed mb-4">
-              Compliance data flows directly to partner banks — turning operations into credit
-              scores.
+              {t.caseStudies.differentiator.card3Text}
             </p>
           </div>
         </div>

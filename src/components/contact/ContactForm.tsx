@@ -4,6 +4,8 @@ import { useState } from "react"
 import { MapPin, Phone, Mail, LinkedinIcon, FacebookIcon, YoutubeIcon } from "lucide-react"
 import { gaEvents } from "@/lib/ga-events"
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from "@/lib/i18n/LanguageProvider"
+import type { Dict } from "@/lib/i18n/dictionary"
 
 const socialLinks = [
   {
@@ -36,7 +38,7 @@ type FormErrors = Partial<Record<keyof FormState, string>>
 const ALLOWED_CHALLENGES = ["compliance", "efficiency", "scaling", "other"]
 const DANGEROUS_PATTERN = /<[^>]*>|javascript\s*:|on\w+\s*=/i
 
-function validateForm(form: FormState): FormErrors {
+function validateForm(form: FormState, msg: Dict["contact"]["form"]["errors"]): FormErrors {
   const errors: FormErrors = {}
   const company = form.company.trim()
   const email = form.email.trim()
@@ -44,45 +46,46 @@ function validateForm(form: FormState): FormErrors {
   const message = form.message.trim()
 
   if (!company) {
-    errors.company = "Company name is required."
+    errors.company = msg.companyRequired
   } else if (company.length > 100) {
-    errors.company = "Company name must be 100 characters or fewer."
+    errors.company = msg.companyLong
   } else if (DANGEROUS_PATTERN.test(company)) {
-    errors.company = "Company name contains invalid characters."
+    errors.company = msg.companyInvalid
   }
 
   if (!email) {
-    errors.email = "Work email is required."
+    errors.email = msg.emailRequired
   } else if (email.length > 254) {
-    errors.email = "Email address is too long."
+    errors.email = msg.emailLong
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.email = "Please enter a valid email address."
+    errors.email = msg.emailInvalid
   } else if (DANGEROUS_PATTERN.test(email)) {
-    errors.email = "Email contains invalid characters."
+    errors.email = msg.emailBadChars
   }
 
   if (!phone) {
-    errors.phone = "Phone number is required."
+    errors.phone = msg.phoneRequired
   } else if (!/^[+\d][\d\s\-(). ]{5,19}$/.test(phone)) {
-    errors.phone = "Please enter a valid phone number."
+    errors.phone = msg.phoneInvalid
   }
 
   if (!form.challenge || !ALLOWED_CHALLENGES.includes(form.challenge)) {
-    errors.challenge = "Please select a challenge."
+    errors.challenge = msg.challengeRequired
   }
 
   if (!message) {
-    errors.message = "Message is required."
+    errors.message = msg.messageRequired
   } else if (message.length > 1000) {
-    errors.message = "Message must be 1000 characters or fewer."
+    errors.message = msg.messageLong
   } else if (DANGEROUS_PATTERN.test(message)) {
-    errors.message = "Message contains invalid characters."
+    errors.message = msg.messageInvalid
   }
 
   return errors
 }
 
 const ContactForm = () => {
+  const { t } = useI18n()
   const [form, setForm] = useState<FormState>({
     company: "",
     email: "",
@@ -105,7 +108,7 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const validationErrors = validateForm(form)
+    const validationErrors = validateForm(form, t.contact.form.errors)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
       return
@@ -150,7 +153,7 @@ const ContactForm = () => {
 
           {/* Left — Contact info */}
           <div>
-            <h2 className="text-2xl font-bold text-foreground mb-8">We're here to help</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-8">{t.contact.form.infoTitle}</h2>
 
             <div className="space-y-6 mb-10">
               <div className="flex items-start gap-4">
@@ -168,7 +171,7 @@ const ContactForm = () => {
                   <Phone size={18} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Phone</p>
+                  <p className="text-sm font-semibold text-foreground">{t.contact.form.phoneLabel}</p>
                   <a
                     href="tel:+254112203982"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -183,7 +186,7 @@ const ContactForm = () => {
                   <Mail size={18} className="text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Email</p>
+                  <p className="text-sm font-semibold text-foreground">{t.contact.form.emailLabel}</p>
                   <a
                     href="mailto:info@eprod-solutions.com"
                     className="text-sm text-primary hover:underline transition-colors"
@@ -211,14 +214,14 @@ const ContactForm = () => {
                   rel="noopener noreferrer"
                   className="text-primary hover:underline"
                 >
-                  View larger map ↗
+                  {t.contact.form.viewLargerMap}
                 </a>
               </div>
             </div>
 
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4">
-                Connect With Us
+                {t.contact.form.connectWithUs}
               </p>
               <div className="flex gap-3">
                 {socialLinks.map(({ label, href, icon: Icon }) => (
@@ -239,20 +242,20 @@ const ContactForm = () => {
 
           {/* Right — Form */}
           <div className="bg-card rounded-2xl border border-border p-8 shadow-sm">
-            <h2 className="text-2xl font-bold text-foreground mb-1">Send us a message</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-1">{t.contact.form.formTitle}</h2>
             <p className="text-sm text-muted-foreground mb-8">
-              Fill out the form below and our team will get back to you within 24 hours.
+              {t.contact.form.formSubtitle}
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1.5">
-                  Company Name <span className="text-destructive">*</span>
+                  {t.contact.form.companyLabel} <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="text"
                   disabled={loading}
-                  placeholder="e.g. Acme AgriCorp"
+                  placeholder={t.contact.form.companyPlaceholder}
                   value={form.company}
                   onChange={(e) => { setForm({ ...form, company: e.target.value }); clearError("company") }}
                   className={fieldCls(errors.company)}
@@ -264,12 +267,12 @@ const ContactForm = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">
-                    Work Email <span className="text-destructive">*</span>
+                    {t.contact.form.workEmailLabel} <span className="text-destructive">*</span>
                   </label>
                   <input
                     type="email"
                     disabled={loading}
-                    placeholder="name@company.com"
+                    placeholder={t.contact.form.emailPlaceholder}
                     value={form.email}
                     onChange={(e) => { setForm({ ...form, email: e.target.value }); clearError("email") }}
                     className={fieldCls(errors.email)}
@@ -279,12 +282,12 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">
-                    Phone <span className="text-destructive">*</span>
+                    {t.contact.form.phoneFieldLabel} <span className="text-destructive">*</span>
                   </label>
                   <input
                     type="tel"
                     disabled={loading}
-                    placeholder="+254 700 000 000"
+                    placeholder={t.contact.form.phonePlaceholder}
                     value={form.phone}
                     onChange={(e) => { setForm({ ...form, phone: e.target.value }); clearError("phone") }}
                     className={fieldCls(errors.phone)}
@@ -296,7 +299,7 @@ const ContactForm = () => {
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1.5">
-                  Primary Challenge <span className="text-destructive">*</span>
+                  {t.contact.form.challengeLabel} <span className="text-destructive">*</span>
                 </label>
                 <select
                   disabled={loading}
@@ -304,23 +307,23 @@ const ContactForm = () => {
                   onChange={(e) => { setForm({ ...form, challenge: e.target.value }); clearError("challenge") }}
                   className={fieldCls(errors.challenge)}
                 >
-                  <option value="">Select an option</option>
-                  <option value="compliance">Compliance</option>
-                  <option value="efficiency">Efficiency</option>
-                  <option value="scaling">Scaling</option>
-                  <option value="other">Other</option>
+                  <option value="">{t.contact.form.challengeSelect}</option>
+                  <option value="compliance">{t.contact.form.challengeCompliance}</option>
+                  <option value="efficiency">{t.contact.form.challengeEfficiency}</option>
+                  <option value="scaling">{t.contact.form.challengeScaling}</option>
+                  <option value="other">{t.contact.form.challengeOther}</option>
                 </select>
                 {errors.challenge && <p className="mt-1 text-xs text-destructive">{errors.challenge}</p>}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1.5">
-                  Message <span className="text-destructive">*</span>
+                  {t.contact.form.messageLabel} <span className="text-destructive">*</span>
                 </label>
                 <textarea
                   disabled={loading}
                   rows={4}
-                  placeholder="Tell us more about your supply chain needs..."
+                  placeholder={t.contact.form.messagePlaceholder}
                   value={form.message}
                   onChange={(e) => { setForm({ ...form, message: e.target.value }); clearError("message") }}
                   className={`${fieldCls(errors.message)} resize-none`}
@@ -334,24 +337,24 @@ const ContactForm = () => {
                 disabled={loading}
                 className="w-full rounded-lg bg-primary py-3 text-sm font-bold text-primary-foreground hover:brightness-110 transition shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {loading ? "Sending..." : <>Send Message <span aria-hidden>→</span></>}
+                {loading ? t.contact.form.submitting : <>{t.contact.form.submit} <span aria-hidden>→</span></>}
               </button>
 
               {status === "success" && (
                 <div className="p-3 rounded-lg bg-primary/10 border border-primary/20 text-sm text-primary text-center">
-                  Thank you! We'll be in touch within 24 hours.
+                  {t.contact.form.success}
                 </div>
               )}
               {status === "error" && (
                 <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm text-destructive text-center">
-                  Something went wrong. Please try again or email us directly.
+                  {t.contact.form.error}
                 </div>
               )}
 
               <p className="text-xs text-muted-foreground text-center">
-                By submitting this form, you agree to our{" "}
+                {t.contact.form.privacyLead}{" "}
                 <a href="#" className="text-primary hover:underline">
-                  Privacy Policy
+                  {t.contact.form.privacyLink}
                 </a>
                 .
               </p>

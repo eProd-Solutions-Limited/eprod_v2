@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { Search } from 'lucide-react'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const SEARCH_DEBOUNCE_MS = 300
 
@@ -21,6 +22,7 @@ interface InsightsFilterBarProps {
  * @see https://nextjs.org/docs/app/api-reference/functions/use-search-params#static-rendering
  */
 export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
+  const { t } = useI18n()
   const router = useRouter()
   const searchParams = useSearchParams()
   const activeCategory = searchParams.get('category') ?? ''
@@ -74,8 +76,8 @@ export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
           type="text"
           value={inputValue}
           onChange={handleSearchChange}
-          placeholder="Search articles..."
-          aria-label="Search articles"
+          placeholder={t.insights.filter.searchPlaceholder}
+          aria-label={t.insights.filter.searchPlaceholder}
           className="h-10 w-full rounded-lg border border-border bg-background pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
         />
       </div>
@@ -92,7 +94,7 @@ export function InsightsFilterBar({ categories }: InsightsFilterBarProps) {
               : 'border border-border text-muted-foreground hover:border-primary hover:text-primary'
           }`}
         >
-          All
+          {t.insights.filter.all}
         </button>
         {categories.map((cat) => (
           <button

@@ -5,29 +5,14 @@ import { Database, ClipboardCheck, BarChart3 } from "lucide-react"
 import { gaEvents } from '@/lib/ga-events'
 import { useInView } from '@/hooks/useInView'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const solutions = [
-  {
-    icon: Database,
-    title: "Unified Data Management",
-    text: "One platform for farmer profiles, communication, and operations. All your data in one place. Always accessible.",
-    outcome: "No more spreadsheets. No more lost information.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Built-In Compliance",
-    text: "Designed for export certification and traceability. Track every farmer, every transaction, every quality metric.",
-    outcome: "Meet regulations confidently. Prove compliance instantly.",
-  },
-  {
-    icon: BarChart3,
-    title: "Operational Efficiency",
-    text: "Automate farmer payments, quality-based incentives, and communication. Reduce manual work.",
-    outcome: "Aim for 30% waste reduction. Improve margins.",
-  },
-]
+const solutionIcons = [Database, ClipboardCheck, BarChart3]
 
 const SolutionSection = () => {
+  const { t } = useI18n()
+  const solutions = t.solution.items.map((item, i) => ({ ...item, icon: solutionIcons[i] }))
+
   useEffect(() => {
     gaEvents.viewPage('home_solution', 'solution')
   }, [])
@@ -55,11 +40,12 @@ const SolutionSection = () => {
             aria-hidden="true"
           />
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
-            Introducing eProd: The{" "}
-            <span className="gradient-primary-text">System of Record</span> for Your Supply Chain
+            {t.solution.headingLead}{" "}
+            <span className="gradient-primary-text">{t.solution.headingHighlight}</span>{" "}
+            {t.solution.headingTrail}
           </h2>
           <p className="text-center text-muted-foreground mb-14 max-w-2xl mx-auto">
-            A purpose-built platform that turns chaos into clarity.
+            {t.solution.subtitle}
           </p>
         </div>
 

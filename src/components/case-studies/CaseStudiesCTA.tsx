@@ -1,7 +1,11 @@
+'use client'
+
 import { ArrowRight, Layers } from 'lucide-react'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 export function CaseStudiesCTA() {
+  const { t } = useI18n()
   return (
     <section id="cta" className="relative overflow-hidden bg-background py-20">
       <CircleBackground />
@@ -13,12 +17,11 @@ export function CaseStudiesCTA() {
 
           <div className="relative max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-black text-primary-foreground leading-tight mb-5">
-              Ready to Write Your{' '}
-              <span className="text-secondary">Own Success Story?</span>
+              {t.caseStudies.cta.headingLead}{' '}
+              <span className="text-secondary">{t.caseStudies.cta.headingHighlight}</span>
             </h2>
             <p className="text-lg text-primary-foreground/90 leading-relaxed mb-10">
-              Stop managing your supply chain in spreadsheets. Start de-risking your operations and
-              unlocking your capital today.
+              {t.caseStudies.cta.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -26,7 +29,7 @@ export function CaseStudiesCTA() {
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-7 py-3.5 text-base font-semibold text-secondary-foreground hover:brightness-110 transition shadow-lg"
               >
-                Request a Custom ROI Assessment
+                {t.caseStudies.cta.ctaPrimary}
                 <ArrowRight size={18} />
               </a>
               <a
@@ -34,7 +37,7 @@ export function CaseStudiesCTA() {
                 className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary-foreground/30 bg-primary-foreground/5 backdrop-blur px-7 py-3.5 text-base font-semibold text-primary-foreground hover:bg-primary-foreground/10 transition"
               >
                 <Layers size={18} />
-                Explore the Platform
+                {t.caseStudies.cta.ctaSecondary}
               </a>
             </div>
           </div>

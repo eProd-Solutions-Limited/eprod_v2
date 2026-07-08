@@ -5,6 +5,7 @@ import { Quote } from 'lucide-react'
 import { gaEvents } from '@/lib/ga-events'
 import { useInView } from '@/hooks/useInView'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 interface QuoteEntry {
   id?: string | number
@@ -22,6 +23,7 @@ const CARDS_PER_PAGE = 3
 const INTERVAL_MS = 4000
 
 const TestimonialsSection = ({ quotes }: Props) => {
+  const { t } = useI18n()
   const [page, setPage] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -73,7 +75,7 @@ const TestimonialsSection = ({ quotes }: Props) => {
             aria-hidden="true"
           />
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground">
-            Real Results from <span className="gradient-primary-text">Real Customers</span>
+            {t.testimonials.headingLead} <span className="gradient-primary-text">{t.testimonials.headingHighlight}</span>
           </h2>
         </div>
 
@@ -115,7 +117,7 @@ const TestimonialsSection = ({ quotes }: Props) => {
 
         <div className="text-center">
           <a href="/case-studies" className="text-primary font-semibold hover:underline text-sm">
-            See more customer stories →
+            {t.testimonials.seeMore}
           </a>
         </div>
       </div>

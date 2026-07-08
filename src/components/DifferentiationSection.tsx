@@ -5,39 +5,30 @@ import { Globe, Smartphone, Tag, Trophy, Check, X } from "lucide-react";
 import { gaEvents } from '@/lib/ga-events'
 import { useInView } from '@/hooks/useInView'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const differentiators = [
-  {
-    icon: Globe,
-    title: "Built for Emerging Markets",
-    text: "Works with low connectivity. Local support.",
-  },
-  {
-    icon: Smartphone,
-    title: "Farmer-Centric",
-    text: "We empower farmers with a simple mobile app. They are partners, not data sources.",
-  },
-  {
-    icon: Tag,
-    title: "Affordable & Accessible",
-    text: "Starts at a fraction of enterprise cost. Designed for SMEs.",
-  },
-  {
-    icon: Trophy,
-    title: "Proven Track Record",
-    text: "20+ years, 500+ customers, 50,000+ farmers. We've solved this at scale.",
-  },
-];
+const differentiatorIcons = [Globe, Smartphone, Tag, Trophy]
 
-const comparisonRows = [
-  { feature: "Built for Supply Chain", eprod: true, enterprise: true, generic: false },
-  { feature: "Affordable", eprod: true, enterprise: false, generic: true },
-  { feature: "Emerging Markets", eprod: true, enterprise: false, generic: false },
-  { feature: "Farmer-Centric", eprod: true, enterprise: false, generic: true },
-  { feature: "Proven in Africa", eprod: true, enterprise: false, generic: false },
-];
+// eprod / enterprise / generic support flags (language-independent)
+const comparisonFlags = [
+  { eprod: true, enterprise: true, generic: false },
+  { eprod: true, enterprise: false, generic: true },
+  { eprod: true, enterprise: false, generic: false },
+  { eprod: true, enterprise: false, generic: true },
+  { eprod: true, enterprise: false, generic: false },
+]
 
 const DifferentiationSection = () => {
+  const { t } = useI18n()
+  const differentiators = t.differentiation.items.map((d, i) => ({
+    ...d,
+    icon: differentiatorIcons[i],
+  }))
+  const comparisonRows = t.differentiation.rows.map((feature, i) => ({
+    feature,
+    ...comparisonFlags[i],
+  }))
+
   useEffect(() => {
     gaEvents.viewPage('home_differentiation', 'differentiation')
   }, [])
@@ -65,7 +56,7 @@ const DifferentiationSection = () => {
             aria-hidden="true"
           />
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground">
-            Why eProd <span className="gradient-primary-text">Stands Out</span>
+            {t.differentiation.headingLead} <span className="gradient-primary-text">{t.differentiation.headingHighlight}</span>
           </h2>
         </div>
 
@@ -86,10 +77,10 @@ const DifferentiationSection = () => {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">Feature</th>
+                <th className="text-left py-3 px-4 font-semibold text-muted-foreground">{t.differentiation.tableFeature}</th>
                 <th className="text-center py-3 px-4 font-bold text-primary-foreground gradient-primary rounded-t-lg">eProd</th>
-                <th className="text-center py-3 px-4 font-semibold text-muted-foreground">Enterprise Platform</th>
-                <th className="text-center py-3 px-4 font-semibold text-muted-foreground">Generic Farm Software</th>
+                <th className="text-center py-3 px-4 font-semibold text-muted-foreground">{t.differentiation.tableEnterprise}</th>
+                <th className="text-center py-3 px-4 font-semibold text-muted-foreground">{t.differentiation.tableGeneric}</th>
               </tr>
             </thead>
             <tbody>

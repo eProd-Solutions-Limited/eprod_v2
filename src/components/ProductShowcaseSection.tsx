@@ -4,9 +4,11 @@ import { useEffect } from 'react'
 import Image from 'next/image'
 import { gaEvents } from '@/lib/ga-events'
 import { useInView } from '@/hooks/useInView'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 import desktopMobileImg from '@/assets/Desktop and Mobile 3.png'
 
 const ProductShowcaseSection = () => {
+  const { t } = useI18n()
   const { ref: sectionRef, inView: sectionInView } = useInView({ threshold: 0.3 })
 
   useEffect(() => {
@@ -45,24 +47,17 @@ const ProductShowcaseSection = () => {
           {/* Right — text content */}
           <div className="flex flex-col gap-6">
             <p className="text-sm font-bold uppercase tracking-widest text-primary-foreground/60">
-              eProd Platform
+              {t.productShowcase.eyebrow}
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-primary-foreground leading-tight">
-              eProd — Everything you need to{' '}
-              <span className="text-secondary">digitalize your agri-supply chain</span>
+              {t.productShowcase.headingLead}{' '}
+              <span className="text-secondary">{t.productShowcase.headingHighlight}</span>
             </h2>
             <p className="text-primary-foreground/80 text-base leading-relaxed">
-              With our end-to-end platform, your farmer management, supply chain traceability, and
-              compliance reporting becomes easier and more accurate than ever. Our modular setup
-              provides a system perfectly tailored to your agribusiness and markets.
+              {t.productShowcase.text}
             </p>
             <ul className="space-y-2.5">
-              {[
-                'Works online and offline on any device',
-                'EUDR, Organic & Fairtrade compliance built in',
-                'Integrates with banks and mobile money',
-                'Trusted by 250+ agribusinesses across 20 countries',
-              ].map((point) => (
+              {t.productShowcase.points.map((point) => (
                 <li key={point} className="flex items-center gap-3 text-sm text-primary-foreground/90">
                   <span className="w-2 h-2 rounded-full bg-secondary flex-shrink-0" />
                   {point}
@@ -74,7 +69,7 @@ const ProductShowcaseSection = () => {
                 onClick={openDemoModal}
                 className="rounded-full bg-secondary px-8 py-3.5 text-sm font-bold text-secondary-foreground hover:brightness-110 active:scale-95 transition-all duration-150 shadow-lg"
               >
-                Request a Demo
+                {t.productShowcase.requestDemo}
               </button>
             </div>
           </div>

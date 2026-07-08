@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowRight, Play, ChevronDown, ChevronUp } from 'lucide-react'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const TEXT_LIMIT = 160
 
@@ -56,12 +57,13 @@ function toEmbedUrl(url: string): string {
 }
 
 function StoryCard({ story }: { story: CaseStudyCard }) {
+  const { t } = useI18n()
   const [expanded, setExpanded] = useState(false)
   const coverUrl = getCoverUrl(story.coverImage)
 
   const rows = [
-    { label: 'Challenge', text: story.situation },
-    { label: 'Solution', text: story.action },
+    { label: t.caseStudies.impact.challengeLabel, text: story.situation },
+    { label: t.caseStudies.impact.solutionLabel, text: story.action },
   ].filter((row) => row.text) as { label: string; text: string }[]
 
   const totalLength = rows.reduce((sum, r) => sum + r.text.length, 0)
@@ -134,7 +136,7 @@ function StoryCard({ story }: { story: CaseStudyCard }) {
           {story.result && (expanded || !needsToggle) && (
             <div className="border-l-2 border-secondary pl-3">
               <dt className="text-xs font-bold text-primary uppercase tracking-wider mb-0.5">
-                Impact
+                {t.caseStudies.impact.impactLabel}
               </dt>
               <dd className="text-sm text-muted-foreground leading-relaxed">
                 <RichTextRenderer
@@ -152,9 +154,9 @@ function StoryCard({ story }: { story: CaseStudyCard }) {
             className="inline-flex items-center gap-1 text-xs font-semibold text-primary mb-4 hover:underline"
           >
             {expanded ? (
-              <>Show less <ChevronUp size={14} /></>
+              <>{t.caseStudies.impact.showLess} <ChevronUp size={14} /></>
             ) : (
-              <>Read more <ChevronDown size={14} /></>
+              <>{t.caseStudies.impact.readMore} <ChevronDown size={14} /></>
             )}
           </button>
         )}
@@ -164,7 +166,7 @@ function StoryCard({ story }: { story: CaseStudyCard }) {
             href={story.ctaLink}
             className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
           >
-            {story.ctaLabel ?? 'Read Full Case Study'}
+            {story.ctaLabel ?? t.caseStudies.impact.readFull}
             <ArrowRight size={16} />
           </a>
         )}
@@ -178,6 +180,7 @@ interface ImpactGridProps {
 }
 
 export function ImpactGrid({ stories }: ImpactGridProps) {
+  const { t } = useI18n()
   const [active, setActive] = useState<Category>('All')
 
   const visible = active === 'All' ? stories : stories.filter((s) => s.tag === active)
@@ -188,20 +191,19 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
-            Success Stories
+            {t.caseStudies.impact.eyebrow}
           </p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground leading-tight mb-5">
-            Measurable Results Across{' '}
-            <span className="gradient-primary-text">Every Value Chain</span>
+            {t.caseStudies.impact.headingLead}{' '}
+            <span className="gradient-primary-text">{t.caseStudies.impact.headingHighlight}</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Real outcomes from clients who transformed their operations into bankable, compliant,
-            scalable businesses.
+            {t.caseStudies.impact.subtitle}
           </p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {FILTERS.map((f) => (
+          {FILTERS.map((f, i) => (
             <button
               key={f}
               onClick={() => setActive(f)}
@@ -211,7 +213,7 @@ export function ImpactGrid({ stories }: ImpactGridProps) {
                   : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
               }`}
             >
-              {f}
+              {t.caseStudies.impact.filters[i]}
             </button>
           ))}
         </div>

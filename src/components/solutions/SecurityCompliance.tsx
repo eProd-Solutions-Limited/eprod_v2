@@ -7,31 +7,13 @@ import gdprLogo from "@/assets/gdpr-compliant.webp";
 import csdddLogo from "@/assets/CSDDD.png";
 import { useInView } from "@/hooks/useInView";
 import { CircleBackground } from '@/components/ui/CircleBackground';
+import { useI18n } from '@/lib/i18n/LanguageProvider';
 
-const items = [
-  {
-    icon: Lock,
-    title: "Data Encryption",
-    text: "All data is encrypted at rest and in transit using industry-standard protocols.",
-  },
-  {
-    icon: Shield,
-    title: "GDPR & Data Privacy",
-    text: "We are fully compliant with GDPR and other international data privacy regulations.",
-  },
-  {
-    icon: FileSearch,
-    title: "Regular Security Audits",
-    text: "Our platform undergoes regular third-party security audits and penetration testing.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "EUDR & CSDDD Ready",
-    text: "Designed to help you meet the traceability and reporting requirements of EUDR and other supply chain due diligence regulations.",
-  },
-];
+const itemIcons = [Lock, Shield, FileSearch, BadgeCheck];
 
 const SecurityCompliance = () => {
+  const { t } = useI18n();
+  const items = t.solutions.security.items.map((item, i) => ({ ...item, icon: itemIcons[i] }));
   const heading = useInView();
   const cards = useInView();
   const logos = useInView();
@@ -46,14 +28,13 @@ const SecurityCompliance = () => {
             heading.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Security & Compliance</p>
+          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{t.solutions.security.eyebrow}</p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5 leading-tight">
-            Enterprise-Grade Security for Your{" "}
-            <span className="gradient-primary-text">Most Valuable Asset</span>
+            {t.solutions.security.headingLead}{" "}
+            <span className="gradient-primary-text">{t.solutions.security.headingHighlight}</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            We understand that your data is your most valuable asset. That&apos;s why we&apos;ve built the eProd platform with
-            enterprise-grade security at its core.
+            {t.solutions.security.subtitle}
           </p>
         </div>
 
@@ -82,7 +63,7 @@ const SecurityCompliance = () => {
           }`}
         >
           <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider w-full text-center mb-2">
-            Compliance Standards
+            {t.solutions.security.standardsLabel}
           </p>
           <div className="flex items-center gap-10 flex-wrap justify-center">
             <Image src={eudrLogo} alt="EUDR Compliant" height={72} className="object-contain opacity-90 hover:opacity-100 transition" />
@@ -98,7 +79,7 @@ const SecurityCompliance = () => {
               className="inline-flex items-center gap-3 rounded-full gradient-primary px-8 py-4 text-sm font-bold text-primary-foreground hover:brightness-110 active:scale-95 transition-all duration-150 shadow-lg group"
             >
               <Download size={18} className="group-hover:animate-bounce" />
-              Download EUDR Implementation Checklist
+              {t.solutions.security.download}
             </a>
           </div>
         </div>

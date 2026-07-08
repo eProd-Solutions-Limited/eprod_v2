@@ -7,8 +7,11 @@ import Image from "next/image"
 import { gaEvents } from '@/lib/ga-events'
 import { useInView } from '@/hooks/useInView'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const HeroSection = () => {
+  const { t } = useI18n()
+
   useEffect(() => {
     gaEvents.viewPage('home_hero', 'hero')
   }, [])
@@ -39,19 +42,19 @@ const HeroSection = () => {
                 aria-hidden="true"
               />
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-foreground">
-                De-Risk Your Supply Chain.{" "}
-                <span className="gradient-primary-text">Unlock Your Capital.</span>
+                {t.hero.titleLead}{" "}
+                <span className="gradient-primary-text">{t.hero.titleHighlight}</span>
               </h1>
             </div>
             <h2 className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              eProd helps agribusinesses manage 1,000+ farmers, ensure traceability, de-risk lending for financial partners, and reduce waste—all in one affordable platform.
+              {t.hero.subtitle}
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <a
                 href="#cta"
                 className="inline-flex items-center justify-center gap-2 rounded-full gradient-primary px-8 py-3.5 text-base font-semibold text-primary-foreground hover:brightness-110 transition shadow-lg"
               >
-                Request a Demo
+                {t.hero.requestDemo}
                 <ArrowRight size={18} />
               </a>
             </div>
@@ -61,7 +64,7 @@ const HeroSection = () => {
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src={heroImage}
-                alt="African farmer using mobile technology in a green agricultural field with digital data overlays"
+                alt={t.hero.imageAlt}
                 className="w-full h-auto object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 placeholder="blur"

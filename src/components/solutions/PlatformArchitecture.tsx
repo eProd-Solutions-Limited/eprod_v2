@@ -6,70 +6,23 @@ import desktopMobile from "@/assets/Desktop and Mobile.png";
 import phone from "@/assets/Phone.png";
 import dftgIntergation from "@/assets/Intergrations.png";
 import { CircleBackground } from '@/components/ui/CircleBackground';
+import { useI18n } from '@/lib/i18n/LanguageProvider';
 
-const pillars: {
+const pillarVisuals: {
   number: string;
-  label: string;
-  subtitle: string;
-  title: string;
-  description: string;
-  features: string[];
   image: StaticImageData;
   imageClass: string;
   imageBg: string;
   imagePadding: string;
 }[] = [
-  {
-    number: "01",
-    label: "Core ERP",
-    subtitle: "Central database & logic",
-    title: "The Central Nervous System of Your Operation",
-    description: "All your data, workflows, and business logic live in one secure, centralized database — giving you a single source of truth across your entire value chain.",
-    features: [
-      "Multi-tenant architecture for complete data isolation",
-      "Scalable infrastructure that grows with your business",
-      "Granular role-based access control",
-    ],
-    image: desktopMobile,
-    imageClass: "object-contain",
-    imageBg: "bg-gray-100",
-    imagePadding: "p-4",
-  },
-  {
-    number: "02",
-    label: "Mobile App",
-    subtitle: "Field staff tool",
-    title: "Your Eyes and Ears in the Field",
-    description: "Offline-first mobile app that empowers field staff to register farmers, record transactions, and conduct surveys — even in the most remote, zero-connectivity locations.",
-    features: [
-      "Offline-first, works without any internet connection",
-      "Real-time sync when connectivity returns",
-      "Intuitive UI built for rapid field adoption",
-    ],
-    image: phone,
-    imageClass: "object-contain",
-    imageBg: "bg-gray-50",
-    imagePadding: "p-6",
-  },
-  {
-    number: "03",
-    label: "Integration Hub",
-    subtitle: "Financial bridge",
-    title: "Your Bridge to the Financial Ecosystem",
-    description: "Connects your eProd instance to banks, mobile money providers, and logistics partners through pre-built connectors and a flexible API — turning your data into financial access.",
-    features: [
-      "RESTful API for custom integrations",
-      "Pre-built connectors for leading financial institutions",
-      "Webhooks for real-time data exchange",
-    ],
-    image: dftgIntergation,
-    imageClass: "object-contain",
-    imageBg: "bg-white",
-    imagePadding: "p-4",
-  },
+  { number: "01", image: desktopMobile, imageClass: "object-contain", imageBg: "bg-gray-100", imagePadding: "p-4" },
+  { number: "02", image: phone, imageClass: "object-contain", imageBg: "bg-gray-50", imagePadding: "p-6" },
+  { number: "03", image: dftgIntergation, imageClass: "object-contain", imageBg: "bg-white", imagePadding: "p-4" },
 ];
 
 const PlatformArchitecture = () => {
+  const { t } = useI18n();
+  const pillars = t.solutions.architecture.pillars.map((p, i) => ({ ...p, ...pillarVisuals[i] }));
   const heading = useInView();
   const body = useInView();
 
@@ -83,13 +36,13 @@ const PlatformArchitecture = () => {
             heading.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Platform Architecture</p>
+          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{t.solutions.architecture.eyebrow}</p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5 leading-tight">
-            An End-to-End Platform to Power Your{" "}
-            <span className="gradient-primary-text">Entire Value Chain</span>
+            {t.solutions.architecture.headingLead}{" "}
+            <span className="gradient-primary-text">{t.solutions.architecture.headingHighlight}</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Three integrated layers — each built for the realities of African agribusiness.
+            {t.solutions.architecture.subtitle}
           </p>
         </div>
 

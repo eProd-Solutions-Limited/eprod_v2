@@ -4,24 +4,14 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Play } from 'lucide-react'
 import { gaEvents } from '@/lib/ga-events'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const videos = [
-  {
-    id: 'K60ZdON-xO0',
-    title: 'eProd Platform Overview',
-  },
-  {
-    id: '2ipMHeav6go',
-    title: 'Supply Chain Digitalization with eProd',
-  },
-  {
-    id: 'H8JB5GRUyE4',
-    title: 'eProd in Action — Farmer Management',
-  },
-]
+const videoIds = ['K60ZdON-xO0', '2ipMHeav6go', 'H8JB5GRUyE4']
 
 const VideoHighlightsSection = () => {
-  const [activeId, setActiveId] = useState(videos[0].id)
+  const { t } = useI18n()
+  const videos = videoIds.map((id, i) => ({ id, title: t.video.titles[i] }))
+  const [activeId, setActiveId] = useState(videoIds[0])
 
   const watchNext = videos.filter((v) => v.id !== activeId)
 
@@ -29,7 +19,7 @@ const VideoHighlightsSection = () => {
     <section className="bg-background py-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10">
-          Video <span className="gradient-primary-text">Highlights</span>
+          {t.video.headingLead} <span className="gradient-primary-text">{t.video.headingHighlight}</span>
         </h2>
 
         <div className="grid md:grid-cols-[1fr_320px] gap-6 items-start">
@@ -49,7 +39,7 @@ const VideoHighlightsSection = () => {
           {/* Watch next */}
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-widest">
-              Watch next
+              {t.video.watchNext}
             </p>
             {watchNext.map((v) => (
               <button

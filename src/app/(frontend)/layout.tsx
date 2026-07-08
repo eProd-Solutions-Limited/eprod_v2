@@ -3,6 +3,10 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { PopupClient, type SerializedPopup } from "@/components/PopupClient";
 import { DemoRequestFAB } from "@/components/DemoRequestFAB";
+import { LanguageProvider, LANG_COOKIE } from "@/lib/i18n/LanguageProvider";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import type { Lang } from "@/lib/i18n/dictionary";
+import { cookies } from "next/headers";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
@@ -63,17 +67,24 @@ export default async function RootLayout({
 }>) {
   const popups = await fetchActivePopups();
 
+  const cookieStore = await cookies();
+  const langCookie = cookieStore.get(LANG_COOKIE)?.value;
+  const initialLang: Lang = langCookie === "fr" ? "fr" : "en";
+
   return (
     <html
-      lang="en"
+      lang={initialLang}
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
-        <Footer />
-        <PopupClient popups={popups} />
-        <DemoRequestFAB />
+        <LanguageProvider initialLang={initialLang}>
+          <Navbar />
+          {children}
+          <Footer />
+          <PopupClient popups={popups} />
+          <LanguageToggle />
+          <DemoRequestFAB />
+        </LanguageProvider>
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}

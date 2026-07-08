@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from "react"
 import { X, CalendarCheck } from "lucide-react"
 import { gaEvents } from "@/lib/ga-events"
+import { useI18n } from "@/lib/i18n/LanguageProvider"
+import type { Dict } from "@/lib/i18n/dictionary"
 
 type FormState = {
   company: string
@@ -25,7 +27,7 @@ const EMPTY_FORM: FormState = {
 const ALLOWED_CHALLENGES = ["compliance", "efficiency", "scaling", "other"]
 const DANGEROUS_PATTERN = /<[^>]*>|javascript\s*:|on\w+\s*=/i
 
-function validateForm(form: FormState): FormErrors {
+function validateForm(form: FormState, msg: Dict["fab"]["errors"]): FormErrors {
   const errors: FormErrors = {}
   const company = form.company.trim()
   const email = form.email.trim()
@@ -33,39 +35,39 @@ function validateForm(form: FormState): FormErrors {
   const message = form.message.trim()
 
   if (!company) {
-    errors.company = "Company name is required."
+    errors.company = msg.companyRequired
   } else if (company.length > 100) {
-    errors.company = "Company name must be 100 characters or fewer."
+    errors.company = msg.companyLong
   } else if (DANGEROUS_PATTERN.test(company)) {
-    errors.company = "Company name contains invalid characters."
+    errors.company = msg.companyInvalid
   }
 
   if (!email) {
-    errors.email = "Work email is required."
+    errors.email = msg.emailRequired
   } else if (email.length > 254) {
-    errors.email = "Email address is too long."
+    errors.email = msg.emailLong
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.email = "Please enter a valid email address."
+    errors.email = msg.emailInvalid
   } else if (DANGEROUS_PATTERN.test(email)) {
-    errors.email = "Email contains invalid characters."
+    errors.email = msg.emailBadChars
   }
 
   if (!phone) {
-    errors.phone = "Phone number is required."
+    errors.phone = msg.phoneRequired
   } else if (!/^[+\d][\d\s\-(). ]{5,19}$/.test(phone)) {
-    errors.phone = "Please enter a valid phone number."
+    errors.phone = msg.phoneInvalid
   }
 
   if (!form.challenge || !ALLOWED_CHALLENGES.includes(form.challenge)) {
-    errors.challenge = "Please select a challenge."
+    errors.challenge = msg.challengeRequired
   }
 
   if (!message) {
-    errors.message = "Message is required."
+    errors.message = msg.messageRequired
   } else if (message.length > 1000) {
-    errors.message = "Message must be 1000 characters or fewer."
+    errors.message = msg.messageLong
   } else if (DANGEROUS_PATTERN.test(message)) {
-    errors.message = "Message contains invalid characters."
+    errors.message = msg.messageInvalid
   }
 
   return errors
@@ -78,6 +80,7 @@ const fieldCls = (hasError?: string) =>
   `${inputBase} ${hasError ? "border-destructive" : "border-border"}`
 
 export function DemoRequestFAB() {
+  const { t } = useI18n()
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [errors, setErrors] = useState<FormErrors>({})
@@ -105,7 +108,7 @@ export function DemoRequestFAB() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const validationErrors = validateForm(form)
+    const validationErrors = validateForm(form, t.fab.errors)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
       return
@@ -151,7 +154,7 @@ export function DemoRequestFAB() {
         className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-secondary px-5 py-3.5 text-sm font-bold text-secondary-foreground shadow-lg hover:brightness-105 active:scale-95 transition-all duration-150"
       >
         <CalendarCheck size={18} strokeWidth={2.5} />
-        <span className="hidden sm:inline">Contact Us</span>
+        <span className="hidden sm:inline">{t.fab.contactUs}</span>
       </button>
 
       {/* Overlay */}
@@ -166,14 +169,14 @@ export function DemoRequestFAB() {
             {/* Header */}
             <div className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-border">
               <div>
-                <h2 className="text-xl font-bold text-foreground">Contact Us</h2>
+                <h2 className="text-xl font-bold text-foreground">{t.fab.contactUs}</h2>
                 <p className="text-sm text-muted-foreground mt-0.5">
-                  Have questions or want to learn more? Reach out to our team.
+                  {t.fab.dialogSubtitle}
                 </p>
               </div>
               <button
                 onClick={close}
-                aria-label="Close"
+                aria-label={t.fab.close}
                 className="ml-4 mt-0.5 rounded-full p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors shrink-0"
               >
                 <X size={18} />
@@ -187,27 +190,27 @@ export function DemoRequestFAB() {
                   <div className="w-14 h-14 rounded-full bg-secondary/20 flex items-center justify-center">
                     <CalendarCheck size={28} className="text-secondary-foreground" strokeWidth={2} />
                   </div>
-                  <p className="font-semibold text-foreground">You&apos;re on the list!</p>
+                  <p className="font-semibold text-foreground">{t.fab.successTitle}</p>
                   <p className="text-sm text-muted-foreground max-w-xs">
-                    Thanks! Our team will reach out within 24 hours to schedule your demo.
+                    {t.fab.successText}
                   </p>
                   <button
                     onClick={close}
                     className="mt-2 text-sm font-medium text-primary hover:underline"
                   >
-                    Close
+                    {t.fab.close}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-1.5">
-                      Company Name <span className="text-destructive">*</span>
+                      {t.fab.companyLabel} <span className="text-destructive">*</span>
                     </label>
                     <input
                       type="text"
                       disabled={loading}
-                      placeholder="e.g. Acme AgriCorp"
+                      placeholder={t.fab.companyPlaceholder}
                       value={form.company}
                       onChange={(e) => { setForm({ ...form, company: e.target.value }); clearError("company") }}
                       className={fieldCls(errors.company)}
@@ -219,12 +222,12 @@ export function DemoRequestFAB() {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-1.5">
-                        Work Email <span className="text-destructive">*</span>
+                        {t.fab.emailLabel} <span className="text-destructive">*</span>
                       </label>
                       <input
                         type="email"
                         disabled={loading}
-                        placeholder="name@company.com"
+                        placeholder={t.fab.emailPlaceholder}
                         value={form.email}
                         onChange={(e) => { setForm({ ...form, email: e.target.value }); clearError("email") }}
                         className={fieldCls(errors.email)}
@@ -234,12 +237,12 @@ export function DemoRequestFAB() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-1.5">
-                        Phone <span className="text-destructive">*</span>
+                        {t.fab.phoneLabel} <span className="text-destructive">*</span>
                       </label>
                       <input
                         type="tel"
                         disabled={loading}
-                        placeholder="+254 700 000 000"
+                        placeholder={t.fab.phonePlaceholder}
                         value={form.phone}
                         onChange={(e) => { setForm({ ...form, phone: e.target.value }); clearError("phone") }}
                         className={fieldCls(errors.phone)}
@@ -251,7 +254,7 @@ export function DemoRequestFAB() {
 
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-1.5">
-                      Primary Challenge <span className="text-destructive">*</span>
+                      {t.fab.challengeLabel} <span className="text-destructive">*</span>
                     </label>
                     <select
                       disabled={loading}
@@ -259,23 +262,23 @@ export function DemoRequestFAB() {
                       onChange={(e) => { setForm({ ...form, challenge: e.target.value }); clearError("challenge") }}
                       className={fieldCls(errors.challenge)}
                     >
-                      <option value="">Select an option</option>
-                      <option value="compliance">Compliance</option>
-                      <option value="efficiency">Efficiency</option>
-                      <option value="scaling">Scaling</option>
-                      <option value="other">Other</option>
+                      <option value="">{t.fab.challengeSelect}</option>
+                      <option value="compliance">{t.fab.challengeCompliance}</option>
+                      <option value="efficiency">{t.fab.challengeEfficiency}</option>
+                      <option value="scaling">{t.fab.challengeScaling}</option>
+                      <option value="other">{t.fab.challengeOther}</option>
                     </select>
                     {errors.challenge && <p className="mt-1 text-xs text-destructive">{errors.challenge}</p>}
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-1.5">
-                      Message <span className="text-destructive">*</span>
+                      {t.fab.messageLabel} <span className="text-destructive">*</span>
                     </label>
                     <textarea
                       disabled={loading}
                       rows={3}
-                      placeholder="Tell us about your supply chain needs..."
+                      placeholder={t.fab.messagePlaceholder}
                       value={form.message}
                       onChange={(e) => { setForm({ ...form, message: e.target.value }); clearError("message") }}
                       className={`${fieldCls(errors.message)} resize-none rounded-2xl!`}
@@ -289,19 +292,19 @@ export function DemoRequestFAB() {
                     disabled={loading}
                     className="w-full rounded-full bg-secondary py-3 text-sm font-bold text-secondary-foreground hover:brightness-105 transition shadow-sm disabled:opacity-50 flex items-center justify-center gap-2"
                   >
-                    {loading ? "Submitting..." : <> Contact Us <span aria-hidden>→</span></>}
+                    {loading ? t.fab.submitting : <> {t.fab.submit} <span aria-hidden>→</span></>}
                   </button>
 
                   {status === "error" && (
                     <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm text-destructive text-center">
-                      Something went wrong. Please try again or email us directly.
+                      {t.fab.errorBanner}
                     </div>
                   )}
 
                   <p className="text-xs text-muted-foreground text-center">
-                    By submitting, you agree to our{" "}
+                    {t.fab.privacyLead}{" "}
                     <a href="/privacy" className="text-primary hover:underline">
-                      Privacy Policy
+                      {t.fab.privacyLink}
                     </a>
                     .
                   </p>

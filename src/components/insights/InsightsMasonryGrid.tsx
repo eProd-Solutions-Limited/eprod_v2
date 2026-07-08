@@ -1,6 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 export interface InsightArticle {
   id: number
@@ -12,12 +15,14 @@ export interface InsightArticle {
   category?: { id: number; name: string; slug: string } | null
 }
 
-function formatDate(iso?: string | null): string {
+function formatDate(iso: string | null | undefined, locale: string): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  return new Date(iso).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 function ArticleCard({ article }: { article: InsightArticle }) {
+  const { t, lang } = useI18n()
+  const locale = lang === 'fr' ? 'fr-FR' : 'en-GB'
   const hasCover = !!article.coverImage?.url
 
   return (
@@ -56,10 +61,10 @@ function ArticleCard({ article }: { article: InsightArticle }) {
         )}
         <div className="flex items-center mt-auto pt-2">
           {article.publishedAt && (
-            <time className="text-xs text-muted-foreground">{formatDate(article.publishedAt)}</time>
+            <time className="text-xs text-muted-foreground">{formatDate(article.publishedAt, locale)}</time>
           )}
           <span className="inline-flex items-center gap-1 text-sm font-bold text-primary group-hover:gap-2 transition-all ml-auto">
-            Read Article <ArrowRight size={14} />
+            {t.insights.grid.readArticle} <ArrowRight size={14} />
           </span>
         </div>
       </div>
@@ -72,12 +77,13 @@ interface InsightsMasonryGridProps {
 }
 
 export function InsightsMasonryGrid({ articles }: InsightsMasonryGridProps) {
+  const { t } = useI18n()
   if (articles.length === 0) {
     return (
       <div className="flex flex-col items-center gap-4 py-20 text-center">
-        <p className="text-muted-foreground">No articles found.</p>
+        <p className="text-muted-foreground">{t.insights.grid.noArticles}</p>
         <Link href="/insights" className="text-sm font-medium text-primary underline underline-offset-4">
-          Clear filters
+          {t.insights.grid.clearFilters}
         </Link>
       </div>
     )

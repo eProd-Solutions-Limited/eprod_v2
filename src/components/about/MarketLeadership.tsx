@@ -1,26 +1,31 @@
+'use client'
+
 import { CircleBackground } from '@/components/ui/CircleBackground'
 import { Users, Building2, Globe, Clock, Banknote } from "lucide-react";
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const metrics = [
-  { icon: Users, value: "1M+", label: "Farmers digitalized", description: "" },
-  { icon: Building2, value: "250+", label: "Agribusiness Clients", description: "" },
-  { icon: Globe, value: "20+", label: "Countries", description: "" },
-  { icon: Clock, value: "15+", label: "Years of Experience", description: "" },
-  { icon: Banknote, value: "Millions", label: "in Loans De-risked Annually", description: "" },
+const metricMeta = [
+  { icon: Users, value: "1M+" },
+  { icon: Building2, value: "250+" },
+  { icon: Globe, value: "20+" },
+  { icon: Clock, value: "15+" },
+  { icon: Banknote, value: "Millions" },
 ];
 
 const MarketLeadership = () => {
+  const { t } = useI18n()
+  const metrics = metricMeta.map((m, i) => ({ ...m, label: t.about.market.metrics[i] }))
   return (
     <section className="bg-background py-20 relative overflow-hidden">
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-14 max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Market Leadership{" "}
-            <span className="gradient-primary-text">by the Numbers</span>
+            {t.about.market.headingLead}{" "}
+            <span className="gradient-primary-text">{t.about.market.headingHighlight}</span>
           </h2>
           <p className="text-muted-foreground text-base">
-            We are the clear market leader in supply chain management for smallholder agriculture in Sub-Saharan Africa. Our leadership is not a claim; it is a fact.
+            {t.about.market.subtitle}
           </p>
         </div>
 
@@ -32,7 +37,6 @@ const MarketLeadership = () => {
               </div>
               <div className="text-3xl md:text-4xl font-black text-primary">{m.value}</div>
               <div className="text-sm font-semibold text-foreground mt-1">{m.label}</div>
-              <div className="text-xs text-muted-foreground">{m.description}</div>
             </div>
           ))}
         </div>

@@ -10,9 +10,12 @@ import {
 import { gaEvents } from '@/lib/ga-events'
 import { useInView } from '@/hooks/useInView'
 import { CircleBackground } from '@/components/ui/CircleBackground'
-import { faqs } from '@/data/faqs'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const FAQSection = () => {
+  const { t } = useI18n()
+  const faqs = t.faqSection.items
+
   useEffect(() => {
     gaEvents.viewPage('home_faq', 'faq')
   }, [])
@@ -40,11 +43,11 @@ const FAQSection = () => {
             aria-hidden="true"
           />
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
-            Frequently Asked{" "}
-            <span className="gradient-primary-text">Questions</span>
+            {t.faqSection.headingLead}{" "}
+            <span className="gradient-primary-text">{t.faqSection.headingHighlight}</span>
           </h2>
           <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-            Everything you need to know about eProd and how it transforms agricultural supply chains.
+            {t.faqSection.subtitle}
           </p>
         </div>
 

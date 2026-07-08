@@ -1,7 +1,10 @@
+'use client'
+
 import { Sprout } from "lucide-react";
 import Image from "next/image";
 import foundersImg from "@/assets/Meet-the-founders.png";
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const VIDEOS = [
   { id: "PN6xMDbZzBw", title: "eProd Founders – Minding Your Business with Jodi-Tatiana" },
@@ -9,6 +12,7 @@ const VIDEOS = [
 ];
 
 const OurStory = () => {
+  const { t } = useI18n()
   return (
     <section className="bg-background py-20 relative overflow-hidden">
       <CircleBackground />
@@ -16,8 +20,8 @@ const OurStory = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Built from Necessity,{" "}
-              <span className="gradient-primary-text">Forged in the Field</span>
+              {t.about.story.headingLead}{" "}
+              <span className="gradient-primary-text">{t.about.story.headingHighlight}</span>
             </h2>
           </div>
 
@@ -59,7 +63,7 @@ const OurStory = () => {
                     rel="noopener noreferrer"
                     className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors max-w-40 text-center leading-tight"
                   >
-                    Watch video {i + 1}
+                    {t.about.story.watchVideo} {i + 1}
                   </a>
                 ))}
               </div>
@@ -67,20 +71,18 @@ const OurStory = () => {
           </div>
 
           <div className="space-y-6 text-base text-muted-foreground leading-relaxed">
+            <p>{t.about.story.p1}</p>
             <p>
-              Our story doesn't begin in a boardroom; it begins in the field. In 2004, our founders were managing their own large-scale outgrower scheme in Kenya, facing the same frustrations our clients do today: fragmented data in spreadsheets, inefficient payment systems, and the constant struggle to prove compliance to buyers and banks.
+              {t.about.story.p2a}
+              <strong className="text-foreground">{t.about.story.p2strong}</strong>
+              {t.about.story.p2b}
             </p>
-            <p>
-              The existing software wasn't built for the realities of African agriculture—the remote locations, the intermittent connectivity, the complex payment structures. <strong className="text-foreground">So, they built their own solution.</strong> eProd was born from direct necessity.
-            </p>
-            <p>
-              This origin is our DNA. We are not just software developers; we are agriculturalists who understand the grit and complexity of the first mile. This deep-rooted experience is why eProd is the most robust, adaptable, and user-centric platform on the market today.
-            </p>
+            <p>{t.about.story.p3}</p>
           </div>
 
           <div className="mt-10 bg-primary/5 border border-primary/10 rounded-xl p-6 text-center">
             <p className="text-lg font-bold text-foreground">
-              "We didn't just build a product; we built the solution to our own problem."
+              {t.about.story.quote}
             </p>
           </div>
         </div>

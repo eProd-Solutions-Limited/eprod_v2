@@ -1,5 +1,8 @@
+'use client'
+
 import Image, { type StaticImageData } from 'next/image'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 import coffeeImg from '@/assets/eprod-coffee-clients.jpg'
 import horticultureImg from '@/assets/Horticulture-eprod.jpg'
 import dairyImg from '@/assets/cow.jpg'
@@ -13,126 +16,27 @@ import poultryImg from '@/assets/poultry.jpg'
 import palmoilImg from '@/assets/Palm-oil-eProd-Products.jpg'
 import rubberTreeImg from '@/assets/rubber-tree.jpg'
 
-type Sector = {
-  name: string
-  color: string
-  description: string
-  features: string[]
-  image: StaticImageData
-}
-
-const sectors: Sector[] = [
-  {
-    name: 'Coffee, Cocoa & Tea',
-    color: '#7C5030',
-    description:
-      'High-value crops grown with large farmer numbers in cooperative setups. Full chain traceability links produce to individual farms for EUDR compliance. Supports volatile-market price management and broker oversight.',
-    features: ['EUDR Compliance', 'Input Tracking', 'Certification Mgmt', 'Price Management', 'Broker Oversight'],
-    image: coffeeImg,
-  },
-  {
-    name: 'Horticulture',
-    color: '#1E6A2E',
-    description:
-      'Markets demand full seed-to-product traceability. Chemical input use is monitored closely for food safety. Yield forecasting drives cashflow planning and peak season readiness.',
-    features: ['Seed-to-Product Traceability', 'Food Safety Monitoring', 'Yield Forecasting', 'Input Repayment', 'Quality Payments'],
-    image: horticultureImg,
-  },
-  {
-    name: 'Dairy',
-    color: '#1A5FA0',
-    description:
-      'End-to-end milk chain management for processors and cooperatives. Milk testing integration enables adulteration detection. Farmers are linked to financial institutions for direct loan access.',
-    features: ['Herd Management', 'Milk Collection Routes', 'Adulteration Detection', 'Automated Payments', 'Financial Linkage'],
-    image: dairyImg,
-  },
-  {
-    name: 'Seeds',
-    color: '#9B6A12',
-    description:
-      'QR codes on seed packages allow farmers to opt in and share traceability data directly with the producer, bypassing stockist intermediary gaps and enabling weather and production advice.',
-    features: ['QR Code Traceability', 'Stockist Network Mgmt', 'Production Advice', 'Impact Measurement', 'Batch Codes'],
-    image: seedsImg,
-  },
-  {
-    name: 'Grains & Pulses',
-    color: '#B04215',
-    description:
-      'Grain traders and aggregators provide inputs recovered from future deliveries, working through cooperatives and brokers. Pulses clients track input issuance to improve productivity. Integrates with RiceAdvice.',
-    features: ['Input Recovery', 'Mobile Money Payments', 'Quality Control', 'RiceAdvice Integration', 'Climate-Smart Ag'],
-    image: grainsImg,
-  },
-  {
-    name: 'Spices',
-    color: '#8B1A1A',
-    description:
-      'Clients work with saffron and Zanzibar spices — pepper, cloves, chilies, cardamom. Full cycle from farmer onboarding and crop registration to certification, purchase, and payment.',
-    features: ['Crop Registration', 'Certification Mgmt', 'Training Uploads', 'Purchase Tracking', 'Payment Processing'],
-    image: spicesImg,
-  },
-  {
-    name: 'Nuts',
-    color: '#5C4A28',
-    description:
-      'Cashew, macadamia, coconut, and almond exporters use eProd from seedling provision through GlobalGAP certification, field inspections, and traceable buying with SMS farmer support.',
-    features: ['GlobalGAP Certification', 'Seedling Provision', 'Field Inspections', 'Traceability', 'SMS Notifications'],
-    image: nutsImg,
-  },
-  {
-    name: 'Apiculture',
-    color: '#C8880A',
-    description:
-      'Thousands of beehives mapped under farmer groups with traceability codes. Barcoded food-safe buckets are issued to farmers. IQBP rewards quality and deducts unreturned equipment automatically.',
-    features: ['Beehive GPS Mapping', 'Barcode Traceability', 'Quality-Based Payment', 'Adulteration Prevention', 'Mobile Money'],
-    image: apicultureImg,
-  },
-  {
-    name: 'Oil & Tree Crops',
-    color: '#2D6B4A',
-    description:
-      'Clients provide tree seedlings and regular agricultural advice. Field and crop mapping drives follow-up and projection management with nutrient advisory integration and quality-based payments.',
-    features: ['Tree & Field Mapping', 'Projection Management', 'Traceable Purchasing', 'Quality Assessment', 'Nutrient Advisory'],
-    image: palmoilImg,
-  },
-  {
-    name: 'Pisciculture',
-    color: '#1A6B7A',
-    description:
-      'Clients produce feed and purchase fish for onward production. eProd maps fishponds, tracks feed and fingerling distribution, rates pond performance, and manages weight-based purchasing with SMS alerts.',
-    features: ['Fishpond Mapping', 'Feed Distribution', 'Pond Performance', 'Weight-Based Buying', 'Input Deductions'],
-    image: piscicultureImg,
-  },
-  {
-    name: 'Poultry',
-    color: '#8B6A14',
-    description:
-      "Hatchlings are fully traceable and distributed to farmers on loan with feed. Covers vaccination scheduling, survival tracking, and egg/broiler purchasing through to complete feed production management.",
-    features: ['Hatchery Management', 'Vaccination Scheduling', 'Survival Rate Tracking', 'Broiler Purchasing', 'Feed Production'],
-    image: poultryImg,
-  },
-  {
-    name: 'Rubber & Gum',
-    color: '#4A7C2F',
-    description:
-      'Rubber and gum producers manage large smallholder tapping networks. eProd tracks individual tree blocks, tapping schedules, and latex volumes. Quality grading at collection points drives differential payments and full chain traceability.',
-    features: ['Tree Block Mapping', 'Tapping Schedules', 'Latex Collection', 'Quality Grading', 'Differential Payments'],
-    image: rubberTreeImg,
-  },
+const sectorImages: StaticImageData[] = [
+  coffeeImg, horticultureImg, dairyImg, seedsImg, grainsImg, spicesImg,
+  nutsImg, apicultureImg, palmoilImg, piscicultureImg, poultryImg, rubberTreeImg,
 ]
 
-const SectorCards = () => (
+const SectorCards = () => {
+  const { t } = useI18n()
+  const sectors = t.sectors.cards.items.map((s, i) => ({ ...s, image: sectorImages[i] }))
+
+  return (
   <section id="sectors" className="bg-background py-20 relative overflow-hidden" aria-labelledby="sectors-heading">
     <CircleBackground />
     <div className="container mx-auto px-4 relative z-10">
       <div className="max-w-3xl mx-auto text-center mb-16">
-        <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Platform Coverage</p>
+        <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{t.sectors.cards.eyebrow}</p>
         <h2 id="sectors-heading" className="text-3xl md:text-5xl font-bold text-foreground mb-5 leading-tight">
-          Every Sector.{' '}
-          <span className="gradient-primary-text">One Platform.</span>
+          {t.sectors.cards.headingLead}{' '}
+          <span className="gradient-primary-text">{t.sectors.cards.headingHighlight}</span>
         </h2>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Each sector has distinct workflows, compliance requirements, and data needs.
-          eProd is purpose-built to handle all of them.
+          {t.sectors.cards.subtitle}
         </p>
       </div>
 
@@ -171,6 +75,7 @@ const SectorCards = () => (
       </ul>
     </div>
   </section>
-)
+  )
+}
 
 export default SectorCards

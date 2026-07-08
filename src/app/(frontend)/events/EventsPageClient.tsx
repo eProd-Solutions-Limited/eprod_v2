@@ -7,6 +7,7 @@ import { MapPin, Calendar, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-
 import type { EventStatus } from '@/lib/event-utils'
 import { EventSlideshow } from '@/components/EventSlideshow'
 import { EventRichText } from '@/components/EventRichText'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 interface ImageEntry { url: string; alt: string }
 
@@ -44,11 +45,11 @@ function StatusDot({ status }: { status: EventStatus }) {
 }
 
 function StatusBadge({ status }: { status: EventStatus }) {
-  const cfg = statusConfig[status]
+  const { t } = useI18n()
   return (
     <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
       <StatusDot status={status} />
-      <span className="text-xs font-semibold text-white">{cfg.label}</span>
+      <span className="text-xs font-semibold text-white">{t.events.status[status]}</span>
     </div>
   )
 }
@@ -60,6 +61,7 @@ export default function EventsPageClient({
   events: EventItem[]
   nextUpcoming: EventItem | null
 }) {
+  const { t } = useI18n()
   const [pastPage, setPastPage] = useState(0)
 
   const ongoing = events.filter((e) => e.status === 'ongoing')
@@ -92,12 +94,12 @@ export default function EventsPageClient({
 
           {/* Left — titles */}
           <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-white/60 mb-4">Our Presence</p>
+            <p className="text-sm font-bold uppercase tracking-widest text-white/60 mb-4">{t.events.hero.eyebrow}</p>
             <h1 className="text-5xl md:text-6xl font-black text-white leading-tight mb-5">
-              Events &amp; <span className="text-secondary">Engagements</span>
+              {t.events.hero.titleLead} <span className="text-secondary">{t.events.hero.titleHighlight}</span>
             </h1>
             <p className="text-white/70 text-lg max-w-lg leading-relaxed">
-              Conferences, expos, and field visits — where we connect, learn, and showcase eProd to the world.
+              {t.events.hero.subtitle}
             </p>
           </div>
 
@@ -108,7 +110,7 @@ export default function EventsPageClient({
                 <span className="relative flex h-2 w-2">
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
                 </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-green-400">Next Event</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-green-400">{t.events.hero.nextEvent}</span>
               </div>
               <h3 className="text-lg font-extrabold text-white leading-snug mb-4">{nextUpcoming.name}</h3>
               <div className="space-y-2.5">
@@ -133,7 +135,7 @@ export default function EventsPageClient({
             </div>
           ) : (
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-center">
-              <p className="text-white/50 text-sm">No upcoming events scheduled.</p>
+              <p className="text-white/50 text-sm">{t.events.hero.noUpcomingHero}</p>
             </div>
           )}
 
@@ -153,7 +155,7 @@ export default function EventsPageClient({
                 <div className="flex items-center gap-2 mb-4">
                   <StatusDot status={featured.status} />
                   <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                    {featured.status === 'ongoing' ? 'Ongoing Event' : 'Latest Event'}
+                    {featured.status === 'ongoing' ? t.events.featured.ongoingEvent : t.events.featured.latestEvent}
                   </span>
                 </div>
                 <Link href={`/events/${featured.id}`} className="rounded-2xl overflow-hidden border border-border shadow-lg bg-card block hover:shadow-xl transition-shadow">
@@ -182,7 +184,7 @@ export default function EventsPageClient({
                       <EventRichText content={featured.description} truncate={false} />
                     )}
                     <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary mt-4">
-                      View full event <ArrowRight size={14} />
+                      {t.events.featured.viewFull} <ArrowRight size={14} />
                     </span>
                   </div>
                 </Link>
@@ -192,7 +194,7 @@ export default function EventsPageClient({
             {/* Past events */}
             {past.length > 0 && (
               <div>
-                <h3 className="text-lg font-bold text-foreground mb-5">Past Events</h3>
+                <h3 className="text-lg font-bold text-foreground mb-5">{t.events.past.title}</h3>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {pagedPast.map((event) => (
                     <Link
@@ -221,7 +223,7 @@ export default function EventsPageClient({
                         {/* Photo count badge */}
                         {event.imageUrls.length > 1 && (
                           <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm rounded-full px-2 py-0.5 text-xs text-white font-medium">
-                            {event.imageUrls.length} photos
+                            {event.imageUrls.length} {t.events.past.photos}
                           </div>
                         )}
                       </div>
@@ -274,7 +276,7 @@ export default function EventsPageClient({
 
             {!featured && past.length === 0 && (
               <div className="py-20 text-center text-muted-foreground">
-                No past events yet. Check back soon!
+                {t.events.past.empty}
               </div>
             )}
           </div>
@@ -283,12 +285,12 @@ export default function EventsPageClient({
           <div className="sticky top-20">
             <h3 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
-              Upcoming Events
+              {t.events.upcoming.title}
             </h3>
 
             {upcoming.length === 0 ? (
               <div className="bg-card border border-border rounded-2xl p-8 text-center text-muted-foreground text-sm">
-                No upcoming events scheduled yet.
+                {t.events.upcoming.empty}
               </div>
             ) : (
               <div className="flex flex-col gap-4">
@@ -308,7 +310,7 @@ export default function EventsPageClient({
                     <div className="p-4">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                        <span className="text-xs font-bold text-green-600 uppercase tracking-wide">Upcoming</span>
+                        <span className="text-xs font-bold text-green-600 uppercase tracking-wide">{t.events.upcoming.badge}</span>
                       </div>
                       <h4 className="font-bold text-foreground text-sm mb-1.5 leading-snug">{event.name}</h4>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground mb-1">

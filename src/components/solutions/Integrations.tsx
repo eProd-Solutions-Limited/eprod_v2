@@ -1,14 +1,15 @@
+'use client';
+
 import { Banknote, Calculator, Truck, BarChart3 } from "lucide-react";
 import Image from "next/image";
 import { CircleBackground } from '@/components/ui/CircleBackground';
+import { useI18n } from '@/lib/i18n/LanguageProvider';
 
 type Partner = { name: string; logo: string }
 
-const categories: { icon: React.ElementType; title: string; text: string; partners: Partner[] }[] = [
+const categoryMeta: { icon: React.ElementType; partners: Partner[] }[] = [
   {
     icon: Banknote,
-    title: "Financial Services",
-    text: "Connect to leading banks, mobile money providers, and insurance companies to unlock financial services for your farmers and your business.",
     partners: [
       { name: "I&M Bank",      logo: "/logos/integrations/im-bank.png" },
       { name: "KCB",          logo: "/logos/integrations/kcb.png" },
@@ -20,8 +21,6 @@ const categories: { icon: React.ElementType; title: string; text: string; partne
   },
   {
     icon: Calculator,
-    title: "ERP & Accounting",
-    text: "Integrate with your existing ERP and accounting systems for seamless financial management.",
     partners: [
       { name: "SAP",        logo: "/logos/integrations/sap.png" },
       { name: "Oracle",     logo: "/logos/integrations/oracle.png" },
@@ -33,8 +32,6 @@ const categories: { icon: React.ElementType; title: string; text: string; partne
   },
   {
     icon: Truck,
-    title: "Logistics and Supply Chain",
-    text: "Connect to logistics platforms and comply with international standards to optimize your supply chain.",
     partners: [
       { name: "DFTG",          logo: "/logos/integrations/itc.svg" },
       { name: "WHISP",         logo: "/logos/integrations/whisp.png" },
@@ -47,8 +44,6 @@ const categories: { icon: React.ElementType; title: string; text: string; partne
   },
   {
     icon: BarChart3,
-    title: "Business Intelligence & Analytics",
-    text: "Export your data to leading BI and analytics tools for advanced reporting and visualization.",
     partners: [
       { name: "Power BI",  logo: "/logos/integrations/power-bi.png" },
       { name: "Metabase",  logo: "/logos/integrations/metabase.png" },
@@ -57,19 +52,20 @@ const categories: { icon: React.ElementType; title: string; text: string; partne
 ];
 
 const Integrations = () => {
+  const { t } = useI18n();
+  const categories = categoryMeta.map((c, i) => ({ ...c, ...t.solutions.integrations.categories[i] }));
   return (
     <section id="integrations" className="section-gray py-20 relative overflow-hidden">
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Integrations</p>
+          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{t.solutions.integrations.eyebrow}</p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5 leading-tight">
-            Seamlessly Connect to the Services{" "}
-            <span className="gradient-primary-text">that Power Your Business</span>
+            {t.solutions.integrations.headingLead}{" "}
+            <span className="gradient-primary-text">{t.solutions.integrations.headingHighlight}</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            The eProd platform is the central hub of your digital ecosystem. Connect to a wide range of third-party services
-            for a single, unified view of your operation.
+            {t.solutions.integrations.subtitle}
           </p>
         </div>
 

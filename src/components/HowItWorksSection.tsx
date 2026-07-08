@@ -6,35 +6,14 @@ import { ArrowRight } from 'lucide-react'
 import { gaEvents } from '@/lib/ga-events'
 import { useInView } from '@/hooks/useInView'
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const steps = [
-  {
-    image: "/steps/SetUp.png",
-    title: "Setup",
-    time: "Week 1",
-    text: "We configure eProd for your specific supply chain.",
-  },
-  {
-    image: "/steps/Onboard.jpeg",
-    title: "Onboard",
-    time: "Week 2-3",
-    text: "Your team and farmers get trained on the platform.",
-  },
-  {
-    image: "/steps/Integrate.png",
-    title: "Integrate",
-    time: "Week 3-4",
-    text: "Connect existing systems. eProd becomes your central hub.",
-  },
-  {
-    image: "/steps/Optimize.png",
-    title: "Optimize",
-    time: "Ongoing",
-    text: "Monitor metrics and optimize operations with our support.",
-  },
-]
+const stepImages = ['/steps/SetUp.png', '/steps/Onboard.jpeg', '/steps/Integrate.png', '/steps/Optimize.png']
 
 const HowItWorksSection = () => {
+  const { t } = useI18n()
+  const steps = t.howItWorks.steps.map((step, i) => ({ ...step, image: stepImages[i] }))
+
   useEffect(() => {
     gaEvents.viewPage('home_how_it_works', 'how_it_works')
   }, [])
@@ -51,7 +30,7 @@ const HowItWorksSection = () => {
       <CircleBackground />
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-14">
-          Get Started in <span className="gradient-primary-text">4 Simple Steps</span>
+          {t.howItWorks.headingLead} <span className="gradient-primary-text">{t.howItWorks.headingHighlight}</span>
         </h2>
 
         <div
@@ -113,7 +92,7 @@ const HowItWorksSection = () => {
 
         <div className="text-center">
           <p className="inline-block rounded-full bg-secondary/15 px-6 py-3 text-secondary font-semibold text-sm">
-            ⚡ Most customers see results within 30 days of launch.
+            {t.howItWorks.footerNote}
           </p>
         </div>
       </div>

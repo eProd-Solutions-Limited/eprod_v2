@@ -9,25 +9,12 @@ import {
 } from '@/components/ui/accordion'
 import { gaEvents } from '@/lib/ga-events'
 import { CircleBackground } from '@/components/ui/CircleBackground'
-
-const faqs = [
-  {
-    question: 'What makes eProd different from other agricultural software?',
-    answer:
-      'eProd combines supply chain digitization with AgFinTech capabilities, enabling both compliance and financial inclusion.',
-  },
-  {
-    question: 'Which compliance standards does eProd support?',
-    answer:
-      'EUDR, Organic, Fairtrade, GlobalG.A.P., and national traceability frameworks.',
-  },
-  {
-    question: 'Is eProd suitable for large and small agribusinesses?',
-    answer: 'Yes. eProd scales from small cooperatives to multinational exporters.',
-  },
-]
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 const AboutFAQ = () => {
+  const { t } = useI18n()
+  const faqs = t.about.faq.items
+
   useEffect(() => {
     gaEvents.viewPage('about_faq', 'faq')
   }, [])
@@ -38,14 +25,14 @@ const AboutFAQ = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto">
           <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-4 text-center">
-            FAQ
+            {t.about.faq.eyebrow}
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
-            Frequently Asked{' '}
-            <span className="gradient-primary-text">Questions</span>
+            {t.about.faq.headingLead}{' '}
+            <span className="gradient-primary-text">{t.about.faq.headingHighlight}</span>
           </h2>
           <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-            Common questions about eProd's platform, compliance coverage, and scale.
+            {t.about.faq.subtitle}
           </p>
 
           <Accordion

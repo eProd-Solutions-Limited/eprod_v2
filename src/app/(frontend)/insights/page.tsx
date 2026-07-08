@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 import { Suspense, cache } from 'react'
 import { InsightsHero } from '@/components/insights/InsightsHero'
+import { InsightsHeader } from '@/components/insights/InsightsHeader'
 import { InsightsFilterBar } from '@/components/insights/InsightsFilterBar'
 import { InsightsMasonryGrid } from '@/components/insights/InsightsMasonryGrid'
 import { InsightsPagination } from '@/components/insights/InsightsPagination'
@@ -109,19 +110,7 @@ export default async function InsightsPage({
       <section className="bg-background py-20 relative overflow-hidden">
         <CircleBackground />
         <div className="container mx-auto max-w-7xl px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">
-              Knowledge Hub
-            </p>
-            <h1 className="text-3xl md:text-5xl font-bold text-foreground leading-tight mb-5">
-              Insights &{' '}
-              <span className="gradient-primary-text">Expert Analysis</span>
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Trends, deep-dives, and practical guides from the intersection of agriculture,
-              finance, and technology.
-            </p>
-          </div>
+          <InsightsHeader />
           <InsightsHero articles={heroArticles} />
         </div>
       </section>

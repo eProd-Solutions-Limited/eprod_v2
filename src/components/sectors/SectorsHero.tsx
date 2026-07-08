@@ -5,6 +5,7 @@ import Image, { type StaticImageData } from 'next/image'
 import { useState, useEffect } from 'react'
 
 import { CircleBackground } from '@/components/ui/CircleBackground'
+import { useI18n } from '@/lib/i18n/LanguageProvider'
 
 import coffeeImg from '@/assets/eprod-coffee-clients.jpg'
 import horticultureImg from '@/assets/Horticulture-eprod.jpg'
@@ -78,6 +79,7 @@ function arcPath(a: { x: number; y: number }, b: { x: number; y: number }) {
 }
 
 function AfricaMap({ activeSectorId }: { activeSectorId: string }) {
+  const { t } = useI18n()
   const [hovered, setHovered] = useState<string | null>(null)
   const highlightId = hovered ?? activeSectorId
 
@@ -137,12 +139,13 @@ function AfricaMap({ activeSectorId }: { activeSectorId: string }) {
         })}
 
         {/* Sector dots */}
-        {SECTORS.map((sector) => {
+        {SECTORS.map((sector, i) => {
+          const name = t.sectors.hero.sectorNames[i] ?? sector.name
           const isActive = highlightId === sector.id
           const dimmed = !isActive
           const labelLeft = sector.x > W * 0.6
           const labelBelow = sector.y < H * 0.15
-          const labelW = sector.name.length * 5 + 14
+          const labelW = name.length * 5 + 14
           const lx = labelLeft ? -(labelW + 7) : 7
           const ly = labelBelow ? 8 : -16
           const r = isActive ? 5.5 : 4
@@ -197,7 +200,7 @@ function AfricaMap({ activeSectorId }: { activeSectorId: string }) {
                     fontFamily="system-ui, sans-serif" fontWeight="600"
                     style={{ pointerEvents: 'none' }}
                   >
-                    {sector.name}
+                    {name}
                   </text>
                 </g>
               )}
@@ -210,6 +213,7 @@ function AfricaMap({ activeSectorId }: { activeSectorId: string }) {
 }
 
 const SectorsHero = () => {
+  const { t } = useI18n()
   const [activeSectorIdx, setActiveSectorIdx] = useState(0)
 
   useEffect(() => {
@@ -276,14 +280,13 @@ const SectorsHero = () => {
           <div>
 
             <h1 className="text-4xl md:text-6xl font-black text-primary-foreground leading-tight mb-6">
-              Sectors We Serve —{' '}
-              <span className="text-secondary">Tailored Solutions</span>{' '}
-              for Every Value Chain
+              {t.sectors.hero.titleLead}{' '}
+              <span className="text-secondary">{t.sectors.hero.titleHighlight}</span>{' '}
+              {t.sectors.hero.titleTrail}
             </h1>
 
             <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed mb-8 max-w-xl">
-              From farm-level data collection to export compliance and farmer payments, eProd adapts
-              to the specific requirements of each agricultural sector across Africa and beyond.
+              {t.sectors.hero.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -291,14 +294,14 @@ const SectorsHero = () => {
                 href="#sectors"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-7 py-3.5 text-base font-semibold text-secondary-foreground hover:brightness-110 transition shadow-lg"
               >
-                Explore Sectors
+                {t.sectors.hero.ctaPrimary}
                 <ArrowRight size={18} />
               </a>
               <a
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary-foreground/30 bg-primary-foreground/5 backdrop-blur px-7 py-3.5 text-base font-semibold text-primary-foreground hover:bg-primary-foreground/10 transition"
               >
-                Talk to a Specialist
+                {t.sectors.hero.ctaSecondary}
               </a>
             </div>
           </div>

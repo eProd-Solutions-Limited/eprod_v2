@@ -3,38 +3,13 @@
 import { MapPin, Cpu, Building2, ArrowRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { CircleBackground } from '@/components/ui/CircleBackground';
+import { useI18n } from '@/lib/i18n/LanguageProvider';
 
-const steps = [
-  {
-    icon: MapPin,
-    step: "Step 1",
-    title: "Data Capture",
-    location: "The Field",
-    action: "Your field staff use the eProd mobile app to register farmers, map fields, record transactions, and conduct surveys.",
-    dataPoints: "Farmer profiles, GPS coordinates, planting data, procurement records, loan repayments.",
-    value: "Creates a rich, granular dataset at the source of the supply chain.",
-  },
-  {
-    icon: Cpu,
-    step: "Step 2",
-    title: "Data Processing",
-    location: "The Core ERP",
-    action: "The data is synchronized with the Core ERP, where it is cleaned, validated, and aggregated.",
-    dataPoints: "Farmer performance history, supply chain analytics, inventory levels, financial reports.",
-    value: "Transforms raw data into actionable business intelligence.",
-  },
-  {
-    icon: Building2,
-    step: "Step 3",
-    title: "Data Sharing",
-    location: "The Integration Hub",
-    action: "The processed data is securely shared with third-party systems via the Integration Hub.",
-    dataPoints: "Bank-ready reports, credit scoring data, compliance documentation.",
-    value: "Unlocks financial services, enables seamless partnerships, and ensures regulatory compliance.",
-  },
-];
+const stepIcons = [MapPin, Cpu, Building2];
 
 const DataFlow = () => {
+  const { t } = useI18n();
+  const steps = t.solutions.dataFlow.steps.map((s, i) => ({ ...s, icon: stepIcons[i] }));
   const heading = useInView();
   const cards = useInView();
 
@@ -48,14 +23,13 @@ const DataFlow = () => {
             heading.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">Data Flow</p>
+          <p className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{t.solutions.dataFlow.eyebrow}</p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-5 leading-tight">
-            Transforming Raw Data into{" "}
-            <span className="gradient-primary-text">Bankable Insights</span>
+            {t.solutions.dataFlow.headingLead}{" "}
+            <span className="gradient-primary-text">{t.solutions.dataFlow.headingHighlight}</span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            At the heart of the eProd platform is a powerful data engine that captures, processes, and transforms raw field data
-            into the structured, verifiable insights that financial institutions require.
+            {t.solutions.dataFlow.subtitle}
           </p>
         </div>
 
@@ -81,11 +55,11 @@ const DataFlow = () => {
 
                   <div className="space-y-3 text-sm">
                     <div>
-                      <p className="font-semibold text-foreground mb-1">Action</p>
+                      <p className="font-semibold text-foreground mb-1">{t.solutions.dataFlow.actionLabel}</p>
                       <p className="text-muted-foreground leading-relaxed">{s.action}</p>
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground mb-1">Data Points</p>
+                      <p className="font-semibold text-foreground mb-1">{t.solutions.dataFlow.dataPointsLabel}</p>
                       <p className="text-muted-foreground leading-relaxed">{s.dataPoints}</p>
                     </div>
                     <div className="pt-3 border-t border-border">
