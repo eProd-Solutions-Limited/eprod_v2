@@ -41,7 +41,7 @@ const HeroSection = () => {
                 style={{ transitionDelay: '150ms' }}
                 aria-hidden="true"
               />
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-foreground text-balance break-words hyphens-auto">
+              <h1 className="text-[32px] md:text-5xl lg:text-6xl font-black leading-tight text-foreground text-balance break-words hyphens-auto">
                 {t.hero.titleLead}{" "}
                 <span className="gradient-primary-text">{t.hero.titleHighlight}</span>
               </h1>
