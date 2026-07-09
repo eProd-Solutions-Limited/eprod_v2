@@ -2,12 +2,14 @@
 
 import { Linkedin, Twitter, Facebook, Youtube, Shield, Lock, FileCheck } from "lucide-react";
 import { useI18n } from "@/lib/i18n/LanguageProvider";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 const Footer = () => {
   const { t } = useI18n();
   return (
     <div className="gradient-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-16">
+        <NewsletterSignup />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div>
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-primary-foreground/60">{t.footer.product}</h4>

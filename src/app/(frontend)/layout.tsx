@@ -9,23 +9,13 @@ import type { Lang } from "@/lib/i18n/dictionary";
 import { cookies } from "next/headers";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import { getPayload } from "payload";
 import payloadConfig from "@/payload.config";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.eprod-solutions.com'),
@@ -74,7 +64,7 @@ export default async function RootLayout({
   return (
     <html
       lang={initialLang}
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+      className={cn("h-full", "antialiased", "font-sans", inter.variable)}
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider initialLang={initialLang}>

@@ -21,6 +21,7 @@ import { CaseStudiesHeroCollection } from './collections/CaseStudiesHero'
 import { Jobs } from './collections/Jobs'
 import { Events } from './collections/Events'
 import { PopupRegistrations } from './collections/PopupRegistrations'
+import { Subscribers } from './collections/Subscribers'
 import { LogoWall } from './globals/LogoWall'
 import { VoiceOfCustomer } from './globals/VoiceOfCustomer'
 
@@ -34,7 +35,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Articles, CaseStudies, Team, Popups, Categories, Enquiries, CaseStudiesHeroCollection, Jobs, Events, PopupRegistrations],
+  collections: [Users, Media, Articles, CaseStudies, Team, Popups, Categories, Enquiries, CaseStudiesHeroCollection, Jobs, Events, PopupRegistrations, Subscribers],
   globals: [LogoWall, VoiceOfCustomer, EnquirySettings],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],

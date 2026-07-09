@@ -79,6 +79,7 @@ export interface Config {
     jobs: Job;
     events: Event;
     'popup-registrations': PopupRegistration;
+    subscribers: Subscriber;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +99,7 @@ export interface Config {
     jobs: JobsSelect<false> | JobsSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     'popup-registrations': PopupRegistrationsSelect<false> | PopupRegistrationsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -561,6 +563,25 @@ export interface Enquiry {
   id: number;
   company: string;
   email: string;
+  position?: string | null;
+  valueChain?:
+    | (
+        | 'coffee_cocoa_tea'
+        | 'horticulture'
+        | 'dairy'
+        | 'seeds'
+        | 'grains_pulses'
+        | 'spices'
+        | 'nuts'
+        | 'oil_tree_crops'
+        | 'apiculture'
+        | 'pisciculture'
+        | 'poultry'
+        | 'rubber_gum'
+        | 'other'
+      )
+    | null;
+  interests?: ('eprod' | 'ago_classic' | 'ago_coffee_cocoa_soya')[] | null;
   challenge: string;
   sourceSection?: string | null;
   status?: ('new' | 'contacted' | 'qualified' | 'won' | 'lost') | null;
@@ -699,6 +720,22 @@ export interface PopupRegistration {
   createdAt: string;
 }
 /**
+ * Newsletter subscribers collected from the site footer.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  /**
+   * Where the subscription was submitted from.
+   */
+  source?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -769,6 +806,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'popup-registrations';
         value: number | PopupRegistration;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1069,6 +1110,9 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface EnquiriesSelect<T extends boolean = true> {
   company?: T;
   email?: T;
+  position?: T;
+  valueChain?: T;
+  interests?: T;
   challenge?: T;
   sourceSection?: T;
   status?: T;
@@ -1148,6 +1192,16 @@ export interface PopupRegistrationsSelect<T extends boolean = true> {
   name?: T;
   phone?: T;
   organization?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  source?: T;
   updatedAt?: T;
   createdAt?: T;
 }

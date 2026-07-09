@@ -5,6 +5,34 @@ import { NextRequest, NextResponse } from 'next/server'
 const replacePlaceholders = (template: string, data: Record<string, string>) =>
   template.replace(/\{\{(\w+)\}\}/g, (_, key) => data[key] ?? '')
 
+const VALUE_CHAIN_LABELS: Record<string, string> = {
+  coffee_cocoa_tea: 'Coffee, Cocoa & Tea',
+  horticulture: 'Horticulture',
+  dairy: 'Dairy',
+  seeds: 'Seeds',
+  grains_pulses: 'Grains & Pulses',
+  spices: 'Spices',
+  nuts: 'Nuts',
+  oil_tree_crops: 'Oil & Tree Crops',
+  apiculture: 'Apiculture',
+  pisciculture: 'Pisciculture',
+  poultry: 'Poultry',
+  rubber_gum: 'Rubber & Gum',
+  other: 'Other',
+}
+
+const INTEREST_LABELS: Record<string, string> = {
+  eprod: 'eProd',
+  ago_classic: 'Africa Grains Online Classic',
+  ago_coffee_cocoa_soya: 'Africa Grains Online (Coffee, Cocoa, Soya)',
+}
+
+const VALUE_CHAIN_VALUES = Object.keys(VALUE_CHAIN_LABELS)
+const INTEREST_VALUES = Object.keys(INTEREST_LABELS)
+
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -18,6 +46,18 @@ export async function POST(req: NextRequest) {
 
     const { to, cc, subject: subjectTemplate, body: bodyTemplate } = config
     const { company, email, challenge, phone, message, sourceSection } = body
+
+    // New optional fields
+    const position: string = typeof body.position === 'string' ? body.position.trim() : ''
+    const valueChain: string =
+      typeof body.valueChain === 'string' && VALUE_CHAIN_VALUES.includes(body.valueChain)
+        ? body.valueChain
+        : ''
+    const interests: string[] = Array.isArray(body.interests)
+      ? body.interests.filter((i: unknown): i is string => typeof i === 'string' && INTEREST_VALUES.includes(i))
+      : []
+    const valueChainLabel = valueChain ? VALUE_CHAIN_LABELS[valueChain] : ''
+    const interestLabels = interests.map((i) => INTEREST_LABELS[i]).join(', ')
 
     const placeholders: Record<string, string> = {
       company: company ?? '',
@@ -36,6 +76,9 @@ export async function POST(req: NextRequest) {
       `<table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:500px;font-family:sans-serif;font-size:14px;">`,
       `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;width:140px;">Company</td><td style="border:1px solid #e0e0e0;">${company}</td></tr>`,
       `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Email</td><td style="border:1px solid #e0e0e0;">${email}</td></tr>`,
+      position ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Position</td><td style="border:1px solid #e0e0e0;">${escapeHtml(position)}</td></tr>` : '',
+      valueChainLabel ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Value Chain</td><td style="border:1px solid #e0e0e0;">${valueChainLabel}</td></tr>` : '',
+      interestLabels ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Areas of Interest</td><td style="border:1px solid #e0e0e0;">${interestLabels}</td></tr>` : '',
       `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Challenge</td><td style="border:1px solid #e0e0e0;">${challenge}</td></tr>`,
       phone ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Phone</td><td style="border:1px solid #e0e0e0;">${phone}</td></tr>` : '',
       message ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Message</td><td style="border:1px solid #e0e0e0;">${message}</td></tr>` : '',
@@ -65,6 +108,9 @@ export async function POST(req: NextRequest) {
           company,
           email,
           challenge,
+          ...(position && { position }),
+          ...(valueChain && { valueChain: valueChain as any }),
+          ...(interests.length > 0 && { interests: interests as any }),
           sourceSection: sourceSection ?? 'unknown',
           status: 'new',
           ...(notes && { notes }),

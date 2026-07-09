@@ -1,5 +1,6 @@
 "use client"
 import { useState, useEffect } from "react";
+import { ChevronDown } from "lucide-react";
 import { gaEvents } from "@/lib/ga-events";
 import { useInView } from "@/hooks/useInView";
 import { CircleBackground } from '@/components/ui/CircleBackground'
@@ -9,13 +10,36 @@ import type { Dict } from "@/lib/i18n/dictionary";
 const ALLOWED_CHALLENGES = ["compliance", "efficiency", "scaling", "other"];
 const DANGEROUS_PATTERN = /<[^>]*>|javascript\s*:|on\w+\s*=/i;
 
-function validateForm(
-  form: { company: string; email: string; challenge: string },
-  msg: Dict["cta"]["errors"],
-) {
-  const errors: { company?: string; email?: string; challenge?: string } = {};
+type FormState = {
+  company: string;
+  email: string;
+  position: string;
+  valueChain: string;
+  interests: string[];
+  phone: string;
+  challenge: string;
+  message: string;
+};
+
+type FormErrors = Partial<Record<keyof FormState, string>>;
+
+const EMPTY_FORM: FormState = {
+  company: "",
+  email: "",
+  position: "",
+  valueChain: "",
+  interests: [],
+  phone: "",
+  challenge: "",
+  message: "",
+};
+
+function validateForm(form: FormState, msg: Dict["cta"]["errors"]): FormErrors {
+  const errors: FormErrors = {};
   const company = form.company.trim();
   const email = form.email.trim();
+  const phone = form.phone.trim();
+  const message = form.message.trim();
 
   if (!company) {
     errors.company = msg.companyRequired;
@@ -35,8 +59,22 @@ function validateForm(
     errors.email = msg.emailBadChars;
   }
 
+  if (!phone) {
+    errors.phone = msg.phoneRequired;
+  } else if (!/^[+\d][\d\s\-(). ]{5,19}$/.test(phone)) {
+    errors.phone = msg.phoneInvalid;
+  }
+
   if (!form.challenge || !ALLOWED_CHALLENGES.includes(form.challenge)) {
     errors.challenge = msg.challengeRequired;
+  }
+
+  if (!message) {
+    errors.message = msg.messageRequired;
+  } else if (message.length > 1000) {
+    errors.message = msg.messageLong;
+  } else if (DANGEROUS_PATTERN.test(message)) {
+    errors.message = msg.messageInvalid;
   }
 
   return errors;
@@ -44,8 +82,9 @@ function validateForm(
 
 const CTASection = () => {
   const { t } = useI18n();
-  const [form, setForm] = useState({ company: "", email: "", challenge: "" });
-  const [errors, setErrors] = useState<{ company?: string; email?: string; challenge?: string }>({});
+  const [expanded, setExpanded] = useState(false);
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -54,6 +93,27 @@ const CTASection = () => {
   useEffect(() => {
     if (sectionInView) gaEvents.sectionViewed('cta')
   }, [sectionInView])
+
+  // Auto-open when someone arrives via a "Request a Demo" link (href="#cta").
+  useEffect(() => {
+    const openIfTargeted = () => {
+      if (window.location.hash === '#cta') setExpanded(true)
+    }
+    openIfTargeted()
+    window.addEventListener('hashchange', openIfTargeted)
+    return () => window.removeEventListener('hashchange', openIfTargeted)
+  }, [])
+
+  const clearError = (field: keyof FormState) =>
+    setErrors((prev) => ({ ...prev, [field]: undefined }));
+
+  const toggleInterest = (value: string) =>
+    setForm((prev) => ({
+      ...prev,
+      interests: prev.interests.includes(value)
+        ? prev.interests.filter((i) => i !== value)
+        : [...prev.interests, value],
+    }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,7 +133,12 @@ const CTASection = () => {
         body: JSON.stringify({
           company: form.company.trim(),
           email: form.email.trim(),
+          position: form.position.trim(),
+          valueChain: form.valueChain,
+          interests: form.interests,
+          phone: form.phone.trim(),
           challenge: form.challenge,
+          message: form.message.trim(),
           sourceSection: "home_cta",
         }),
       });
@@ -81,7 +146,7 @@ const CTASection = () => {
       if (res.ok) {
         gaEvents.formSubmitted("cta_form", form.company);
         setMessage(t.cta.success);
-        setForm({ company: "", email: "", challenge: "" });
+        setForm(EMPTY_FORM);
       } else {
         setMessage(t.cta.error);
       }
@@ -118,8 +183,33 @@ const CTASection = () => {
           {t.cta.subtitle}
         </p>
 
-        <div className="max-w-lg mx-auto bg-card rounded-2xl p-8 shadow-2xl">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="max-w-lg mx-auto">
+          {!expanded && (
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => setExpanded(true)}
+                aria-expanded={expanded}
+                className="group relative inline-flex items-center justify-center rounded-full bg-secondary px-8 py-4 text-base font-bold text-secondary-foreground shadow-lg hover:brightness-110 active:scale-95 transition-all"
+              >
+                <span className="absolute inset-0 rounded-full bg-secondary opacity-40 animate-ping motion-reduce:animate-none" aria-hidden="true" />
+                <span className="relative flex items-center gap-3">
+                  {t.cta.expandPrompt}
+                  <ChevronDown size={20} className="animate-bounce motion-reduce:animate-none" />
+                </span>
+              </button>
+              <p className="text-primary-foreground/60 text-xs mt-3">{t.cta.expandHint}</p>
+            </div>
+          )}
+
+          <div
+            className={`grid transition-all duration-500 ease-out ${
+              expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+            }`}
+          >
+            <div className="overflow-hidden" inert={!expanded}>
+              <div className="bg-card rounded-2xl p-8 shadow-2xl">
+                <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">{t.cta.companyLabel}</label>
               <input
@@ -147,6 +237,62 @@ const CTASection = () => {
               {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
             </div>
             <div>
+              <label className="block text-sm font-medium text-foreground mb-1">{t.formShared.positionLabel}</label>
+              <input
+                type="text"
+                disabled={loading}
+                value={form.position}
+                onChange={(e) => setForm({ ...form, position: e.target.value })}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
+                placeholder={t.formShared.positionPlaceholder}
+                maxLength={100}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1">{t.formShared.valueChainLabel}</label>
+              <select
+                disabled={loading}
+                value={form.valueChain}
+                onChange={(e) => setForm({ ...form, valueChain: e.target.value })}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
+              >
+                <option value="">{t.formShared.valueChainSelect}</option>
+                {t.formShared.valueChains.map((vc) => (
+                  <option key={vc.value} value={vc.value}>{vc.label}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1">{t.cta.phoneLabel}</label>
+              <input
+                type="tel"
+                disabled={loading}
+                value={form.phone}
+                onChange={(e) => { setForm({ ...form, phone: e.target.value }); clearError("phone") }}
+                className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50 ${errors.phone ? "border-destructive" : "border-border"}`}
+                placeholder={t.cta.phonePlaceholder}
+                maxLength={20}
+              />
+              {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">{t.formShared.interestsLabel}</label>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {t.formShared.interests.map((it) => (
+                  <label key={it.value} className="flex items-center gap-2.5 text-sm text-foreground cursor-pointer">
+                    <input
+                      type="checkbox"
+                      disabled={loading}
+                      checked={form.interests.includes(it.value)}
+                      onChange={() => toggleInterest(it.value)}
+                      className="h-4 w-4 rounded border-border text-primary focus:ring-primary/30"
+                    />
+                    {it.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div>
               <label className="block text-sm font-medium text-foreground mb-1">{t.cta.challengeLabel}</label>
               <select
                 disabled={loading}
@@ -162,6 +308,19 @@ const CTASection = () => {
               </select>
               {errors.challenge && <p className="mt-1 text-xs text-destructive">{errors.challenge}</p>}
             </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1">{t.cta.messageLabel}</label>
+              <textarea
+                disabled={loading}
+                rows={3}
+                value={form.message}
+                onChange={(e) => { setForm({ ...form, message: e.target.value }); clearError("message") }}
+                className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50 resize-none ${errors.message ? "border-destructive" : "border-border"}`}
+                placeholder={t.cta.messagePlaceholder}
+                maxLength={1000}
+              />
+              {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
+            </div>
             <button
               type="submit"
               disabled={loading}
@@ -169,15 +328,16 @@ const CTASection = () => {
             >
               {loading ? t.cta.submitting : t.cta.submit}
             </button>
-          </form>
+                </form>
 
-          {message && (
-            <div className="mt-4 p-3 rounded-lg bg-primary/10 border border-primary/20 text-sm text-primary text-center">
-              {message}
+                {message && (
+                  <div className="mt-4 p-3 rounded-lg bg-primary/10 border border-primary/20 text-sm text-primary text-center">
+                    {message}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-
-          
+          </div>
         </div>
 
         <p className="text-center text-primary-foreground/60 text-sm mt-8">

@@ -28,6 +28,9 @@ const socialLinks = [
 type FormState = {
   company: string
   email: string
+  position: string
+  valueChain: string
+  interests: string[]
   phone: string
   challenge: string
   message: string
@@ -89,6 +92,9 @@ const ContactForm = () => {
   const [form, setForm] = useState<FormState>({
     company: "",
     email: "",
+    position: "",
+    valueChain: "",
+    interests: [],
     phone: "",
     challenge: "",
     message: "",
@@ -99,6 +105,14 @@ const ContactForm = () => {
 
   const clearError = (field: keyof FormState) =>
     setErrors((prev) => ({ ...prev, [field]: undefined }))
+
+  const toggleInterest = (value: string) =>
+    setForm((prev) => ({
+      ...prev,
+      interests: prev.interests.includes(value)
+        ? prev.interests.filter((i) => i !== value)
+        : [...prev.interests, value],
+    }))
 
   const inputBase =
     "w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
@@ -124,6 +138,9 @@ const ContactForm = () => {
         body: JSON.stringify({
           company: form.company.trim(),
           email: form.email.trim(),
+          position: form.position.trim(),
+          valueChain: form.valueChain,
+          interests: form.interests,
           phone: form.phone.trim(),
           challenge: form.challenge,
           message: form.message.trim(),
@@ -134,7 +151,7 @@ const ContactForm = () => {
       if (res.ok) {
         gaEvents.contactFormSubmitted(form.company)
         setStatus("success")
-        setForm({ company: "", email: "", phone: "", challenge: "", message: "" })
+        setForm({ company: "", email: "", position: "", valueChain: "", interests: [], phone: "", challenge: "", message: "" })
       } else {
         setStatus("error")
       }
@@ -294,6 +311,58 @@ const ContactForm = () => {
                     maxLength={20}
                   />
                   {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">
+                  {t.formShared.positionLabel}
+                </label>
+                <input
+                  type="text"
+                  disabled={loading}
+                  placeholder={t.formShared.positionPlaceholder}
+                  value={form.position}
+                  onChange={(e) => setForm({ ...form, position: e.target.value })}
+                  className={fieldCls()}
+                  maxLength={100}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">
+                  {t.formShared.valueChainLabel}
+                </label>
+                <select
+                  disabled={loading}
+                  value={form.valueChain}
+                  onChange={(e) => setForm({ ...form, valueChain: e.target.value })}
+                  className={fieldCls()}
+                >
+                  <option value="">{t.formShared.valueChainSelect}</option>
+                  {t.formShared.valueChains.map((vc) => (
+                    <option key={vc.value} value={vc.value}>{vc.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  {t.formShared.interestsLabel}
+                </label>
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {t.formShared.interests.map((it) => (
+                    <label key={it.value} className="flex items-center gap-2.5 text-sm text-foreground cursor-pointer">
+                      <input
+                        type="checkbox"
+                        disabled={loading}
+                        checked={form.interests.includes(it.value)}
+                        onChange={() => toggleInterest(it.value)}
+                        className="h-4 w-4 rounded border-border text-primary focus:ring-primary/30"
+                      />
+                      {it.label}
+                    </label>
+                  ))}
                 </div>
               </div>
 
