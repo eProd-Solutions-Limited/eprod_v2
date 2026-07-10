@@ -13,9 +13,12 @@ const DANGEROUS_PATTERN = /<[^>]*>|javascript\s*:|on\w+\s*=/i;
 type FormState = {
   company: string;
   email: string;
+  contactName: string;
   position: string;
+  numberOfFarmers: string;
   valueChain: string;
-  interests: string[];
+  requestFor: string;
+  requestForOther: string;
   phone: string;
   challenge: string;
   message: string;
@@ -26,9 +29,12 @@ type FormErrors = Partial<Record<keyof FormState, string>>;
 const EMPTY_FORM: FormState = {
   company: "",
   email: "",
+  contactName: "",
   position: "",
+  numberOfFarmers: "",
   valueChain: "",
-  interests: [],
+  requestFor: "",
+  requestForOther: "",
   phone: "",
   challenge: "",
   message: "",
@@ -107,14 +113,6 @@ const CTASection = () => {
   const clearError = (field: keyof FormState) =>
     setErrors((prev) => ({ ...prev, [field]: undefined }));
 
-  const toggleInterest = (value: string) =>
-    setForm((prev) => ({
-      ...prev,
-      interests: prev.interests.includes(value)
-        ? prev.interests.filter((i) => i !== value)
-        : [...prev.interests, value],
-    }));
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validateForm(form, t.cta.errors);
@@ -133,9 +131,12 @@ const CTASection = () => {
         body: JSON.stringify({
           company: form.company.trim(),
           email: form.email.trim(),
+          contactName: form.contactName.trim(),
           position: form.position.trim(),
+          numberOfFarmers: form.numberOfFarmers,
           valueChain: form.valueChain,
-          interests: form.interests,
+          requestFor: form.requestFor,
+          requestForOther: form.requestForOther.trim(),
           phone: form.phone.trim(),
           challenge: form.challenge,
           message: form.message.trim(),
@@ -224,6 +225,18 @@ const CTASection = () => {
               {errors.company && <p className="mt-1 text-xs text-destructive">{errors.company}</p>}
             </div>
             <div>
+              <label className="block text-sm font-medium text-foreground mb-1">{t.formShared.contactNameLabel}</label>
+              <input
+                type="text"
+                disabled={loading}
+                value={form.contactName}
+                onChange={(e) => setForm({ ...form, contactName: e.target.value })}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
+                placeholder={t.formShared.contactNamePlaceholder}
+                maxLength={100}
+              />
+            </div>
+            <div>
               <label className="block text-sm font-medium text-foreground mb-1">{t.cta.emailLabel}</label>
               <input
                 type="email"
@@ -247,6 +260,20 @@ const CTASection = () => {
                 placeholder={t.formShared.positionPlaceholder}
                 maxLength={100}
               />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-1">{t.formShared.farmersLabel}</label>
+              <select
+                disabled={loading}
+                value={form.numberOfFarmers}
+                onChange={(e) => setForm({ ...form, numberOfFarmers: e.target.value })}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
+              >
+                <option value="">{t.formShared.farmersSelect}</option>
+                {t.formShared.farmers.map((f) => (
+                  <option key={f.value} value={f.value}>{f.label}</option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">{t.formShared.valueChainLabel}</label>
@@ -276,21 +303,30 @@ const CTASection = () => {
               {errors.phone && <p className="mt-1 text-xs text-destructive">{errors.phone}</p>}
             </div>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">{t.formShared.interestsLabel}</label>
-              <div className="grid sm:grid-cols-2 gap-2">
-                {t.formShared.interests.map((it) => (
-                  <label key={it.value} className="flex items-center gap-2.5 text-sm text-foreground cursor-pointer">
-                    <input
-                      type="checkbox"
-                      disabled={loading}
-                      checked={form.interests.includes(it.value)}
-                      onChange={() => toggleInterest(it.value)}
-                      className="h-4 w-4 rounded border-border text-primary focus:ring-primary/30"
-                    />
-                    {it.label}
-                  </label>
+              <label className="block text-sm font-medium text-foreground mb-1">{t.formShared.requestForLabel}</label>
+              <select
+                disabled={loading}
+                value={form.requestFor}
+                onChange={(e) => setForm({ ...form, requestFor: e.target.value })}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
+              >
+                <option value="">{t.formShared.requestForSelect}</option>
+                {t.formShared.requestForOptions.map((r) => (
+                  <option key={r.value} value={r.value}>{r.label}</option>
                 ))}
-              </div>
+              </select>
+              {form.requestFor === "other" && (
+                <input
+                  type="text"
+                  disabled={loading}
+                  value={form.requestForOther}
+                  onChange={(e) => setForm({ ...form, requestForOther: e.target.value })}
+                  className="mt-2 w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
+                  placeholder={t.formShared.requestForOtherPlaceholder}
+                  maxLength={200}
+                  aria-label={t.formShared.requestForOtherLabel}
+                />
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-foreground mb-1">{t.cta.challengeLabel}</label>

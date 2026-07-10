@@ -28,9 +28,12 @@ const socialLinks = [
 type FormState = {
   company: string
   email: string
+  contactName: string
   position: string
+  numberOfFarmers: string
   valueChain: string
-  interests: string[]
+  requestFor: string
+  requestForOther: string
   phone: string
   challenge: string
   message: string
@@ -92,9 +95,12 @@ const ContactForm = () => {
   const [form, setForm] = useState<FormState>({
     company: "",
     email: "",
+    contactName: "",
     position: "",
+    numberOfFarmers: "",
     valueChain: "",
-    interests: [],
+    requestFor: "",
+    requestForOther: "",
     phone: "",
     challenge: "",
     message: "",
@@ -105,14 +111,6 @@ const ContactForm = () => {
 
   const clearError = (field: keyof FormState) =>
     setErrors((prev) => ({ ...prev, [field]: undefined }))
-
-  const toggleInterest = (value: string) =>
-    setForm((prev) => ({
-      ...prev,
-      interests: prev.interests.includes(value)
-        ? prev.interests.filter((i) => i !== value)
-        : [...prev.interests, value],
-    }))
 
   const inputBase =
     "w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition disabled:opacity-50"
@@ -138,9 +136,12 @@ const ContactForm = () => {
         body: JSON.stringify({
           company: form.company.trim(),
           email: form.email.trim(),
+          contactName: form.contactName.trim(),
           position: form.position.trim(),
+          numberOfFarmers: form.numberOfFarmers,
           valueChain: form.valueChain,
-          interests: form.interests,
+          requestFor: form.requestFor,
+          requestForOther: form.requestForOther.trim(),
           phone: form.phone.trim(),
           challenge: form.challenge,
           message: form.message.trim(),
@@ -151,7 +152,7 @@ const ContactForm = () => {
       if (res.ok) {
         gaEvents.contactFormSubmitted(form.company)
         setStatus("success")
-        setForm({ company: "", email: "", position: "", valueChain: "", interests: [], phone: "", challenge: "", message: "" })
+        setForm({ company: "", email: "", contactName: "", position: "", numberOfFarmers: "", valueChain: "", requestFor: "", requestForOther: "", phone: "", challenge: "", message: "" })
       } else {
         setStatus("error")
       }
@@ -281,6 +282,21 @@ const ContactForm = () => {
                 {errors.company && <p className="mt-1 text-xs text-destructive">{errors.company}</p>}
               </div>
 
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">
+                  {t.formShared.contactNameLabel}
+                </label>
+                <input
+                  type="text"
+                  disabled={loading}
+                  placeholder={t.formShared.contactNamePlaceholder}
+                  value={form.contactName}
+                  onChange={(e) => setForm({ ...form, contactName: e.target.value })}
+                  className={fieldCls()}
+                  maxLength={100}
+                />
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">
@@ -331,6 +347,23 @@ const ContactForm = () => {
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1.5">
+                  {t.formShared.farmersLabel}
+                </label>
+                <select
+                  disabled={loading}
+                  value={form.numberOfFarmers}
+                  onChange={(e) => setForm({ ...form, numberOfFarmers: e.target.value })}
+                  className={fieldCls()}
+                >
+                  <option value="">{t.formShared.farmersSelect}</option>
+                  {t.formShared.farmers.map((f) => (
+                    <option key={f.value} value={f.value}>{f.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">
                   {t.formShared.valueChainLabel}
                 </label>
                 <select
@@ -347,23 +380,32 @@ const ContactForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  {t.formShared.interestsLabel}
+                <label className="block text-sm font-medium text-foreground mb-1.5">
+                  {t.formShared.requestForLabel}
                 </label>
-                <div className="grid sm:grid-cols-2 gap-2">
-                  {t.formShared.interests.map((it) => (
-                    <label key={it.value} className="flex items-center gap-2.5 text-sm text-foreground cursor-pointer">
-                      <input
-                        type="checkbox"
-                        disabled={loading}
-                        checked={form.interests.includes(it.value)}
-                        onChange={() => toggleInterest(it.value)}
-                        className="h-4 w-4 rounded border-border text-primary focus:ring-primary/30"
-                      />
-                      {it.label}
-                    </label>
+                <select
+                  disabled={loading}
+                  value={form.requestFor}
+                  onChange={(e) => setForm({ ...form, requestFor: e.target.value })}
+                  className={fieldCls()}
+                >
+                  <option value="">{t.formShared.requestForSelect}</option>
+                  {t.formShared.requestForOptions.map((r) => (
+                    <option key={r.value} value={r.value}>{r.label}</option>
                   ))}
-                </div>
+                </select>
+                {form.requestFor === "other" && (
+                  <input
+                    type="text"
+                    disabled={loading}
+                    placeholder={t.formShared.requestForOtherPlaceholder}
+                    value={form.requestForOther}
+                    onChange={(e) => setForm({ ...form, requestForOther: e.target.value })}
+                    className={`${fieldCls()} mt-2`}
+                    maxLength={200}
+                    aria-label={t.formShared.requestForOtherLabel}
+                  />
+                )}
               </div>
 
               <div>

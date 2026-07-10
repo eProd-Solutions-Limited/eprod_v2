@@ -25,9 +25,19 @@ export const Enquiries: CollectionConfig = {
       required: true,
     },
     {
+      name: 'contactName',
+      type: 'text',
+      label: 'Name of Person',
+    },
+    {
       name: 'position',
       type: 'text',
       label: 'Position in the Company',
+    },
+    {
+      name: 'numberOfFarmers',
+      type: 'text',
+      label: 'Number of Farmers',
     },
     {
       name: 'valueChain',
@@ -50,15 +60,9 @@ export const Enquiries: CollectionConfig = {
       ],
     },
     {
-      name: 'interests',
-      type: 'select',
-      hasMany: true,
-      label: 'Areas of Interest',
-      options: [
-        { label: 'eProd', value: 'eprod' },
-        { label: 'Africa Grains Online Classic', value: 'ago_classic' },
-        { label: 'Africa Grains Online (Coffee, Cocoa, Soya)', value: 'ago_coffee_cocoa_soya' },
-      ],
+      name: 'requestFor',
+      type: 'text',
+      label: 'Request For',
     },
     {
       name: 'challenge',

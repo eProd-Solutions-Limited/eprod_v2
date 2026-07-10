@@ -563,7 +563,9 @@ export interface Enquiry {
   id: number;
   company: string;
   email: string;
+  contactName?: string | null;
   position?: string | null;
+  numberOfFarmers?: string | null;
   valueChain?:
     | (
         | 'coffee_cocoa_tea'
@@ -581,7 +583,7 @@ export interface Enquiry {
         | 'other'
       )
     | null;
-  interests?: ('eprod' | 'ago_classic' | 'ago_coffee_cocoa_soya')[] | null;
+  requestFor?: string | null;
   challenge: string;
   sourceSection?: string | null;
   status?: ('new' | 'contacted' | 'qualified' | 'won' | 'lost') | null;
@@ -1110,9 +1112,11 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface EnquiriesSelect<T extends boolean = true> {
   company?: T;
   email?: T;
+  contactName?: T;
   position?: T;
+  numberOfFarmers?: T;
   valueChain?: T;
-  interests?: T;
+  requestFor?: T;
   challenge?: T;
   sourceSection?: T;
   status?: T;

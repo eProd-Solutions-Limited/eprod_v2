@@ -1022,8 +1022,20 @@ const en = {
   },
 
   formShared: {
+    contactNameLabel: 'Name of Person',
+    contactNamePlaceholder: 'e.g. Jane Doe',
     positionLabel: 'Position in the Company',
     positionPlaceholder: 'e.g. Procurement Manager',
+    farmersLabel: 'Number of Farmers',
+    farmersSelect: 'Select a range',
+    farmers: [
+      { value: 'lt_100', label: 'Fewer than 100' },
+      { value: '100_500', label: '100 – 500' },
+      { value: '500_1000', label: '500 – 1,000' },
+      { value: '1000_5000', label: '1,000 – 5,000' },
+      { value: '5000_10000', label: '5,000 – 10,000' },
+      { value: 'gt_10000', label: 'More than 10,000' },
+    ],
     valueChainLabel: 'Value Chain',
     valueChainSelect: 'Select a value chain',
     valueChains: [
@@ -1041,23 +1053,15 @@ const en = {
       { value: 'rubber_gum', label: 'Rubber & Gum' },
       { value: 'other', label: 'Other' },
     ],
-    interestsLabel: 'Areas of Interest',
-    interests: [
-      { value: 'eprod', label: 'eProd' },
-      { value: 'ago_classic', label: 'Africa Grains Online Classic' },
-      { value: 'ago_coffee_cocoa_soya', label: 'Africa Grains Online (Coffee, Cocoa, Soya)' },
+    requestForLabel: 'Request For',
+    requestForSelect: 'Select an option',
+    requestForOptions: [
+      { value: 'newsletter', label: 'Newsletter Signup' },
+      { value: 'demo', label: 'Demo' },
+      { value: 'other', label: 'Other' },
     ],
-  },
-
-  newsletter: {
-    title: 'Subscribe to our newsletter',
-    subtitle: 'Agribusiness insights and product updates from eProd — straight to your inbox.',
-    placeholder: 'Enter your email',
-    button: 'Subscribe',
-    submitting: 'Subscribing...',
-    success: "Thanks for subscribing! You're on the list.",
-    error: 'Something went wrong. Please try again.',
-    invalidEmail: 'Please enter a valid email address.',
+    requestForOtherLabel: 'Please specify',
+    requestForOtherPlaceholder: 'Tell us what you need',
   },
 
   languageToggle: {
@@ -2102,8 +2106,20 @@ const fr: typeof en = {
   },
 
   formShared: {
+    contactNameLabel: 'Nom de la personne',
+    contactNamePlaceholder: 'ex. Jean Dupont',
     positionLabel: 'Poste dans l’entreprise',
     positionPlaceholder: 'ex. Responsable des achats',
+    farmersLabel: 'Nombre de producteurs',
+    farmersSelect: 'Sélectionnez une tranche',
+    farmers: [
+      { value: 'lt_100', label: 'Moins de 100' },
+      { value: '100_500', label: '100 – 500' },
+      { value: '500_1000', label: '500 – 1 000' },
+      { value: '1000_5000', label: '1 000 – 5 000' },
+      { value: '5000_10000', label: '5 000 – 10 000' },
+      { value: 'gt_10000', label: 'Plus de 10 000' },
+    ],
     valueChainLabel: 'Chaîne de valeur',
     valueChainSelect: 'Sélectionnez une chaîne de valeur',
     valueChains: [
@@ -2121,23 +2137,15 @@ const fr: typeof en = {
       { value: 'rubber_gum', label: 'Caoutchouc et gomme' },
       { value: 'other', label: 'Autre' },
     ],
-    interestsLabel: 'Domaines d’intérêt',
-    interests: [
-      { value: 'eprod', label: 'eProd' },
-      { value: 'ago_classic', label: 'Africa Grains Online Classic' },
-      { value: 'ago_coffee_cocoa_soya', label: 'Africa Grains Online (Café, Cacao, Soja)' },
+    requestForLabel: 'Objet de la demande',
+    requestForSelect: 'Sélectionnez une option',
+    requestForOptions: [
+      { value: 'newsletter', label: 'Inscription à la newsletter' },
+      { value: 'demo', label: 'Démo' },
+      { value: 'other', label: 'Autre' },
     ],
-  },
-
-  newsletter: {
-    title: 'Abonnez-vous à notre newsletter',
-    subtitle: 'Analyses agro-industrielles et nouveautés produits d’eProd — directement dans votre boîte mail.',
-    placeholder: 'Saisissez votre e-mail',
-    button: 'S’abonner',
-    submitting: 'Abonnement...',
-    success: 'Merci pour votre abonnement ! Vous êtes inscrit.',
-    error: 'Une erreur s’est produite. Veuillez réessayer.',
-    invalidEmail: 'Veuillez saisir une adresse e-mail valide.',
+    requestForOtherLabel: 'Veuillez préciser',
+    requestForOtherPlaceholder: 'Dites-nous ce dont vous avez besoin',
   },
 
   languageToggle: {

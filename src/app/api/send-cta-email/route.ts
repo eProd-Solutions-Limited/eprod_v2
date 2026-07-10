@@ -21,14 +21,24 @@ const VALUE_CHAIN_LABELS: Record<string, string> = {
   other: 'Other',
 }
 
-const INTEREST_LABELS: Record<string, string> = {
-  eprod: 'eProd',
-  ago_classic: 'Africa Grains Online Classic',
-  ago_coffee_cocoa_soya: 'Africa Grains Online (Coffee, Cocoa, Soya)',
+const FARMERS_LABELS: Record<string, string> = {
+  lt_100: 'Fewer than 100',
+  '100_500': '100 – 500',
+  '500_1000': '500 – 1,000',
+  '1000_5000': '1,000 – 5,000',
+  '5000_10000': '5,000 – 10,000',
+  gt_10000: 'More than 10,000',
+}
+
+const REQUEST_FOR_LABELS: Record<string, string> = {
+  newsletter: 'Newsletter Signup',
+  demo: 'Demo',
+  other: 'Other',
 }
 
 const VALUE_CHAIN_VALUES = Object.keys(VALUE_CHAIN_LABELS)
-const INTEREST_VALUES = Object.keys(INTEREST_LABELS)
+const FARMERS_VALUES = Object.keys(FARMERS_LABELS)
+const REQUEST_FOR_VALUES = Object.keys(REQUEST_FOR_LABELS)
 
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -48,16 +58,30 @@ export async function POST(req: NextRequest) {
     const { company, email, challenge, phone, message, sourceSection } = body
 
     // New optional fields
+    const contactName: string =
+      typeof body.contactName === 'string' ? body.contactName.trim().slice(0, 100) : ''
     const position: string = typeof body.position === 'string' ? body.position.trim() : ''
+    const numberOfFarmers: string =
+      typeof body.numberOfFarmers === 'string' && FARMERS_VALUES.includes(body.numberOfFarmers)
+        ? body.numberOfFarmers
+        : ''
     const valueChain: string =
       typeof body.valueChain === 'string' && VALUE_CHAIN_VALUES.includes(body.valueChain)
         ? body.valueChain
         : ''
-    const interests: string[] = Array.isArray(body.interests)
-      ? body.interests.filter((i: unknown): i is string => typeof i === 'string' && INTEREST_VALUES.includes(i))
-      : []
+    const requestForValue: string =
+      typeof body.requestFor === 'string' && REQUEST_FOR_VALUES.includes(body.requestFor)
+        ? body.requestFor
+        : ''
+    const requestForOther: string =
+      typeof body.requestForOther === 'string' ? body.requestForOther.trim().slice(0, 200) : ''
     const valueChainLabel = valueChain ? VALUE_CHAIN_LABELS[valueChain] : ''
-    const interestLabels = interests.map((i) => INTEREST_LABELS[i]).join(', ')
+    const farmersLabel = numberOfFarmers ? FARMERS_LABELS[numberOfFarmers] : ''
+    const requestForLabel = requestForValue
+      ? requestForValue === 'other' && requestForOther
+        ? `Other: ${requestForOther}`
+        : REQUEST_FOR_LABELS[requestForValue]
+      : ''
 
     const placeholders: Record<string, string> = {
       company: company ?? '',
@@ -76,9 +100,11 @@ export async function POST(req: NextRequest) {
       `<table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:500px;font-family:sans-serif;font-size:14px;">`,
       `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;width:140px;">Company</td><td style="border:1px solid #e0e0e0;">${company}</td></tr>`,
       `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Email</td><td style="border:1px solid #e0e0e0;">${email}</td></tr>`,
+      contactName ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Name</td><td style="border:1px solid #e0e0e0;">${escapeHtml(contactName)}</td></tr>` : '',
       position ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Position</td><td style="border:1px solid #e0e0e0;">${escapeHtml(position)}</td></tr>` : '',
+      farmersLabel ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Number of Farmers</td><td style="border:1px solid #e0e0e0;">${farmersLabel}</td></tr>` : '',
       valueChainLabel ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Value Chain</td><td style="border:1px solid #e0e0e0;">${valueChainLabel}</td></tr>` : '',
-      interestLabels ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Areas of Interest</td><td style="border:1px solid #e0e0e0;">${interestLabels}</td></tr>` : '',
+      requestForLabel ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Request For</td><td style="border:1px solid #e0e0e0;">${escapeHtml(requestForLabel)}</td></tr>` : '',
       `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Challenge</td><td style="border:1px solid #e0e0e0;">${challenge}</td></tr>`,
       phone ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Phone</td><td style="border:1px solid #e0e0e0;">${phone}</td></tr>` : '',
       message ? `<tr><td style="border:1px solid #e0e0e0;background:#f5f5f5;font-weight:600;">Message</td><td style="border:1px solid #e0e0e0;">${message}</td></tr>` : '',
@@ -108,9 +134,11 @@ export async function POST(req: NextRequest) {
           company,
           email,
           challenge,
+          ...(contactName && { contactName }),
           ...(position && { position }),
+          ...(farmersLabel && { numberOfFarmers: farmersLabel }),
           ...(valueChain && { valueChain: valueChain as any }),
-          ...(interests.length > 0 && { interests: interests as any }),
+          ...(requestForLabel && { requestFor: requestForLabel }),
           sourceSection: sourceSection ?? 'unknown',
           status: 'new',
           ...(notes && { notes }),
