@@ -14,6 +14,7 @@ import * as migration_20260602_074925 from './20260602_074925';
 import * as migration_20260602_enquiry_settings_global from './20260602_enquiry_settings_global';
 import * as migration_20260708_events_description_jsonb from './20260708_events_description_jsonb';
 import * as migration_20260708_drop_cta_config_id_rel from './20260708_drop_cta_config_id_rel';
+import * as migration_20260728_video_highlights_global from './20260728_video_highlights_global';
 
 export const migrations = [
   {
@@ -95,5 +96,10 @@ export const migrations = [
     up: migration_20260708_drop_cta_config_id_rel.up,
     down: migration_20260708_drop_cta_config_id_rel.down,
     name: '20260708_drop_cta_config_id_rel',
+  },
+  {
+    up: migration_20260728_video_highlights_global.up,
+    down: migration_20260728_video_highlights_global.down,
+    name: '20260728_video_highlights_global',
   },
 ];
