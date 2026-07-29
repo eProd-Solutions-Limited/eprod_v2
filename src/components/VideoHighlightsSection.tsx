@@ -6,14 +6,33 @@ import { Play } from 'lucide-react'
 import { gaEvents } from '@/lib/ga-events'
 import { useI18n } from '@/lib/i18n/LanguageProvider'
 
-const videoIds = ['K60ZdON-xO0', '2ipMHeav6go', 'H8JB5GRUyE4']
+export type HighlightVideo = {
+  /** YouTube video id, already extracted from the link stored in Payload. */
+  id: string
+  title: string
+  titleFr?: string | null
+}
 
-const VideoHighlightsSection = () => {
-  const { t } = useI18n()
-  const videos = videoIds.map((id, i) => ({ id, title: t.video.titles[i] }))
-  const [activeId, setActiveId] = useState(videoIds[0])
+/** Used only if the CMS list is empty, so the section never renders blank. */
+const fallbackIds = ['K60ZdON-xO0', '2ipMHeav6go', 'H8JB5GRUyE4']
+
+const VideoHighlightsSection = ({ videos: cmsVideos = [] }: { videos?: HighlightVideo[] }) => {
+  const { t, lang } = useI18n()
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+
+  const videos =
+    cmsVideos.length > 0
+      ? cmsVideos.map((v) => ({
+          id: v.id,
+          title: (lang === 'fr' && v.titleFr) || v.title,
+        }))
+      : fallbackIds.map((id, i) => ({ id, title: t.video.titles[i] }))
+
+  const activeId = videos.some((v) => v.id === selectedId) ? selectedId : videos[0]?.id
 
   const watchNext = videos.filter((v) => v.id !== activeId)
+
+  if (!activeId) return null
 
   return (
     <section className="bg-background py-20">
@@ -44,7 +63,7 @@ const VideoHighlightsSection = () => {
             {watchNext.map((v) => (
               <button
                 key={v.id}
-                onClick={() => { gaEvents.videoSelected(v.title); setActiveId(v.id) }}
+                onClick={() => { gaEvents.videoSelected(v.title); setSelectedId(v.id) }}
                 className="flex items-start gap-3 rounded-xl p-2 hover:bg-muted transition-colors text-left group"
               >
                 {/* Thumbnail */}

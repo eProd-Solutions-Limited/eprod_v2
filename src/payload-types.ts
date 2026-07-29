@@ -112,11 +112,13 @@ export interface Config {
   globals: {
     'logo-wall': LogoWall;
     'voice-of-customer': VoiceOfCustomer;
+    'video-highlights': VideoHighlight;
     'enquiry-settings': EnquirySetting;
   };
   globalsSelect: {
     'logo-wall': LogoWallSelect<false> | LogoWallSelect<true>;
     'voice-of-customer': VoiceOfCustomerSelect<false> | VoiceOfCustomerSelect<true>;
+    'video-highlights': VideoHighlightsSelect<false> | VideoHighlightsSelect<true>;
     'enquiry-settings': EnquirySettingsSelect<false> | EnquirySettingsSelect<true>;
   };
   locale: null;
@@ -1310,6 +1312,41 @@ export interface VoiceOfCustomer {
   createdAt?: string | null;
 }
 /**
+ * Videos shown in the "Video Highlights" section on the homepage. Drag the rows to reorder — the first video plays in the big player, the rest appear under "Watch next".
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video-highlights".
+ */
+export interface VideoHighlight {
+  id: number;
+  /**
+   * Drag to reorder. The top video is the one that shows first on the homepage.
+   */
+  videos?:
+    | {
+        /**
+         * Paste the YouTube link, e.g. https://www.youtube.com/watch?v=K60ZdON-xO0 or https://youtu.be/K60ZdON-xO0
+         */
+        url: string;
+        /**
+         * Leave blank and the title will be pulled from YouTube automatically when you save.
+         */
+        title?: string | null;
+        /**
+         * Optional. Falls back to the English title when left blank.
+         */
+        titleFr?: string | null;
+        /**
+         * Uncheck to hide this video without deleting it.
+         */
+        active?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Configure recipients and email template for enquiry form submissions.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1383,6 +1420,24 @@ export interface VoiceOfCustomerSelect<T extends boolean = true> {
         name?: T;
         role?: T;
         tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "video-highlights_select".
+ */
+export interface VideoHighlightsSelect<T extends boolean = true> {
+  videos?:
+    | T
+    | {
+        url?: T;
+        title?: T;
+        titleFr?: T;
+        active?: T;
         id?: T;
       };
   updatedAt?: T;

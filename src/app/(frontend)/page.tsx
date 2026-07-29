@@ -8,11 +8,12 @@ import HowItWorksSection from '@/components/HowItWorksSection'
 import TestimonialsSection from '@/components/TestimonialsSection'
 import DifferentiationSection from '@/components/DifferentiationSection'
 import ProductShowcaseSection from '@/components/ProductShowcaseSection'
-import VideoHighlightsSection from '@/components/VideoHighlightsSection'
+import VideoHighlightsSection, { type HighlightVideo } from '@/components/VideoHighlightsSection'
 import TeamAndEventsSection from '@/components/TeamAndEventsSection'
 import FAQSection from '@/components/FAQSection'
 import CTASection from '@/components/CTASection'
 import { faqs } from '@/data/faqs'
+import { extractYouTubeId } from '@/lib/youtube'
 import { SectionScoop } from '@/components/ui/SectionScoop'
 
 const BG_WHITE = 'hsl(0 0% 100%)'
@@ -22,10 +23,11 @@ export const dynamic = 'force-dynamic'
 
 export default async function IndexPage() {
   const payload = await getPayloadClient()
-  const [logoWall, teamResult, voiceOfCustomer] = await Promise.all([
+  const [logoWall, teamResult, voiceOfCustomer, videoHighlights] = await Promise.all([
     payload.findGlobal({ slug: 'logo-wall', depth: 1 }),
     payload.find({ collection: 'team', sort: 'order', limit: 20 }),
     payload.findGlobal({ slug: 'voice-of-customer' }),
+    payload.findGlobal({ slug: 'video-highlights' }),
   ])
 
   const agribusinessLogos = ((logoWall as any).agribusinessLogos ?? []).filter(
@@ -34,6 +36,12 @@ export default async function IndexPage() {
   const bankLogos = ((logoWall as any).bankLogos ?? []).filter((l: any) => l.active !== false)
   const team = teamResult.docs
   const vocQuotes = (voiceOfCustomer as any).quotes ?? []
+
+  // Editors paste plain YouTube links in the admin; the embed needs the bare id.
+  const highlightVideos: HighlightVideo[] = ((videoHighlights as any).videos ?? [])
+    .filter((v: any) => v.active !== false)
+    .map((v: any) => ({ id: extractYouTubeId(v.url), title: v.title ?? '', titleFr: v.titleFr }))
+    .filter((v: any): v is HighlightVideo => Boolean(v.id))
 
   const bankPartnerNames: string[] = bankLogos
     .filter((b: any) => b.name)
@@ -132,7 +140,7 @@ export default async function IndexPage() {
       <DifferentiationSection />
       {/* white → gradient-primary — scoop built into ProductShowcaseSection top */}
       <ProductShowcaseSection />
-      <VideoHighlightsSection />
+      <VideoHighlightsSection videos={highlightVideos} />
       <TeamAndEventsSection />
       {/* photo → white — scoop built into TeamBannerSection bottom */}
       <FAQSection />

@@ -24,6 +24,7 @@ import { PopupRegistrations } from './collections/PopupRegistrations'
 import { Subscribers } from './collections/Subscribers'
 import { LogoWall } from './globals/LogoWall'
 import { VoiceOfCustomer } from './globals/VoiceOfCustomer'
+import { VideoHighlights } from './globals/VideoHighlights'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,7 +37,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Articles, CaseStudies, Team, Popups, Categories, Enquiries, CaseStudiesHeroCollection, Jobs, Events, PopupRegistrations, Subscribers],
-  globals: [LogoWall, VoiceOfCustomer, EnquirySettings],
+  globals: [LogoWall, VoiceOfCustomer, VideoHighlights, EnquirySettings],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, EXPERIMENTAL_TableFeature()],
   }),
