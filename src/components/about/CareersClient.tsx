@@ -13,6 +13,7 @@ export type Job = {
   type?: string
   description?: string
   applyEmail?: string
+  jdFileUrl?: string | null
 }
 
 export default function CareersClient({ jobs }: { jobs: Job[] }) {
@@ -63,13 +64,26 @@ export default function CareersClient({ jobs }: { jobs: Job[] }) {
                 {job.description && (
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{job.description}</p>
                 )}
-                <a
-                  href={`mailto:${job.applyEmail || FALLBACK_EMAIL}?subject=Application for ${encodeURIComponent(job.title)}`}
-                  aria-label={`Apply for ${job.title}`}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:brightness-110 transition"
-                >
-                  {t.about.careers.apply}
-                </a>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={`mailto:${job.applyEmail || FALLBACK_EMAIL}?subject=Application for ${encodeURIComponent(job.title)}`}
+                    aria-label={`Apply for ${job.title}`}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground hover:brightness-110 transition"
+                  >
+                    {t.about.careers.apply}
+                  </a>
+                  {job.jdFileUrl && (
+                    <a
+                      href={job.jdFileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View full job description for ${job.title}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border px-5 py-2 text-sm font-semibold text-foreground hover:bg-muted transition"
+                    >
+                      {t.about.careers.viewJd}
+                    </a>
+                  )}
+                </div>
               </article>
             ))}
           </div>

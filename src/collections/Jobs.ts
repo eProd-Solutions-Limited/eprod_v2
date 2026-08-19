@@ -44,6 +44,22 @@ export const Jobs: CollectionConfig = {
       },
     },
     {
+      name: 'jdFile',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Job Description File',
+      filterOptions: {
+        or: [
+          { mimeType: { equals: 'application/pdf' } },
+          { mimeType: { equals: 'application/msword' } },
+          { mimeType: { equals: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' } },
+        ],
+      },
+      admin: {
+        description: 'Optional. Upload a PDF or Word doc with the full job description for applicants to download.',
+      },
+    },
+    {
       name: 'type',
       type: 'select',
       required: true,

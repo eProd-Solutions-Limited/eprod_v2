@@ -42,6 +42,11 @@ next-env.d.ts
 
 /media
 
+# local Postgres dump/seed (contains production data — never commit)
+dump.sql
+DB_Docker.zip
+00-init-role.sql
+
 # Playwright
 node_modules/
 /test-results/

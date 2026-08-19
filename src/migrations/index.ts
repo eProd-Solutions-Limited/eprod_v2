@@ -15,6 +15,7 @@ import * as migration_20260602_enquiry_settings_global from './20260602_enquiry_
 import * as migration_20260708_events_description_jsonb from './20260708_events_description_jsonb';
 import * as migration_20260708_drop_cta_config_id_rel from './20260708_drop_cta_config_id_rel';
 import * as migration_20260728_video_highlights_global from './20260728_video_highlights_global';
+import * as migration_20260819_jobs_jd_file from './20260819_jobs_jd_file';
 
 export const migrations = [
   {
@@ -101,5 +102,10 @@ export const migrations = [
     up: migration_20260728_video_highlights_global.up,
     down: migration_20260728_video_highlights_global.down,
     name: '20260728_video_highlights_global',
+  },
+  {
+    up: migration_20260819_jobs_jd_file.up,
+    down: migration_20260819_jobs_jd_file.down,
+    name: '20260819_jobs_jd_file',
   },
 ];

@@ -523,6 +523,7 @@ const en = {
       emailPrefix: 'Email us at',
       typeLabels: { FULL_TIME: 'Full-time', PART_TIME: 'Part-time', CONTRACT: 'Contract' },
       apply: 'Apply →',
+      viewJd: 'View full JD',
     },
     faq: {
       eyebrow: 'FAQ',
@@ -1599,6 +1600,7 @@ const fr: typeof en = {
       emailPrefix: 'Écrivez-nous à',
       typeLabels: { FULL_TIME: 'Temps plein', PART_TIME: 'Temps partiel', CONTRACT: 'Contrat' },
       apply: 'Postuler →',
+      viewJd: 'Voir la fiche de poste',
     },
     faq: {
       eyebrow: 'FAQ',

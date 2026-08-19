@@ -45,6 +45,7 @@ export default async function CareersSection() {
     type: job.type,
     description: job.description,
     applyEmail: job.applyEmail,
+    jdFileUrl: job.jdFile?.url ?? null,
   }))
 
   return (

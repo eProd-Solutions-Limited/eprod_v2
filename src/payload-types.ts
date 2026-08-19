@@ -633,6 +633,10 @@ export interface Job {
    * Optional brief description shown on the About page and in Google job search results.
    */
   description?: string | null;
+  /**
+   * Optional. Upload a PDF or Word doc with the full job description for applicants to download.
+   */
+  jdFile?: (number | null) | Media;
   type: 'FULL_TIME' | 'PART_TIME' | 'CONTRACT';
   /**
    * Optional. Defaults to careers@eprod-solutions.com if left blank.
@@ -1153,6 +1157,7 @@ export interface JobsSelect<T extends boolean = true> {
   department?: T;
   location?: T;
   description?: T;
+  jdFile?: T;
   type?: T;
   applyEmail?: T;
   isActive?: T;
