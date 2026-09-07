@@ -5,6 +5,7 @@ import { getPayloadClient } from '@/lib/payload-client'
 import { cn } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { ArticleReadTracker } from '@/components/articles/ArticleReadTracker'
+import { BackToInsights } from '@/components/articles/BackToInsights'
 
 const getArticle = cache(async (slug: string) => {
   const payload = await getPayloadClient()
@@ -111,6 +112,7 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      <BackToInsights className="mb-8" />
       <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
       <time className="text-gray-400">
         {article.publishedAt}
@@ -135,6 +137,7 @@ export default async function ArticlePage({
           <BlockRenderer key={i} block={block} />
         ))}
       </div>
+      <BackToInsights className="mt-12 pt-8 border-t border-white/10" />
       <ArticleReadTracker slug={slug} />
     </article>
   )
